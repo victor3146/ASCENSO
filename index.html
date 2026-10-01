@@ -1,0 +1,1198 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>ADN Riesgos · Ascenso 4x4</title>
+<style>
+  :root{
+    --ink:#071330; --ink2:#0c1d4a; --ink3:#14295f; --line:rgba(255,255,255,.16);
+    --cyan:#26d6ff; --green:#31d624; --green2:#1c8a0c; --gold:#ffc94b; --red:#ff5f5f; --orange:#ff9a3d;
+    --white:#f8fbff; --muted:#a9b7dd;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;width:100%;height:100%;overflow:hidden;background:radial-gradient(circle at 70% 15%,rgba(38,214,255,.18),transparent 30%),linear-gradient(180deg,#071330,#040916);font-family:"Trebuchet MS",Arial,sans-serif;color:var(--white)}
+  #viewport{position:fixed;inset:0;display:grid;place-items:center}
+  #stage{position:absolute;left:0;top:0;width:1440px;height:900px;transform-origin:0 0;background:#000;box-shadow:0 24px 70px rgba(0,0,0,.5);overflow:hidden;user-select:none;-webkit-user-select:none}
+  canvas{display:block;width:1440px;height:900px;outline:none}
+  .ov{position:absolute;inset:0;display:none;align-items:center;justify-content:center;background:rgba(4,10,28,.62);backdrop-filter:blur(2px);z-index:5}
+  .ov.on{display:flex}
+  .card{background:linear-gradient(180deg,#0c1d4a,#071330);border:2px solid var(--line);border-radius:28px;padding:34px 40px;box-shadow:0 30px 80px rgba(0,0,0,.55);position:relative}
+  h1,h2,h3{margin:0}
+  .tag{display:inline-block;padding:7px 16px;border-radius:999px;font-size:15px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--cyan);color:var(--ink)}
+  .tag.gold{background:var(--gold)} .tag.green{background:var(--green)} .tag.red{background:var(--red)}
+  .btn{font:700 21px "Trebuchet MS",Arial,sans-serif;border:2px solid rgba(255,255,255,.28);border-radius:999px;padding:14px 30px;cursor:pointer;color:var(--white);background:#14295f;transition:transform .12s,background .12s}
+  .btn:hover{transform:translateY(-2px);background:#1c3678}
+  .btn.primary{background:var(--green);color:var(--ink);border-color:transparent}
+  .btn.primary:hover{background:#4ee43f}
+  .btn.ghost{background:transparent}
+  .btn:disabled{opacity:.4;cursor:not-allowed;transform:none}
+  .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .muted{color:var(--muted)}
+  /* MENU */
+  #menu{background:linear-gradient(90deg,rgba(7,19,48,.96) 0%,rgba(7,19,48,.86) 52%,rgba(7,19,48,.25) 100%);backdrop-filter:none}
+  #menu .inner{width:1300px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:30px}
+  .logo{font-size:110px;font-weight:700;line-height:.9;letter-spacing:-.03em}
+  .logo small{display:block;font-size:46px;color:var(--cyan);letter-spacing:0;margin-top:6px}
+  .logo b{color:var(--green)}
+  .pitch{font-size:23px;line-height:1.45;color:#dfe7ff;max-width:640px;margin:26px 0 22px}
+  .phases{display:flex;gap:12px;margin-bottom:26px}
+  .ph{flex:1;border:1px solid var(--line);border-radius:16px;padding:12px 14px;background:rgba(255,255,255,.04)}
+  .ph .n{font-size:13px;color:var(--cyan);font-weight:700;letter-spacing:.08em}
+  .ph .t{font-size:17px;font-weight:700;margin-top:4px}
+  .userbox{display:flex;align-items:center;gap:0;border:2px solid rgba(255,255,255,.35);border-radius:16px;overflow:hidden;width:520px;background:#0c1d4a}
+  .userbox input{flex:1;font:700 24px "Trebuchet MS",Arial;padding:14px 16px;background:transparent;border:0;color:var(--white);outline:none;min-width:0}
+  .userbox span{padding:0 16px;color:#b4c4ff;font-size:20px}
+  .err{color:#ff8b8b;font-size:17px;min-height:24px;margin:8px 0 14px}
+  .hero{position:relative;height:640px;display:grid;place-items:center}
+  .hero img{height:520px;filter:drop-shadow(0 0 40px rgba(38,214,255,.35));animation:float 3.2s ease-in-out infinite}
+  .hero .mx{position:absolute;right:10px;bottom:40px}
+  @keyframes float{50%{transform:translateY(-14px)}}
+  /* QUESTION */
+  #qCard{width:1120px}
+  .qhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+  .timer{width:260px;height:14px;border-radius:9px;background:#14295f;overflow:hidden;border:1px solid var(--line)}
+  .timer i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--green),var(--gold));transition:width .1s linear}
+  .case{font-size:30px;font-weight:700;line-height:1.3;margin:6px 0 12px}
+  .ask{font-size:23px;color:#b9c8f2;margin-bottom:20px}
+  .opts{display:grid;gap:12px}
+  .opt{display:flex;gap:16px;align-items:center;text-align:left;font:22px "Trebuchet MS",Arial;color:var(--white);background:#12265c;border:2px solid rgba(255,255,255,.18);border-radius:18px;padding:16px 20px;cursor:pointer;transition:background .12s,border-color .12s}
+  .opt:hover:not(:disabled){border-color:var(--cyan);background:#183172}
+  .opt .k{flex:0 0 40px;height:40px;border-radius:12px;background:var(--cyan);color:var(--ink);display:grid;place-items:center;font-weight:700}
+  .opt.ok{background:#1d7a45;border-color:#8dffb0}
+  .opt.bad{background:#7d2d2d;border-color:#ffb3a6}
+  .opt:disabled{cursor:default}
+  .fb{min-height:64px;margin-top:18px;font-size:20px;line-height:1.4;display:flex;justify-content:space-between;gap:20px;align-items:center}
+  .fb .txt.ok{color:#8dffb0} .fb .txt.bad{color:#ffcfc4}
+  /* TREATMENTS */
+  #tCard{width:1260px}
+  .tgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:22px}
+  .tcard{text-align:left;font-family:inherit;color:var(--white);background:#10245a;border:2px solid rgba(255,255,255,.18);border-radius:22px;padding:20px;cursor:pointer;min-height:330px;display:flex;flex-direction:column;gap:10px;transition:transform .12s,border-color .12s}
+  .tcard:hover:not(:disabled){transform:translateY(-4px);border-color:var(--c)}
+  .tcard:disabled{opacity:.45;cursor:not-allowed}
+  .tcard .ic{width:54px;height:54px;border-radius:16px;background:var(--c);color:var(--ink);display:grid;place-items:center;font-size:28px;font-weight:700}
+  .tcard h3{font-size:26px;color:var(--c)}
+  .tcard p{margin:0;font-size:16.5px;line-height:1.4;color:#dbe4ff}
+  .tcard .fx{margin-top:auto;font-size:15px;padding:10px 12px;border-radius:12px;background:rgba(0,0,0,.25);color:#fff}
+  .tcard .fx b{color:var(--c)}
+  .tcard .lock{font-size:14px;color:#ffb3a6}
+  /* GENERIC PANELS */
+  .wide{width:1180px}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:22px 0 26px}
+  .concept{border:1px solid var(--line);border-radius:18px;padding:18px;background:rgba(255,255,255,.04)}
+  .concept h3{font-size:22px;color:var(--cyan);margin-bottom:8px}
+  .concept p{margin:0;font-size:17px;line-height:1.45;color:#dbe4ff}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}
+  .stat{background:#12265c;border-radius:18px;padding:16px 18px;border:1px solid var(--line)}
+  .stat .l{font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  .stat .v{font-size:32px;font-weight:700;margin-top:4px;color:var(--cyan)}
+  .legend{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-top:12px}
+  .lg{display:flex;flex-direction:column;align-items:center;text-align:center;gap:6px;font-size:14.5px;color:#dbe4ff;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:14px;padding:10px 8px}
+  .lg b{color:#fff;font-size:15.5px}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  table.rank{width:100%;border-collapse:separate;border-spacing:0 8px;font-size:20px}
+  table.rank th{color:var(--muted);font-size:15px;text-align:left;padding:0 14px;font-weight:400}
+  table.rank td{background:#12265c;padding:12px 14px}
+  table.rank td:first-child{border-radius:14px 0 0 14px;color:var(--muted)} table.rank td:last-child{border-radius:0 14px 14px 0}
+  table.rank td.c{color:var(--cyan);font-weight:700}
+  .msg{color:#7dffb7;font-size:17px;min-height:22px;margin-top:10px}
+  #touch{position:absolute;inset:auto 0 0 0;height:160px;display:none;z-index:4;pointer-events:none}
+  #touch .tb{pointer-events:auto;position:absolute;bottom:26px;width:130px;height:110px;border-radius:26px;background:rgba(255,255,255,.12);border:2px solid rgba(255,255,255,.3);color:#fff;font:700 40px Arial;display:grid;place-items:center}
+  #toast{position:absolute;left:50%;bottom:28px;transform:translateX(-50%);background:rgba(7,19,48,.92);border:1px solid var(--line);padding:12px 22px;border-radius:999px;font-size:19px;z-index:4;opacity:0;transition:opacity .25s;pointer-events:none;white-space:nowrap}
+  #toast.on{opacity:1}
+  #loading{position:absolute;inset:0;display:grid;place-items:center;background:var(--ink);font-size:26px;font-weight:700;z-index:20}
+  #rotate{display:none;position:fixed;inset:0;z-index:50;background:#071330;color:#fff;align-items:center;justify-content:center;text-align:center;font-size:22px;padding:30px}
+  @media (orientation:portrait) and (pointer:coarse){ #rotate{display:flex} }
+  #mute{position:absolute;left:250px;top:818px;z-index:6;font-size:15px;padding:8px 14px}
+</style>
+</head>
+<body>
+<div id="rotate">Gira tu dispositivo a horizontal para jugar ADN Riesgos · Ascenso 4×4 ↻</div>
+<div id="viewport">
+ <div id="stage">
+  <canvas id="cv" width="1440" height="900" tabindex="0" aria-label="ADN Riesgos Ascenso"></canvas>
+  <button id="mute" class="btn ghost" title="Sonido">♪ Sonido: sí</button>
+  <div id="toast"></div>
+  <div id="touch"><div class="tb" id="tL" style="left:30px">◀</div><div class="tb" id="tF" style="left:50%;transform:translateX(-50%);width:170px;font-size:24px">CONTROL</div><div class="tb" id="tR" style="right:30px">▶</div></div>
+
+  <!-- MENU -->
+  <div class="ov on" id="menu">
+   <div class="inner">
+    <div>
+     <div class="logo">adn<small>riesgos · <b>Ascenso 4×4</b></small></div>
+     <p class="pitch">Sube en bicicleta con Gofsi por tres fases de la gestión del riesgo. Aquí no tienes vidas: tienes <b>tu propia matriz de riesgo</b>. Cada decisión mueve la <b>probabilidad</b>; cada golpe, el <b>impacto</b>. Si llegas a la celda 4×4, el riesgo se materializa.</p>
+     <div class="phases">
+      <div class="ph"><div class="n">FASE 1 · AMANECER</div><div class="t">Identificar y evaluar</div></div>
+      <div class="ph"><div class="n">FASE 2 · ATARDECER</div><div class="t">Controlar y tratar</div></div>
+      <div class="ph"><div class="n">FASE 3 · NOCHE</div><div class="t">Continuidad del negocio</div></div>
+     </div>
+     <div class="userbox"><input id="user" maxlength="20" placeholder="tu usuario (ej: nvargas)" autocomplete="off" spellcheck="false"><span>@sistecredito.com</span></div>
+     <div class="err" id="userErr"></div>
+     <div class="row">
+      <button class="btn primary" id="bPlay">JUGAR</button>
+      <button class="btn" id="bHow">CÓMO SE JUEGA</button>
+      <button class="btn ghost" id="bRank">RANKING</button>
+     </div>
+    </div>
+    <div class="hero"><img id="heroImg" alt="Gofsi"></div>
+   </div>
+  </div>
+
+  <!-- HOW TO -->
+  <div class="ov" id="how">
+   <div class="card wide">
+    <span class="tag">Cómo se juega</span>
+    <h2 style="font-size:40px;margin:14px 0 6px">Escala, decide y gestiona tu exposición</h2>
+    <div class="two" style="margin-top:16px">
+     <div class="concept"><h3>Controles</h3><p><b>← →</b> o <b>A / D</b>: mover a Gofsi (salta solo y puede cruzar los bordes).<br><b>Espacio / ↑ / W</b>: lanzar un <b>control</b> hacia arriba (tienes 3, se recargan con el tiempo).<br>Caer sobre un riesgo también lo neutraliza. <b>P / Esc</b>: pausa.<br>En pantalla táctil usa los botones inferiores.</p></div>
+     <div class="concept"><h3>Tu matriz 4×4</h3><p><b>Probabilidad (P)</b>: sube con cada respuesta incorrecta o fuera de tiempo; baja cuando aciertas.<br><b>Impacto (I)</b>: sube cuando un riesgo te golpea o te caes; baja con el tratamiento <b>Reducir</b>.<br>Exposición = P × I. En 16 el riesgo se materializa y la fase se reinicia.</p></div>
+    </div>
+    <div class="concept" style="margin-top:16px"><h3>Puntos de decisión</h3><p>Cada fase tiene 6 barreras doradas. Al tocarlas aparece un caso real: decide en 30 segundos. Si aciertas, eliges un tratamiento (Evitar, Reducir, Transferir o Aceptar) que cambia el juego. Si fallas, ves la explicación y la barrera se abre, pero tu probabilidad sube.</p></div>
+    <div class="legend" id="legend"></div>
+    <div class="row" style="justify-content:flex-end;margin-top:22px"><button class="btn primary" id="bHowOk">ENTENDIDO</button></div>
+   </div>
+  </div>
+
+  <!-- BRIEFING -->
+  <div class="ov" id="brief">
+   <div class="card wide">
+    <span class="tag gold" id="bTag">Fase 1</span>
+    <h2 style="font-size:44px;margin:14px 0 4px" id="bTitle"></h2>
+    <div class="muted" style="font-size:21px" id="bSub"></div>
+    <div class="grid3" id="bConcepts"></div>
+    <div class="row" style="justify-content:space-between">
+     <div class="muted" style="font-size:18px" id="bHint"></div>
+     <button class="btn primary" id="bGo">COMENZAR ASCENSO</button>
+    </div>
+   </div>
+  </div>
+
+  <!-- QUESTION -->
+  <div class="ov" id="quest">
+   <div class="card" id="qCard">
+    <div class="qhead">
+     <div class="row"><span class="tag gold" id="qTag">Punto de decisión</span><span class="muted" id="qMeta" style="font-size:16px"></span></div>
+     <div class="row"><span id="qTime" style="font-size:18px;font-weight:700;width:40px;text-align:right">30</span><div class="timer"><i id="qBar"></i></div></div>
+    </div>
+    <div class="case" id="qCase"></div>
+    <div class="ask" id="qAsk"></div>
+    <div class="opts" id="qOpts"></div>
+    <div class="fb"><div class="txt" id="qFb"></div><button class="btn primary" id="qNext" style="display:none;flex:0 0 auto">CONTINUAR</button></div>
+   </div>
+  </div>
+
+  <!-- TREATMENT -->
+  <div class="ov" id="treat">
+   <div class="card" id="tCard">
+    <span class="tag green">Decisión acertada</span>
+    <h2 style="font-size:36px;margin:12px 0 4px">Elige cómo tratar el riesgo</h2>
+    <div class="muted" style="font-size:19px" id="tSub">Después de evaluar, se decide cómo actuar. Cada tratamiento tiene un efecto distinto en el ascenso.</div>
+    <div class="tgrid" id="tGrid"></div>
+   </div>
+  </div>
+
+  <!-- REPORT -->
+  <div class="ov" id="report">
+   <div class="card wide">
+    <span class="tag green" id="rTag">Fase superada</span>
+    <h2 style="font-size:40px;margin:14px 0 4px" id="rTitle"></h2>
+    <div class="muted" style="font-size:20px" id="rSub"></div>
+    <div class="stats" id="rStats"></div>
+    <div class="concept"><h3>Lectura de tu matriz</h3><p id="rRead"></p></div>
+    <div class="row" style="justify-content:flex-end;margin-top:22px"><button class="btn primary" id="rNext">SIGUIENTE FASE</button></div>
+   </div>
+  </div>
+
+  <!-- PAUSE -->
+  <div class="ov" id="pause">
+   <div class="card" style="width:560px;text-align:center">
+    <h2 style="font-size:42px;margin-bottom:10px">Pausa</h2>
+    <p class="muted" style="font-size:19px">El riesgo no descansa, pero tú sí.</p>
+    <div class="row" style="justify-content:center;margin-top:20px"><button class="btn primary" id="pGo">CONTINUAR</button><button class="btn" id="pMenu">MENÚ</button></div>
+   </div>
+  </div>
+
+  <!-- GAME OVER -->
+  <div class="ov" id="over">
+   <div class="card wide">
+    <span class="tag red">Riesgo materializado</span>
+    <h2 style="font-size:46px;margin:14px 0 4px">Tu exposición llegó a 16 (4 × 4)</h2>
+    <div class="muted" style="font-size:20px">Probabilidad e impacto quedaron en el nivel máximo. En la vida real esto es un evento de pérdida: hay que tratar antes de que ocurra.</div>
+    <div class="stats" id="oStats"></div>
+    <div class="row" style="justify-content:flex-end"><button class="btn primary" id="oRetry">REINTENTAR FASE</button><button class="btn" id="oMenu">MENÚ PRINCIPAL</button></div>
+   </div>
+  </div>
+
+  <!-- FINAL -->
+  <div class="ov" id="final">
+   <div class="card wide">
+    <span class="tag green">Recorrido completo</span>
+    <h2 style="font-size:46px;margin:14px 0 4px">¡Lo lograste, gestor de riesgos!</h2>
+    <div class="muted" style="font-size:20px">Superaste las tres fases. Descarga tu certificado y cuéntanos cómo te fue.</div>
+    <div class="stats" id="fStats"></div>
+    <div class="row" style="justify-content:space-between">
+     <div class="row"><button class="btn primary" id="fDip">DESCARGAR CERTIFICADO</button><button class="btn" id="fRate" style="background:#0b6fd1">CALIFICA TU EXPERIENCIA</button></div>
+     <div class="row"><button class="btn ghost" id="fRank">RANKING</button><button class="btn ghost" id="fAgain">JUGAR DE NUEVO</button></div>
+    </div>
+    <div class="msg" id="fMsg"></div>
+   </div>
+  </div>
+
+  <!-- RANKING -->
+  <div class="ov" id="rank">
+   <div class="card" style="width:980px">
+    <span class="tag">Mejores ascensos</span>
+    <h2 style="font-size:38px;margin:12px 0 10px">Ranking (este equipo)</h2>
+    <table class="rank"><thead><tr><th>#</th><th>Usuario</th><th>Puntaje</th><th>Tiempo</th><th>Aciertos</th><th>Exposición final</th></tr></thead><tbody id="rankBody"></tbody></table>
+    <div class="row" style="justify-content:flex-end;margin-top:14px"><button class="btn primary" id="rankOk">VOLVER</button></div>
+   </div>
+  </div>
+
+  <div id="loading">Cargando ADN Riesgos…</div>
+ </div>
+</div>
+
+<script src="./assets/questions.js"></script>
+<script src="./assets/diploma-data.js"></script>
+<script>
+(() => {
+"use strict";
+
+/* ============================ CONFIGURACIÓN ============================ */
+const W = 1440, H = 900, COLX = 400, COLW = 640;
+const GRAV = 0.42, BOUNCE = -14.6, SPRING = -23, BOOST = -19, MAXVX = 7.2;
+const PW = 40, PH = 58;
+const GATES = 6, GATE_GAP = 1300, Q_TIME = 30;
+const RANK_KEY = "adn_riesgos_ascenso_v1";
+const SURVEY_URL = "https://formacion.sistecredito.com/#dashboard/student/gestores-de-riesgo/forums";
+const ASSETS = {
+  amanecer: "./assets/03-amanecer.png",
+  atardecer: "./assets/04-atardecer.png",
+  noche: "./assets/01-noche.png",
+  diploma: "./assets/05-diploma.png",
+  gofsi: "./assets/06-gofsi.png",
+  sprite: "./assets/07-gofsi_sprite_transparente.png"
+};
+// Recortes del sprite (x, y, w, h): 0 de pie, 1 bici izq, 2 bici der, 3 caballito der, 4 caballito izq
+const FRAMES = [[65,328,177,288],[308,347,262,288],[649,343,274,290],[982,325,277,314],[1313,324,279,317]];
+
+const PHASES = [
+  { key:"evaluar", name:"Identificar y evaluar", bg:"amanecer", gap:[70,145], moving:.15, fragile:.18, spring:.07, enemyGap:430,
+    enemies:["humano","proceso"],
+    sub:"Reconoce el riesgo antes de que te alcance: causa, evento y consecuencia.",
+    concepts:[
+      ["¿Qué es un riesgo?","Un evento incierto que, si ocurre, afecta objetivos: clientes, operación, finanzas o cumplimiento. Se describe con causa → evento → consecuencia."],
+      ["Riesgo = P × I","La exposición combina la probabilidad de ocurrencia y el impacto si ocurre. Tu matriz en pantalla funciona exactamente así."],
+      ["Matriz 4×4 y apetito","La matriz prioriza: verde y amarillo pueden estar dentro del apetito; naranja y rojo exigen tratamiento. Aquí el apetito es P × I ≤ 6."]
+    ]},
+  { key:"tratar", name:"Controlar y tratar", bg:"atardecer", gap:[80,160], moving:.28, fragile:.26, spring:.06, enemyGap:340,
+    enemies:["humano","proceso","tecnologia","externo"],
+    sub:"Un control que existe en papel pero no opera no reduce el riesgo.",
+    concepts:[
+      ["Cuatro tratamientos","Evitar elimina la exposición, Reducir aplica controles, Transferir comparte el impacto con un tercero y Aceptar asume un riesgo dentro del apetito."],
+      ["Preventivo vs. detectivo","El preventivo evita que el evento ocurra (validación previa); el detectivo lo descubre después (conciliación). Ambos son necesarios."],
+      ["Diseño vs. operación","Las plataformas ámbar son controles débiles: soportan un salto y se rompen. Un control diseñado que no se ejecuta deja una brecha."]
+    ]},
+  { key:"continuidad", name:"Continuidad del negocio", bg:"noche", gap:[90,170], moving:.32, fragile:.3, spring:.06, enemyGap:280,
+    enemies:["humano","proceso","tecnologia","externo","ciber"],
+    sub:"Prepararse antes del incidente define qué tan rápido te recuperas.",
+    concepts:[
+      ["BIA","El análisis de impacto al negocio identifica procesos críticos y cuánto tiempo pueden detenerse sin daño grave."],
+      ["RTO y RPO","RTO: tiempo máximo para recuperar el servicio. RPO: cuánta información (en tiempo) se puede perder. Respaldos y canales alternos los hacen posibles."],
+      ["Responder y aprender","Ante una caída: prioriza, activa el plan alterno, comunica temprano y registra el incidente para que no se repita."]
+    ]}
+];
+
+const ENEMY = {
+  humano:     { label:"Error humano",          factor:"Recurso humano",           color:"#ffb04e", r:24 },
+  proceso:    { label:"Falla de proceso",      factor:"Procesos",                 color:"#b98bff", r:26 },
+  tecnologia: { label:"Falla tecnológica",     factor:"Tecnología",               color:"#5cb4ff", r:24 },
+  externo:    { label:"Evento externo",        factor:"Acontecimientos externos", color:"#9aa6bf", r:30 },
+  ciber:      { label:"Ciberataque",           factor:"Seguridad de la información", color:"#ff6b8f", r:22 }
+};
+
+const TREATMENTS = [
+  { id:"evitar", name:"Evitar", ic:"⊘", color:"#b98bff",
+    def:"Eliminar la exposición: cambiar, detener o rediseñar la actividad para que el riesgo no se materialice.",
+    ex:"Ej.: eliminar un paso manual crítico y reemplazarlo por validación automática.",
+    fx:"Despeja <b>todos</b> los riesgos cercanos y frena nuevas apariciones 10 s." },
+  { id:"reducir", name:"Reducir", ic:"▼", color:"#3dd676",
+    def:"Aplicar controles que bajan la probabilidad, el impacto o ambos sin detener la actividad.",
+    ex:"Ej.: doble validación, lista de chequeo, capacitación.",
+    fx:"<b>Impacto −1</b> y escudo de control por 10 s." },
+  { id:"transferir", name:"Transferir", ic:"⇄", color:"#50b3ff",
+    def:"Compartir o trasladar parte del impacto a un tercero. La responsabilidad de gestionarlo sigue siendo tuya.",
+    ex:"Ej.: póliza de seguro, proveedor especializado con ANS.",
+    fx:"Ganas una <b>póliza</b>: absorbe el próximo golpe (máx. 2)." },
+  { id:"aceptar", name:"Aceptar", ic:"✓", color:"#ffc94b",
+    def:"Asumir conscientemente un riesgo dentro del apetito, cuando controlarlo cuesta más que su efecto.",
+    ex:"Ej.: una mejora menor que se deja monitoreada.",
+    fx:"<b>+400 pts</b> y puntos ×1,5 hasta la próxima decisión, sin protección." }
+];
+
+/* ============================ UTILIDADES ============================ */
+const $ = (id) => document.getElementById(id);
+const clamp = (v,a,b) => Math.max(a, Math.min(b, v));
+const pad = (v,n) => String(Math.max(0, Math.floor(v))).padStart(n, "0");
+const fmtTime = (s) => `${pad(s/60,2)}:${pad(s%60,2)}`;
+const rand = (a,b) => a + Math.random()*(b-a);
+const pick = (arr) => arr[Math.floor(Math.random()*arr.length)];
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function wrapDx(a,b){ let d=a-b; if(d>COLW/2) d-=COLW; if(d<-COLW/2) d+=COLW; return d; }
+function esc(s){ return String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function rr(ctx,x,y,w,h,r){ r=Math.min(r,w/2,h/2); ctx.beginPath(); ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r); ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath(); }
+function loadImage(src){ return new Promise((res,rej)=>{ const i=new Image(); i.onload=()=>res(i); i.onerror=()=>rej(new Error("No se pudo cargar "+src)); i.src=src; }); }
+function riskLevel(e){ if(e<=2) return {n:"BAJO",c:"#3dd676"}; if(e<=4) return {n:"MODERADO",c:"#ffd34b"}; if(e<=8) return {n:"ALTO",c:"#ff9a3d"}; return {n:"EXTREMO",c:"#ff5252"}; }
+function storeGet(){ try{ const d=JSON.parse(localStorage.getItem(RANK_KEY)||"[]"); return Array.isArray(d)?d:[]; }catch{ return []; } }
+function storeSet(d){ try{ localStorage.setItem(RANK_KEY, JSON.stringify(d)); }catch{} }
+
+/* ============================ AUDIO ============================ */
+let actx=null, soundOn=true;
+function beep(freq=440, dur=.08, type="square", vol=.05, slide=0){
+  if(!soundOn) return;
+  try{
+    actx = actx || new (window.AudioContext||window.webkitAudioContext)();
+    const o=actx.createOscillator(), g=actx.createGain(), t=actx.currentTime;
+    o.type=type; o.frequency.setValueAtTime(freq,t); if(slide) o.frequency.exponentialRampToValueAtTime(Math.max(40,freq+slide), t+dur);
+    g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+dur+.02);
+  }catch{}
+}
+const SFX = {
+  jump:()=>beep(330,.07,"square",.025,220), spring:()=>beep(260,.25,"triangle",.06,700),
+  shot:()=>beep(880,.06,"square",.03,-300), ko:()=>{beep(520,.08,"square",.05,300);setTimeout(()=>beep(780,.1,"square",.04,200),60);},
+  hit:()=>beep(160,.25,"sawtooth",.07,-90), coin:()=>beep(1240,.06,"sine",.05,300),
+  ok:()=>{beep(523,.1,"triangle",.07);setTimeout(()=>beep(659,.1,"triangle",.07),90);setTimeout(()=>beep(784,.18,"triangle",.07),180);},
+  bad:()=>{beep(300,.18,"sawtooth",.05,-80);setTimeout(()=>beep(200,.25,"sawtooth",.05,-60),150);},
+  gate:()=>beep(700,.15,"sine",.05,500)
+};
+
+/* ============================ PREGUNTAS ============================ */
+function normalize(row, i){
+  if(!row || !Array.isArray(row.options) || row.options.length<2) return null;
+  const options = row.options.map(o => String(typeof o==="object" ? (o.text||o.texto||"") : o).trim()).filter(Boolean).slice(0,4);
+  const ci = clamp(Number.isFinite(+row.correctIndex) ? +row.correctIndex : 0, 0, options.length-1);
+  return {
+    id: String(row.id || "q"+(i+1)),
+    topic: String(row.topic || "riesgo operacional"),
+    context: String(row.context || ""),
+    question: String(row.question || ""),
+    options, correctIndex: ci,
+    fbOk: String(row.feedbackCorrect || "Correcto.").replace(/\.\.+/g, "."),
+    fbBad: String(row.feedbackIncorrect || ("La respuesta correcta es: " + options[ci])).replace(/\.\.+/g, ".")
+  };
+}
+function phaseOfQuestion(q){
+  const t = (q.context+" "+q.question+" "+q.options[q.correctIndex]).toLowerCase();
+  const cont = ["continuidad","contingencia","deja de funcionar","respaldo","proveedor","tercer","persona clave","una sola persona","incidente","deterioro","escalar","repite","alarma","deja de ejecutarse","alterno","pérdida relevante"];
+  const ctrl = ["control","validación","validaciones","segregación","cambios","aprob","automatiz","captura","trazabilidad","auditoría","conciliac","firma","revisión","parametriz","duplicidad","credencial","accesos","privilegios","pruebas"];
+  if(cont.some(k=>t.includes(k))) return 2;
+  if(ctrl.some(k=>t.includes(k))) return 1;
+  return 0;
+}
+function buildQuestionSets(bank){
+  const pool = shuffle(bank);
+  const buckets = [[],[],[]];
+  pool.forEach(q => buckets[phaseOfQuestion(q)].push(q));
+  const used = new Set(), sets = [[],[],[]];
+  for(let p=0;p<3;p++){ for(const q of buckets[p]){ if(sets[p].length<GATES){ sets[p].push(q); used.add(q.id);} } }
+  const rest = pool.filter(q=>!used.has(q.id));
+  for(let p=0;p<3;p++){ while(sets[p].length<GATES && rest.length){ const q=rest.shift(); sets[p].push(q); used.add(q.id);} }
+  for(let p=0;p<3;p++){ while(sets[p].length<GATES && pool.length){ sets[p].push(pick(pool)); } }
+  return sets;
+}
+
+/* ============================ ESTADO ============================ */
+const cv = $("cv"); let ctx = cv.getContext("2d");
+let IMG = {}, BANK = [];
+const keys = { left:false, right:false };
+const S = {
+  scene:"menu", modal:null, user:"",
+  phase:0, P:2, I:1, score:0, time:0,
+  answered:0, correct:0, ko:0, hits:0,
+  phaseStats:null, snap:null, qsets:null,
+  world:null, player:null, camY:0,
+  fx:{ parts:[], texts:[], rings:[], flash:0, flashC:"255,255,255", shake:0 },
+  tr:{ shield:0, polizas:0, evitar:0, mult:1 },
+  shootCd:0, spawnT:0, tick:0, howSeen:false
+};
+window.__adn = S; window.__adnKeys = keys;
+
+/* ============================ MUNDO ============================ */
+function genWorld(pi){
+  const cfg = PHASES[pi];
+  const plats=[], enemies=[], tokens=[], gates=[];
+  plats.push({ x:0, y:0, w:COLW, h:26, type:"base" });
+  for(let i=0;i<GATES;i++) gates.push({ y:-(i+1)*GATE_GAP, idx:i, opened:false, t:0 });
+  let bottom = 0;
+  for(let g=0; g<GATES; g++){
+    const gate = gates[g];
+    const stop = gate.y + 150;
+    let y = bottom;
+    while(true){
+      const gap = rand(cfg.gap[0], cfg.gap[1]);
+      if(y - gap < stop + 40) break;
+      y -= gap;
+      const w = rand(104, 150), x = rand(0, COLW - w);
+      const moving = Math.random() < cfg.moving;
+      const p = { x, y, w, h:18, type: moving ? "moving" : "stable", vx: moving ? (Math.random()<.5?-1:1)*rand(1.1, 1.6 + pi*.4) : 0 };
+      if(!moving && Math.random() < cfg.spring) p.spring = { off: rand(16, w-34), t:0 };
+      plats.push(p);
+      if(Math.random() < .26 && !p.spring) tokens.push({ x: x + w/2, y: y - 46, taken:false, ph:Math.random()*6 });
+      if(Math.random() < cfg.fragile){ const fw=rand(90,120); plats.push({ x: rand(0, COLW-fw), y: y + gap*rand(.35,.65), w:fw, h:16, type:"fragile", broken:false, vy:0 }); }
+    }
+    const pw = 210; plats.push({ x: rand(20, COLW-pw-20), y: stop, w:pw, h:20, type:"stable" });
+    const sw = 260; plats.push({ x: (COLW-sw)/2, y: gate.y - 120, w:sw, h:22, type:"safe", gate:g });
+    // riesgos de la franja
+    let ey = bottom - 380;
+    while(ey > stop + 160){
+      if(!(g===0 && ey > -500)) enemies.push(makeEnemy(pick(cfg.enemies), rand(50, COLW-50), ey));
+      ey -= cfg.enemyGap * rand(.75, 1.25);
+    }
+    bottom = gate.y - 120;
+  }
+  return { plats, enemies, tokens, gates, shots:[], bolts:[], cfg };
+}
+function makeEnemy(type, x, y){
+  return { type, x, y, x0:x, y0:y, t:Math.random()*10, alive:true, vis:true, cd:rand(1.5,3), dir:Math.random()<.5?-1:1 };
+}
+function nextGate(){ return S.world.gates.find(g=>!g.opened); }
+function lastSafe(){
+  const opened = S.world.gates.filter(g=>g.opened);
+  if(!opened.length) return { x: COLW/2, y: 0 };
+  const g = opened[opened.length-1];
+  return { x: COLW/2, y: g.y - 120 };
+}
+
+/* ============================ FLUJO ============================ */
+function show(id){ document.querySelectorAll(".ov").forEach(o=>o.classList.toggle("on", o.id===id)); S.modal = id; }
+function hideAll(){ document.querySelectorAll(".ov").forEach(o=>o.classList.remove("on")); S.modal=null; }
+let toastT=null;
+function toast(msg){ const t=$("toast"); t.textContent=msg; t.classList.add("on"); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("on"), 2300); }
+
+function startCampaign(){
+  Object.assign(S, { phase:0, P:2, I:1, score:0, time:0, answered:0, correct:0, ko:0, hits:0 });
+  S.qsets = buildQuestionSets(BANK);
+  if(!S.howSeen){ S.howSeen=true; S.afterHow = () => startPhase(0); openHow(); }
+  else startPhase(0);
+}
+function startPhase(pi){
+  S.phase = pi;
+  S.world = genWorld(pi);
+  S.player = { x: COLW/2 - PW/2, y: -PH, vx:0, vy:0, face:1, inv:0, land:0 };
+  S.camY = -H + 140;
+  S.tr = { shield:0, polizas:0, evitar:0, mult:1 };
+  S.ammo = 3; S.ammoT = 0;
+  S.phaseStats = { answered:0, correct:0, ko:0, hits:0, scoreStart:S.score };
+  S.snap = { score:S.score, P:S.P, I:S.I, time:S.time, answered:S.answered, correct:S.correct, ko:S.ko, hits:S.hits };
+  S.fx = { parts:[], texts:[], rings:[], flash:0, flashC:"255,255,255", shake:0 };
+  S.scene = "game";
+  const cfg = PHASES[pi];
+  $("bTag").textContent = `Fase ${pi+1} de 3`;
+  $("bTitle").textContent = cfg.name;
+  $("bSub").textContent = cfg.sub;
+  $("bConcepts").innerHTML = cfg.concepts.map(c=>`<div class="concept"><h3>${esc(c[0])}</h3><p>${esc(c[1])}</p></div>`).join("");
+  const enemyNames = cfg.enemies.map(e=>ENEMY[e].label).join(", ");
+  $("bHint").textContent = `Riesgos en esta fase: ${enemyNames}.`;
+  show("brief");
+}
+function openHow(){ show("how"); }
+
+function triggerGate(g){
+  const pl = S.player;
+  pl.y = g.y + 8; pl.vy = 0; pl.vx = 0; keys.left = keys.right = false;
+  SFX.gate();
+  const q = S.qsets[S.phase][g.idx];
+  S.q = { gate:g, q, opts: shuffle(q.options.map((t,i)=>({t, ok:i===q.correctIndex}))), left:Q_TIME, done:false, ok:false };
+  $("qTag").textContent = `Punto de decisión ${g.idx+1}/${GATES}`;
+  $("qMeta").textContent = `Fase ${S.phase+1} · ${PHASES[S.phase].name}`;
+  $("qCase").textContent = q.context;
+  $("qAsk").textContent = q.question;
+  $("qFb").textContent = "Lee el caso y elige la mejor respuesta (teclas 1, 2, 3).";
+  $("qFb").className = "txt";
+  $("qNext").style.display = "none";
+  $("qOpts").innerHTML = S.q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${esc(o.t)}</span></button>`).join("");
+  $("qOpts").querySelectorAll(".opt").forEach(b=>b.onclick=()=>answer(+b.dataset.i));
+  show("quest");
+}
+function answer(i){
+  const Q = S.q; if(!Q || Q.done) return;
+  Q.done = true;
+  const chosen = i>=0 ? Q.opts[i] : null;
+  Q.ok = !!(chosen && chosen.ok);
+  S.answered++; S.phaseStats.answered++;
+  $("qOpts").querySelectorAll(".opt").forEach((b,k)=>{ b.disabled=true; if(Q.opts[k].ok) b.classList.add("ok"); else if(k===i) b.classList.add("bad"); });
+  const fb = $("qFb");
+  if(Q.ok){
+    S.correct++; S.phaseStats.correct++;
+    const bonus = Math.round(300 * Q.left / Q_TIME);
+    addScore(500 + bonus, false);
+    const oldP = S.P; S.P = Math.max(1, S.P-1);
+    fb.className = "txt ok";
+    fb.textContent = `✔ ${Q.q.fbOk}  (+${500+bonus} pts${oldP!==S.P?` · Probabilidad ${oldP}→${S.P}`:""})`;
+    SFX.ok();
+    burst(COLX + COLW/2, 450, "141,255,176", 60);
+  } else {
+    const oldP = S.P; S.P = Math.min(4, S.P+1);
+    fb.className = "txt bad";
+    fb.textContent = (i<0 ? "⏱ Se acabó el tiempo. " : "✖ ") + Q.q.fbBad + `  (Probabilidad ${oldP}→${S.P})`;
+    SFX.bad();
+    S.fx.flash = .5; S.fx.flashC = "255,90,90";
+  }
+  $("qNext").style.display = "inline-block";
+  $("qNext").focus();
+}
+function afterQuestion(){
+  if(!S.q || !S.q.done) return;
+  if(S.P*S.I >= 16){ gameOver(); return; }
+  if(S.q.ok) openTreatment(); else resolveGate();
+}
+function openTreatment(){
+  const exp = S.P*S.I;
+  $("tSub").textContent = `Exposición actual: P${S.P} × I${S.I} = ${exp} (${riskLevel(exp).n}). Después de evaluar, se decide cómo actuar.`;
+  $("tGrid").innerHTML = TREATMENTS.map((t,i)=>{
+    const locked = t.id==="aceptar" && exp>6;
+    return `<button class="tcard" data-id="${t.id}" style="--c:${t.color}" ${locked?"disabled":""}>
+      <div class="row"><div class="ic">${t.ic}</div><h3>${i+1}. ${t.name}</h3></div>
+      <p>${esc(t.def)}</p><p class="muted">${esc(t.ex)}</p>
+      ${locked?`<div class="lock">Bloqueado: tu exposición (${exp}) supera el apetito de riesgo (≤ 6). No se acepta un riesgo fuera del apetito.</div>`:""}
+      <div class="fx">${t.fx}</div></button>`;
+  }).join("");
+  $("tGrid").querySelectorAll(".tcard").forEach(b=>b.onclick=()=>applyTreatment(b.dataset.id));
+  show("treat");
+}
+function applyTreatment(id){
+  const tr = S.tr;
+  if(id==="aceptar" && S.P*S.I>6) return;
+  if(id==="evitar"){
+    tr.evitar = 10;
+    let n=0; for(const e of S.world.enemies){ if(e.alive && e.y > S.camY - 1500 && e.y < S.camY + H + 200){ e.alive=false; n++; poof(e,false);} }
+    S.world.bolts = [];
+    toast(`Evitar: ${n} riesgo(s) eliminados de tu ruta.`);
+  } else if(id==="reducir"){
+    const old=S.I; S.I = Math.max(1, S.I-1); tr.shield = 10;
+    toast(`Reducir: impacto ${old}→${S.I} y escudo de control activo.`);
+  } else if(id==="transferir"){
+    tr.polizas = Math.min(2, tr.polizas+1);
+    toast(`Transferir: póliza activa (${tr.polizas}). El impacto lo absorbe un tercero.`);
+  } else if(id==="aceptar"){
+    addScore(400, false); tr.mult = 1.5;
+    toast("Aceptar: riesgo asumido dentro del apetito. Puntos ×1,5.");
+  }
+  S.lastTreat = id;
+  resolveGate();
+}
+function resolveGate(){
+  const g = S.q.gate; g.opened = true; S.q = null;
+  if(S.lastTreat!=="aceptar") S.tr.mult = 1; S.lastTreat = null;
+  if(g.idx === GATES-1){ phaseComplete(); return; }
+  hideAll(); S.scene="game";
+  const pl=S.player; pl.vy = BOOST; pl.inv = Math.max(pl.inv, 1);
+  ring(COLX + pl.x + PW/2, pl.y - S.camY, "255,201,75");
+}
+function phaseComplete(){
+  const exp = S.P*S.I;
+  const bonus = (17-exp)*60;
+  addScore(bonus, false);
+  const ps = S.phaseStats;
+  const oldI = S.I; S.I = Math.max(1, S.I-1);
+  $("rTag").textContent = `Fase ${S.phase+1} superada`;
+  $("rTitle").textContent = PHASES[S.phase].name;
+  $("rSub").textContent = `Bono por exposición controlada: +${bonus} pts. ` + (oldI>S.I ? `Lección aprendida: el impacto baja de ${oldI} a ${S.I} para la siguiente fase.` : "Tu impacto ya está en el mínimo: mantén los controles.");
+  $("rStats").innerHTML = statHTML([
+    ["Aciertos de la fase", `${ps.correct}/${ps.answered}`],
+    ["Riesgos neutralizados", ps.ko],
+    ["Golpes recibidos", ps.hits],
+    ["Puntaje acumulado", pad(S.score,6)]
+  ]);
+  const lvl = riskLevel(exp);
+  $("rRead").innerHTML = `Terminaste con <b>P${S.P} × I${oldI} = ${exp}</b>, nivel <b style="color:${lvl.c}">${lvl.n}</b>. ` +
+    (exp<=4 ? "Tu exposición quedó dentro del apetito: buenas decisiones y controles efectivos." :
+     exp<=8 ? "Quedaste en zona alta: revisa las causas de los golpes y las respuestas falladas antes de seguir." :
+              "Zona extrema: en la práctica esto exige un plan de tratamiento inmediato y escalamiento.");
+  $("rNext").textContent = S.phase < 2 ? "SIGUIENTE FASE" : "VER RESULTADO FINAL";
+  S.scene = "report";
+  show("report");
+  SFX.ok();
+}
+function nextFromReport(){ if(S.phase<2) startPhase(S.phase+1); else finish(); }
+function statHTML(rows){ return rows.map(([l,v])=>`<div class="stat"><div class="l">${esc(l)}</div><div class="v">${esc(v)}</div></div>`).join(""); }
+
+function gameOver(){
+  S.scene = "over";
+  $("oStats").innerHTML = statHTML([
+    ["Fase", `${S.phase+1} · ${PHASES[S.phase].name}`.slice(0,26)],
+    ["Decisiones acertadas", `${S.phaseStats.correct}/${S.phaseStats.answered}`],
+    ["Golpes recibidos", S.phaseStats.hits],
+    ["Puntaje", pad(S.score,6)]
+  ]);
+  show("over"); SFX.bad();
+}
+function retryPhase(){
+  const s = S.snap;
+  Object.assign(S, { score:s.score, time:s.time, answered:s.answered, correct:s.correct, ko:s.ko, hits:s.hits, P:Math.min(s.P,3), I:Math.min(s.I,2) });
+  S.qsets[S.phase] = shuffle(BANK).slice(0, GATES);
+  startPhase(S.phase);
+}
+function finish(){
+  S.scene = "final";
+  const exp = S.P*S.I;
+  const acc = S.answered ? Math.round(100*S.correct/S.answered) : 0;
+  $("fStats").innerHTML = statHTML([["Puntaje final", pad(S.score,6)],["Tiempo total", fmtTime(S.time)],["Aciertos", `${S.correct}/${S.answered} (${acc}%)`],["Exposición final", `${exp} · ${riskLevel(exp).n}`]]);
+  $("fMsg").textContent = "";
+  const r = storeGet(); r.push({ user:S.user, score:S.score, time:Math.floor(S.time), acc, exp, d:Date.now() });
+  r.sort((a,b)=> b.score-a.score || a.time-b.time); storeSet(r.slice(0,50));
+  show("final");
+}
+function openRank(back){
+  const r = storeGet().slice(0,10);
+  $("rankBody").innerHTML = r.length ? r.map((x,i)=>`<tr><td>${i+1}</td><td>@${esc(String(x.user).slice(0,18))}</td><td class="c">${pad(x.score,6)}</td><td>${fmtTime(x.time)}</td><td>${x.acc}%</td><td>${x.exp}</td></tr>`).join("")
+    : `<tr><td colspan="6" style="text-align:center;color:var(--muted)">Aún no hay ascensos registrados en este navegador.</td></tr>`;
+  S.rankBack = back; show("rank");
+}
+function saveDiploma(){
+  const c = document.createElement("canvas"); c.width=1920; c.height=1080;
+  const x = c.getContext("2d");
+  x.drawImage(IMG.diploma, 0, 0, c.width, c.height);
+  const user = S.user || "PLAYER";
+  x.fillStyle="white"; x.textAlign="center"; x.textBaseline="middle";
+  x.font="700 60px Arial, sans-serif"; x.fillText(`@${user}`, c.width/2, c.height/2+350);
+  x.font="700 40px Arial, sans-serif"; x.fillText(`Cod: ${pad(S.score,5)}${pad(S.P*S.I,2)}${pad(S.time,4)}`, c.width/2, c.height/2+420);
+  try{
+    const a=document.createElement("a"); a.download=`Certificado_Riesgos_${user.replace(/[^a-z0-9_.-]/gi,"_")}.png`;
+    a.href=c.toDataURL("image/png"); document.body.appendChild(a); a.click(); a.remove();
+    $("fMsg").textContent = "✅ Certificado descargado.";
+  }catch(err){ $("fMsg").textContent = "No se pudo generar el certificado en este navegador."; console.error(err); }
+}
+
+/* ============================ PUNTOS Y EFECTOS ============================ */
+function addScore(n, useMult=true){ const v=Math.round(n*(useMult?S.tr.mult:1)); S.score+=v; return v; }
+function burst(x,y,c,n=24,pow=6){ for(let i=0;i<n;i++){ const a=Math.random()*Math.PI*2, s=rand(1,pow); S.fx.parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s-1.5,l:rand(.4,.9),m:.9,c,sz:rand(3,7)}); } }
+function ring(x,y,c){ S.fx.rings.push({x,y,r:8,max:130,l:.5,c}); }
+function floatText(t,x,y,c){ S.fx.texts.push({t,x,y,l:1.1,c}); }
+function poof(e, scoreIt=true){
+  const sx = COLX + e.x, sy = e.y - S.camY;
+  burst(sx, sy, hexRgb(ENEMY[e.type].color), 30); ring(sx, sy, "255,201,75");
+  if(scoreIt){ const v=addScore(150); S.ko++; S.phaseStats.ko++; floatText(`Control aplicado +${v}`, sx, sy-30, "#ffc94b"); SFX.ko(); }
+}
+function hexRgb(h){ const n=parseInt(h.slice(1),16); return `${n>>16&255},${n>>8&255},${n&255}`; }
+
+function damage(src){
+  const pl=S.player;
+  if(pl.inv>0) return;
+  if(S.tr.shield>0) return;
+  if(S.tr.polizas>0){
+    S.tr.polizas--; pl.inv=1.4; addScore(-50,false);
+    floatText("Póliza: impacto transferido (−50)", COLX+pl.x, pl.y-S.camY-20, "#50b3ff");
+    ring(COLX+pl.x+PW/2, pl.y-S.camY+PH/2, "80,179,255"); SFX.coin(); return;
+  }
+  const old=S.I; S.I=Math.min(4,S.I+1); S.hits++; S.phaseStats.hits++;
+  pl.inv=1.6; pl.vy=Math.min(pl.vy, -8); pl.vx = (src && src.x < pl.x ? 6 : -6);
+  S.fx.flash=.6; S.fx.flashC="255,80,80"; S.fx.shake=.35;
+  burst(COLX+pl.x+PW/2, pl.y-S.camY+PH/2, "255,96,80", 36);
+  floatText(`¡Impacto! I ${old}→${S.I}`, COLX+pl.x-30, pl.y-S.camY-20, "#ffb3a6");
+  SFX.hit();
+  toast(`Te alcanzó: ${src && src.type ? ENEMY[src.type].label : "un riesgo"}. Impacto ${old}→${S.I}.`);
+  if(S.P*S.I>=16) gameOver();
+}
+
+/* ============================ ACTUALIZACIÓN ============================ */
+function update(dt){
+  const f = dt*60;
+  const W_ = S.world, pl = S.player, tr = S.tr;
+  S.tick += dt;
+  tr.shield = Math.max(0, tr.shield-dt); tr.evitar = Math.max(0, tr.evitar-dt);
+  pl.inv = Math.max(0, pl.inv-dt); S.shootCd = Math.max(0, S.shootCd-dt);
+  if(S.ammo<3){ S.ammoT += dt; if(S.ammoT>=1.6){ S.ammo++; S.ammoT=0; } }
+
+  // movimiento horizontal
+  if(keys.left){ pl.vx -= .8*f; pl.face=-1; }
+  if(keys.right){ pl.vx += .8*f; pl.face=1; }
+  if(!keys.left && !keys.right) pl.vx *= Math.pow(.86, f);
+  pl.vx = clamp(pl.vx, -MAXVX, MAXVX);
+  pl.x += pl.vx*f;
+  if(pl.x + PW/2 < 0) pl.x += COLW; if(pl.x + PW/2 > COLW) pl.x -= COLW;
+
+  // vertical
+  const prevBottom = pl.y + PH;
+  pl.vy = Math.min(16, pl.vy + GRAV*f);
+  pl.y += pl.vy*f;
+  const bottom = pl.y + PH;
+  const cx = pl.x + PW/2;
+
+  // plataformas
+  for(const p of W_.plats){
+    if(p.type==="moving"){ p.x += p.vx*f; if(p.x<0){p.x=0;p.vx*=-1;} if(p.x+p.w>COLW){p.x=COLW-p.w;p.vx*=-1;} }
+    if(p.type==="fragile" && p.broken){ p.vy += .5*f; p.y += p.vy*f; continue; }
+    if(pl.vy>0 && prevBottom <= p.y + 2 && bottom >= p.y){
+      const inX = (cx >= p.x - 14 && cx <= p.x + p.w + 14) || (cx+COLW >= p.x-14 && cx+COLW <= p.x+p.w+14) || (cx-COLW >= p.x-14 && cx-COLW <= p.x+p.w+14);
+      if(inX){
+        pl.y = p.y - PH;
+        if(p.spring && Math.abs(wrapDx(cx, p.x+p.spring.off+9)) < 26){ pl.vy = SPRING; p.spring.t=.3; SFX.spring(); floatText("¡Impulso!", COLX+cx-30, pl.y-S.camY-10, "#26d6ff"); }
+        else { pl.vy = BOUNCE; SFX.jump(); }
+        pl.land = .15;
+        if(p.type==="fragile"){ p.broken=true; p.vy=1; burst(COLX+p.x+p.w/2, p.y-S.camY, "255,190,85", 14, 3); }
+        break;
+      }
+    }
+  }
+
+  // barrera de decisión
+  const g = nextGate();
+  if(g && pl.y <= g.y + 8 && S.scene==="game"){ triggerGate(g); return; }
+  for(const gg of W_.gates) gg.t += dt;
+
+  // fichas de evidencia
+  for(const t of W_.tokens){
+    if(t.taken) continue;
+    if(Math.abs(wrapDx(cx, t.x))<30 && Math.abs((pl.y+PH/2) - t.y)<40){ t.taken=true; const v=addScore(50); SFX.coin(); floatText(`Evidencia +${v}`, COLX+t.x-30, t.y-S.camY-20, "#ffc94b"); burst(COLX+t.x, t.y-S.camY, "255,201,75", 12, 3); }
+  }
+
+  // disparos de control
+  for(const s of W_.shots){ s.y += s.vy*f; s.l -= dt; }
+  W_.shots = W_.shots.filter(s=> s.l>0 && s.y > S.camY - 60);
+
+  // riesgos
+  const viewTop = S.camY - 300, viewBot = S.camY + H + 300;
+  for(const e of W_.enemies){
+    if(!e.alive || e.y < viewTop || e.y > viewBot) continue;
+    e.t += dt;
+    const def = ENEMY[e.type];
+    if(e.type==="humano"){ e.x += e.dir*1.1*f; if(e.x<30||e.x>COLW-30) e.dir*=-1; e.y = e.y0 + Math.sin(e.t*2)*10; }
+    else if(e.type==="proceso"){ e.x = e.x0 + Math.sin(e.t*.9)*Math.min(220, COLW/2-40); e.x = clamp(e.x, 30, COLW-30); }
+    else if(e.type==="tecnologia"){ const c=(e.t%3.0); e.vis = c < 1.8; if(c>1.8 && c<1.85){ e.x = clamp(e.x + rand(-160,160), 40, COLW-40); } }
+    else if(e.type==="externo"){ e.x += e.dir*.6*f; if(e.x<40||e.x>COLW-40) e.dir*=-1;
+      e.cd -= dt; const sy=e.y-S.camY; if(e.cd<=0 && sy>0 && sy<H-200){ e.cd=rand(2.2,3.2); W_.bolts.push({x:e.x,y:e.y+20,vy:5.2}); } }
+    else if(e.type==="ciber"){ const sy=e.y-S.camY; if(sy>-50 && sy<H){ const dx=wrapDx(cx,e.x), dy=(pl.y+PH/2)-e.y, d=Math.hypot(dx,dy)||1; e.x += dx/d*.95*f; e.y += dy/d*.7*f; if(e.x<0)e.x+=COLW; if(e.x>COLW)e.x-=COLW; } }
+    // impacto con disparo
+    for(const s of W_.shots){ if(e.alive && (e.vis||e.type!=="tecnologia") && Math.abs(wrapDx(s.x,e.x))<def.r+8 && Math.abs(s.y-e.y)<def.r+14){ e.alive=false; s.l=0; poof(e); } }
+    if(!e.alive) continue;
+    if(e.type==="tecnologia" && !e.vis) continue;
+    // contacto con jugador
+    const dx = Math.abs(wrapDx(cx, e.x)), dy = (pl.y+PH/2) - e.y;
+    if(dx < def.r + PW/2 - 6 && Math.abs(dy) < def.r + PH/2 - 8){
+      if(S.tr.shield>0){ e.alive=false; poof(e); continue; }
+      if(pl.vy>0 && dy < -def.r*.3){ e.alive=false; pl.vy=BOUNCE; poof(e); continue; }
+      damage(e); if(S.scene!=="game") return;
+    }
+  }
+  // rayos
+  for(const b of W_.bolts){ b.y += b.vy*f; if(Math.abs(wrapDx(cx,b.x))<18 && b.y>pl.y && b.y<pl.y+PH){ b.dead=true; damage({type:"externo", x:b.x}); if(S.scene!=="game") return; } }
+  W_.bolts = W_.bolts.filter(b=>!b.dead && b.y < S.camY + H + 40);
+
+  // aparición dinámica según probabilidad
+  S.spawnT -= dt;
+  if(S.spawnT<=0){
+    S.spawnT = 3.5;
+    const ng = nextGate();
+    const sy = S.camY - 80;
+    if(tr.evitar<=0 && ng && Math.random() < (S.P-1)/5 && Math.abs(sy - ng.y) > 260)
+      W_.enemies.push(makeEnemy(pick(W_.cfg.enemies), rand(50,COLW-50), sy));
+  }
+
+  // cámara
+  const target = pl.y - 470;
+  if(target < S.camY) S.camY += (target - S.camY) * Math.min(1, .18*f);
+
+  // caída
+  if(pl.y > S.camY + H + 60){
+    const safe = lastSafe();
+    pl.x = safe.x - PW/2; pl.y = safe.y - PH - 4; pl.vy = BOUNCE; pl.vx = 0;
+    S.camY = pl.y - 470;
+    for(const e of W_.enemies) if(e.alive && Math.abs(e.y-pl.y)<320) e.alive=false;
+    W_.bolts = [];
+    const before = S.I; pl.inv = 0; damage(null); if(S.scene!=="game") return; pl.inv = 2;
+    toast(S.I>before ? "Caíste del recorrido: retomas desde el último punto seguro. Impacto +1." : "Caíste, pero tu tratamiento cubrió el impacto.");
+  }
+}
+
+function updateFx(dt){
+  const fx=S.fx, f=dt*60;
+  for(const p of fx.parts){ p.x+=p.vx*f; p.y+=p.vy*f; p.vy+=.25*f; p.l-=dt; }
+  fx.parts = fx.parts.filter(p=>p.l>0);
+  for(const t of fx.texts){ t.y -= 50*dt; t.l -= dt; }
+  fx.texts = fx.texts.filter(t=>t.l>0);
+  for(const r of fx.rings){ r.r += (r.max-r.r)*Math.min(1,dt*6); r.l-=dt; }
+  fx.rings = fx.rings.filter(r=>r.l>0);
+  fx.flash = Math.max(0, fx.flash - dt*2.2); fx.shake = Math.max(0, fx.shake - dt);
+}
+
+/* ============================ DIBUJO ============================ */
+function drawBg(){
+  const cfg = PHASES[S.phase];
+  const img = IMG[cfg.bg];
+  const top = -GATES*GATE_GAP;
+  const prog = S.world ? clamp((S.camY + H) / top, 0, 1) : 0; // 0 abajo, 1 arriba
+  const ih = 1100, oy = -(ih-H) * (1-prog);
+  ctx.drawImage(img, 0, oy, W, ih);
+}
+function drawColumn(){
+  ctx.save();
+  ctx.beginPath(); ctx.rect(COLX, 0, COLW, H); ctx.clip();
+  const grd = ctx.createLinearGradient(0,0,0,H); grd.addColorStop(0,"rgba(6,16,42,.55)"); grd.addColorStop(1,"rgba(6,16,42,.30)");
+  ctx.fillStyle = grd; ctx.fillRect(COLX,0,COLW,H);
+  // rejilla tipo matriz
+  ctx.strokeStyle="rgba(255,255,255,.05)"; ctx.lineWidth=1;
+  const off = ((-S.camY)%80+80)%80;
+  for(let y=off; y<H; y+=80){ ctx.beginPath(); ctx.moveTo(COLX,y); ctx.lineTo(COLX+COLW,y); ctx.stroke(); }
+  for(let x=0; x<=COLW; x+=80){ ctx.beginPath(); ctx.moveTo(COLX+x,0); ctx.lineTo(COLX+x,H); ctx.stroke(); }
+
+  const W_=S.world;
+  for(const g of W_.gates) drawGate(g);
+  for(const p of W_.plats){ const sy=p.y-S.camY; if(sy<-40||sy>H+40) continue; drawPlat(p, COLX+p.x, sy); }
+  for(const t of W_.tokens){ if(t.taken) continue; const sy=t.y-S.camY; if(sy<-30||sy>H+30) continue; drawToken(COLX+t.x, sy + Math.sin(S.tick*3+t.ph)*5); }
+  for(const e of W_.enemies){ if(!e.alive) continue; const sy=e.y-S.camY; if(sy<-60||sy>H+60) continue; drawEnemy(ctx, e.type, COLX+e.x, sy, e.t, e.vis, true); }
+  for(const b of W_.bolts) drawBolt(COLX+b.x, b.y-S.camY);
+  for(const s of W_.shots) drawShot(COLX+s.x, s.y-S.camY);
+  drawPlayer();
+  for(const r of S.fx.rings){ ctx.strokeStyle=`rgba(${r.c},${clamp(r.l/.5,0,1)})`; ctx.lineWidth=4; ctx.beginPath(); ctx.arc(r.x,r.y,r.r,0,Math.PI*2); ctx.stroke(); }
+  for(const p of S.fx.parts){ ctx.fillStyle=`rgba(${p.c},${clamp(p.l/p.m,0,1)})`; ctx.fillRect(p.x,p.y,p.sz,p.sz); }
+  ctx.restore();
+  // marco
+  ctx.strokeStyle="rgba(255,255,255,.22)"; ctx.lineWidth=2; ctx.strokeRect(COLX+1,1,COLW-2,H-2);
+  // textos flotantes fuera del clip
+  ctx.textAlign="left"; ctx.textBaseline="top";
+  for(const t of S.fx.texts){ ctx.globalAlpha=clamp(t.l,0,1); ctx.font="700 22px 'Trebuchet MS', Arial, sans-serif"; ctx.fillStyle="#071330"; ctx.fillText(t.t,t.x+2,t.y+2); ctx.fillStyle=t.c; ctx.fillText(t.t,t.x,t.y); }
+  ctx.globalAlpha=1;
+}
+function drawPlat(p, x, y){
+  ctx.save();
+  if(p.type==="base"){
+    ctx.fillStyle="#17b54a"; ctx.fillRect(x,y,p.w,10); ctx.fillStyle="#74482e"; ctx.fillRect(x,y+10,p.w,300);
+    ctx.fillStyle="rgba(255,255,255,.85)"; ctx.font="700 16px 'Trebuchet MS', Arial, sans-serif"; ctx.textAlign="center"; ctx.fillText("BASE · RIESGO INHERENTE", x+p.w/2, y+34);
+  } else if(p.type==="safe"){
+    rr(ctx,x,y,p.w,p.h,10); ctx.fillStyle="#1b3c8f"; ctx.fill(); ctx.strokeStyle="#26d6ff"; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle="#26d6ff"; ctx.font="700 12px 'Trebuchet MS', Arial, sans-serif"; ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillText("PUNTO SEGURO", x+p.w/2, y+p.h/2+1);
+  } else if(p.type==="stable"){
+    rr(ctx,x,y,p.w,p.h,9); ctx.fillStyle="#22b84f"; ctx.fill();
+    rr(ctx,x+4,y+3,p.w-8,5,3); ctx.fillStyle="rgba(255,255,255,.45)"; ctx.fill();
+    ctx.fillStyle="#0f6b2c"; ctx.fillRect(x+6,y+p.h-4,p.w-12,3);
+    if(p.spring){ const sx=x+p.spring.off, comp=p.spring.t>0?6:0; p.spring.t=Math.max(0,p.spring.t-1/60);
+      ctx.strokeStyle="#cfd8ff"; ctx.lineWidth=3; ctx.beginPath(); for(let i=0;i<4;i++){ ctx.moveTo(sx,y-2-i*4+comp*i/4); ctx.lineTo(sx+18,y-4-i*4+comp*i/4); } ctx.stroke();
+      rr(ctx,sx-3,y-20+comp,24,6,3); ctx.fillStyle="#26d6ff"; ctx.fill(); }
+  } else if(p.type==="moving"){
+    rr(ctx,x,y,p.w,p.h,9); ctx.fillStyle="#1aa3d8"; ctx.fill();
+    rr(ctx,x+4,y+3,p.w-8,5,3); ctx.fillStyle="rgba(255,255,255,.4)"; ctx.fill();
+    ctx.fillStyle="#073a63"; ctx.font="700 14px Arial"; ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillText("◀ ▶", x+p.w/2, y+p.h/2+2);
+  } else if(p.type==="fragile"){
+    ctx.globalAlpha = p.broken ? .55 : 1;
+    rr(ctx,x,y,p.w,p.h,8); ctx.fillStyle="#e7a43d"; ctx.fill(); ctx.setLineDash([6,5]); ctx.strokeStyle="#7a4a12"; ctx.lineWidth=2; ctx.stroke(); ctx.setLineDash([]);
+    ctx.strokeStyle="#7a4a12"; ctx.beginPath(); ctx.moveTo(x+p.w*.35,y); ctx.lineTo(x+p.w*.45,y+p.h*.6); ctx.lineTo(x+p.w*.4,y+p.h); ctx.moveTo(x+p.w*.7,y); ctx.lineTo(x+p.w*.62,y+p.h); ctx.stroke();
+  }
+  ctx.restore();
+}
+function drawGate(g){
+  const y = g.y - S.camY; if(y<-80||y>H+80) return;
+  ctx.save();
+  if(g.opened){
+    ctx.strokeStyle="rgba(61,214,118,.5)"; ctx.setLineDash([10,10]); ctx.lineWidth=2;
+    ctx.beginPath(); ctx.moveTo(COLX,y); ctx.lineTo(COLX+COLW,y); ctx.stroke(); ctx.setLineDash([]);
+    ctx.fillStyle="rgba(61,214,118,.85)"; ctx.font="700 15px 'Trebuchet MS', Arial, sans-serif"; ctx.textAlign="right"; ctx.fillText(`✓ Decisión ${g.idx+1} tomada`, COLX+COLW-12, y-8);
+  } else {
+    const pulse = .6 + Math.sin(g.t*5)*.3;
+    const grd = ctx.createLinearGradient(0,y-26,0,y+26); grd.addColorStop(0,"rgba(255,201,75,0)"); grd.addColorStop(.5,`rgba(255,201,75,${.35*pulse})`); grd.addColorStop(1,"rgba(255,201,75,0)");
+    ctx.fillStyle=grd; ctx.fillRect(COLX,y-26,COLW,52);
+    ctx.fillStyle="#ffc94b"; ctx.fillRect(COLX,y-3,COLW,6);
+    for(let x=0;x<COLW;x+=40){ ctx.fillStyle="rgba(7,19,48,.55)"; ctx.fillRect(COLX+x+((g.t*40)%40),y-3,14,6); }
+    rr(ctx, COLX+COLW/2-150, y-44, 300, 34, 17); ctx.fillStyle="#071330"; ctx.fill(); ctx.strokeStyle="#ffc94b"; ctx.lineWidth=2; ctx.stroke();
+    ctx.fillStyle="#ffc94b"; ctx.font="700 17px 'Trebuchet MS', Arial, sans-serif"; ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillText(`🔒 PUNTO DE DECISIÓN ${g.idx+1}/${GATES}`, COLX+COLW/2, y-27);
+  }
+  ctx.restore();
+}
+function drawToken(x,y){
+  ctx.save(); ctx.translate(x,y);
+  ctx.beginPath(); ctx.moveTo(0,-14); ctx.lineTo(12,-9); ctx.lineTo(10,6); ctx.lineTo(0,14); ctx.lineTo(-10,6); ctx.lineTo(-12,-9); ctx.closePath();
+  ctx.fillStyle="#ffc94b"; ctx.fill(); ctx.strokeStyle="#8a5b00"; ctx.lineWidth=2; ctx.stroke();
+  ctx.strokeStyle="#071330"; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(-5,0); ctx.lineTo(-1,5); ctx.lineTo(6,-5); ctx.stroke();
+  ctx.restore();
+}
+function drawShot(x,y){
+  ctx.save(); const g=ctx.createRadialGradient(x,y,0,x,y,14); g.addColorStop(0,"rgba(255,255,255,1)"); g.addColorStop(.4,"rgba(49,214,36,.9)"); g.addColorStop(1,"rgba(49,214,36,0)");
+  ctx.fillStyle=g; ctx.beginPath(); ctx.arc(x,y,14,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle="#fff"; ctx.font="700 12px Arial"; ctx.textAlign="center"; ctx.textBaseline="middle"; ctx.fillText("✓",x,y+1); ctx.restore();
+}
+function drawBolt(x,y){
+  ctx.save(); ctx.strokeStyle="#fff36b"; ctx.lineWidth=4; ctx.shadowColor="#fff36b"; ctx.shadowBlur=10;
+  ctx.beginPath(); ctx.moveTo(x,y-18); ctx.lineTo(x-7,y-2); ctx.lineTo(x+4,y-2); ctx.lineTo(x-3,y+16); ctx.stroke(); ctx.restore();
+}
+function drawEnemy(c, type, x, y, t, vis=true, label=false){
+  const d = ENEMY[type];
+  c.save(); c.translate(x,y);
+  if(type==="humano"){
+    c.fillStyle=d.color; c.beginPath(); c.arc(0,0,22,0,Math.PI*2); c.fill();
+    c.fillStyle="#7a3f00"; c.fillRect(-22,-8,44,4);
+    c.fillStyle="#fff"; c.beginPath(); c.arc(-8,2,6,0,7); c.arc(8,2,6,0,7); c.fill();
+    c.fillStyle="#111"; c.beginPath(); c.arc(-7,3,3,0,7); c.arc(9,3,3,0,7); c.fill();
+    c.strokeStyle="#111"; c.lineWidth=2.5; c.beginPath(); c.arc(0,15,6,Math.PI*1.1,Math.PI*1.9); c.stroke();
+    c.fillStyle="#7fd6ff"; c.beginPath(); c.moveTo(17,-14); c.quadraticCurveTo(22,-6,17,-4); c.quadraticCurveTo(12,-6,17,-14); c.fill();
+    c.fillStyle="#ffde59"; rr(c,-16,-26,32,10,5); c.fill();
+  } else if(type==="proceso"){
+    c.rotate(t*2.2); c.fillStyle=d.color;
+    for(let i=0;i<8;i++){ c.rotate(Math.PI/4); c.fillRect(-5,-27,10,10); }
+    c.beginPath(); c.arc(0,0,19,0,7); c.fill();
+    c.rotate(-t*2.2); c.fillStyle="#2b1260"; c.beginPath(); c.arc(0,0,9,0,7); c.fill();
+    c.fillStyle="#fff"; c.beginPath(); c.arc(-3,-2,3,0,7); c.arc(4,-2,3,0,7); c.fill();
+  } else if(type==="tecnologia"){
+    if(!vis){ c.globalAlpha=.35; c.setLineDash([4,4]); c.strokeStyle=d.color; c.lineWidth=2; rr(c,-24,-20,48,34,6); c.stroke(); c.setLineDash([]); }
+    else {
+      const j = Math.sin(t*40)*1.5;
+      rr(c,-24+j,-20,48,34,6); c.fillStyle="#173a6e"; c.fill(); c.strokeStyle=d.color; c.lineWidth=3; c.stroke();
+      c.fillStyle=d.color; for(let i=0;i<4;i++){ c.fillRect(-20+((t*90+i*23)%40), -16+i*7, 14, 3); }
+      c.fillStyle="#ff5f5f"; c.font="700 16px Arial"; c.textAlign="center"; c.fillText("ERR", 0, 6);
+      c.fillStyle=d.color; c.fillRect(-6,14,12,6); c.fillRect(-14,19,28,3);
+    }
+  } else if(type==="externo"){
+    c.fillStyle="#5c6680"; c.beginPath(); c.arc(-14,2,14,0,7); c.arc(4,-6,18,0,7); c.arc(18,4,12,0,7); c.rect(-14,2,32,14); c.fill();
+    c.fillStyle="#8792ad"; c.beginPath(); c.arc(2,-10,10,0,7); c.fill();
+    c.fillStyle="#fff36b"; c.beginPath(); c.moveTo(2,4); c.lineTo(-6,18); c.lineTo(1,18); c.lineTo(-3,30); c.lineTo(9,13); c.lineTo(2,13); c.closePath(); c.fill();
+    c.fillStyle="#111"; c.fillRect(-10,-2,5,3); c.fillRect(6,-2,5,3);
+  } else if(type==="ciber"){
+    c.rotate(t*1.2); c.strokeStyle=d.color; c.lineWidth=3;
+    for(let i=0;i<10;i++){ c.rotate(Math.PI/5); c.beginPath(); c.moveTo(0,14); c.lineTo(0,25); c.stroke(); c.beginPath(); c.arc(0,26,3,0,7); c.fillStyle=d.color; c.fill(); }
+    c.rotate(-t*1.2); c.fillStyle="#a01d43"; c.beginPath(); c.arc(0,0,16,0,7); c.fill();
+    c.fillStyle="#fff"; c.font="700 15px Arial"; c.textAlign="center"; c.textBaseline="middle"; c.fillText("☠",0,1);
+  }
+  c.restore();
+  if(label && (vis || type!=="tecnologia")){
+    c.save(); c.font="700 12px 'Trebuchet MS', Arial, sans-serif"; const tw=c.measureText(d.label).width+14;
+    rr(c, x-tw/2, y+d.r+8, tw, 18, 9); c.fillStyle="rgba(7,19,48,.82)"; c.fill();
+    c.fillStyle=d.color; c.textAlign="center"; c.textBaseline="middle"; c.fillText(d.label, x, y+d.r+17.5); c.restore();
+  }
+}
+function drawSpriteFrame(c, fi, cx, baseY, h){
+  const [sx,sy,sw,sh] = FRAMES[fi];
+  const s = h/290, dw = sw*s, dh = sh*s;
+  c.drawImage(IMG.sprite, sx, sy, sw, sh, Math.round(cx-dw/2), Math.round(baseY-dh), dw, dh);
+}
+function drawPlayer(){
+  const pl=S.player;
+  if(pl.inv>0 && Math.floor(pl.inv*12)%2===0) return;
+  const fi = pl.vy < -2 ? (pl.face>0?3:4) : (pl.face>0?2:1);
+  const sy = pl.y - S.camY + PH + 6;
+  for(const off of [0,-COLW,COLW]){
+    const cx = COLX + pl.x + PW/2 + off;
+    if(cx < COLX-60 || cx > COLX+COLW+60) continue;
+    if(S.tr.shield>0){ ctx.save(); const a=.35+Math.sin(S.tick*10)*.15; ctx.strokeStyle=`rgba(61,214,118,${a+.3})`; ctx.fillStyle=`rgba(61,214,118,${a*.4})`; ctx.lineWidth=3; ctx.beginPath(); ctx.arc(cx, sy-40, 50, 0, Math.PI*2); ctx.fill(); ctx.stroke(); ctx.restore(); }
+    drawSpriteFrame(ctx, fi, cx, sy, 82);
+  }
+}
+
+/* ---------- HUD ---------- */
+function panel(x,y,w,h){ rr(ctx,x,y,w,h,22); ctx.fillStyle="rgba(7,19,48,.86)"; ctx.fill(); ctx.strokeStyle="rgba(255,255,255,.16)"; ctx.lineWidth=2; ctx.stroke(); }
+function txt(t,x,y,font,color,align="left"){ ctx.font=font; ctx.fillStyle=color; ctx.textAlign=align; ctx.textBaseline="top"; ctx.fillText(t,x,y); }
+function drawHud(){
+  const cfg = PHASES[S.phase];
+  // ---- panel izquierdo
+  panel(22,22,356,856);
+  txt("adn", 44, 36, "700 46px 'Trebuchet MS', Arial, sans-serif", "#f8fbff"); txt("riesgos", 132, 54, "700 24px 'Trebuchet MS', Arial, sans-serif", "#26d6ff");
+  txt(`@${S.user}`, 44, 92, "18px 'Trebuchet MS', Arial, sans-serif", "#a9b7dd");
+  rr(ctx,44,124,312,56,14); ctx.fillStyle="#12265c"; ctx.fill();
+  txt(`FASE ${S.phase+1}/3`, 60, 132, "700 14px 'Trebuchet MS', Arial, sans-serif", "#ffc94b"); txt(cfg.name, 60, 150, "700 19px 'Trebuchet MS', Arial, sans-serif", "#f8fbff");
+  const st=[["PUNTAJE",pad(S.score,6)],["TIEMPO",fmtTime(S.time)]];
+  st.forEach(([l,v],i)=>{ const x=44+i*160; rr(ctx,x,192,152,62,14); ctx.fillStyle="#12265c"; ctx.fill(); txt(l,x+14,200,"14px 'Trebuchet MS', Arial, sans-serif","#a9b7dd"); txt(v,x+14,218,"700 26px 'Trebuchet MS', Arial, sans-serif","#26d6ff"); });
+  // matriz
+  txt("TU MATRIZ DE RIESGO", 44, 274, "700 16px 'Trebuchet MS', Arial, sans-serif", "#f8fbff");
+  const mx=86, my=304, cs=64;
+  for(let p=4;p>=1;p--) for(let i=1;i<=4;i++){
+    const x=mx+(i-1)*cs, y=my+(4-p)*cs, e=p*i, lv=riskLevel(e);
+    rr(ctx,x+2,y+2,cs-4,cs-4,8); ctx.fillStyle=lv.c; ctx.globalAlpha=(p===S.P&&i===S.I)?1:.38; ctx.fill(); ctx.globalAlpha=1;
+    txt(String(e), x+cs/2, y+cs/2-9, "700 17px 'Trebuchet MS', Arial, sans-serif", "rgba(7,19,48,.85)", "center");
+  }
+  // marcador
+  const ax = mx+(S.I-1)*cs+cs/2, ay = my+(4-S.P)*cs+cs/2, pr = 30+Math.sin(S.tick*5)*3;
+  ctx.strokeStyle="#fff"; ctx.lineWidth=4; ctx.beginPath(); ctx.arc(ax,ay,pr,0,Math.PI*2); ctx.stroke();
+  // apetito
+  ctx.strokeStyle="#26d6ff"; ctx.lineWidth=2; ctx.setLineDash([5,4]); ctx.beginPath();
+  ctx.moveTo(mx, my+2*cs); ctx.lineTo(mx+cs*3, my+2*cs); ctx.lineTo(mx+cs*3, my+3*cs); ctx.lineTo(mx+4*cs, my+3*cs); ctx.stroke(); ctx.setLineDash([]);
+  ctx.save(); ctx.translate(58, my+2*cs); ctx.rotate(-Math.PI/2); txt("PROBABILIDAD", 0, -8, "700 13px 'Trebuchet MS', Arial, sans-serif", "#a9b7dd", "center"); ctx.restore();
+  for(let p=1;p<=4;p++) txt(String(p), mx-12, my+(4-p)*cs+cs/2-8, "13px 'Trebuchet MS', Arial, sans-serif", "#a9b7dd", "center");
+  for(let i=1;i<=4;i++) txt(String(i), mx+(i-1)*cs+cs/2, my+4*cs+4, "13px 'Trebuchet MS', Arial, sans-serif", "#a9b7dd", "center");
+  txt("IMPACTO", mx+2*cs, my+4*cs+22, "700 13px 'Trebuchet MS', Arial, sans-serif", "#a9b7dd", "center");
+  const e=S.P*S.I, lv=riskLevel(e);
+  rr(ctx,44,618,312,74,14); ctx.fillStyle="#12265c"; ctx.fill();
+  txt("EXPOSICIÓN  P × I", 60, 628, "14px 'Trebuchet MS', Arial, sans-serif", "#a9b7dd");
+  txt(`${S.P} × ${S.I} = ${e}`, 60, 648, "700 30px 'Trebuchet MS', Arial, sans-serif", "#f8fbff");
+  rr(ctx,236,650,104,28,14); ctx.fillStyle=lv.c; ctx.fill(); txt(lv.n, 288, 656, "700 14px 'Trebuchet MS', Arial, sans-serif", "#071330", "center");
+  txt("--- Apetito de riesgo: P × I ≤ 6", 44, 706, "15px 'Trebuchet MS', Arial, sans-serif", "#26d6ff");
+  txt("Fallar una decisión sube P.", 44, 736, "16px 'Trebuchet MS', Arial, sans-serif", "#dbe4ff");
+  txt("Recibir un golpe o caer sube I.", 44, 758, "16px 'Trebuchet MS', Arial, sans-serif", "#dbe4ff");
+  txt("En 16 el riesgo se materializa.", 44, 780, "700 16px 'Trebuchet MS', Arial, sans-serif", "#ffb3a6");
+  txt("P / Esc: pausa", 44, 828, "14px 'Trebuchet MS', Arial, sans-serif", "#a9b7dd");
+
+  // ---- panel derecho
+  panel(1062,22,356,856);
+  txt("RUTA DE LA FASE", 1084, 40, "700 16px 'Trebuchet MS', Arial, sans-serif", "#f8fbff");
+  const bx=1110, by0=820, by1=90;
+  ctx.fillStyle="#12265c"; rr(ctx,bx-6,by1,12,by0-by1,6); ctx.fill();
+  const top = -GATES*GATE_GAP;
+  const prog = clamp(-(S.player.y)/(-top), 0, 1);
+  const yy = by0 - (by0-by1)*prog;
+  ctx.fillStyle="#26d6ff"; rr(ctx,bx-6,yy,12,by0-yy,6); ctx.fill();
+  S.world.gates.forEach(g=>{ const gy = by0 - (by0-by1)*((g.idx+1)/GATES);
+    ctx.beginPath(); ctx.arc(bx, gy, 11, 0, Math.PI*2); ctx.fillStyle = g.opened ? "#3dd676" : "#ffc94b"; ctx.fill();
+    txt(g.opened ? "✓" : String(g.idx+1), bx, gy-8, "700 13px 'Trebuchet MS', Arial, sans-serif", "#071330", "center"); });
+  drawSpriteFrame(ctx, 3, bx+30, yy+16, 34);
+  // tratamientos
+  let ty = 96;
+  const tx = 1170;
+  txt("TRATAMIENTOS ACTIVOS", tx, ty, "700 15px 'Trebuchet MS', Arial, sans-serif", "#f8fbff"); ty += 28;
+  const act = [];
+  if(S.tr.shield>0) act.push(["Reducir · escudo", `${Math.ceil(S.tr.shield)} s`, "#3dd676"]);
+  if(S.tr.evitar>0) act.push(["Evitar · sin apariciones", `${Math.ceil(S.tr.evitar)} s`, "#b98bff"]);
+  if(S.tr.polizas>0) act.push(["Transferir · pólizas", `×${S.tr.polizas}`, "#50b3ff"]);
+  if(S.tr.mult>1) act.push(["Aceptar · puntos", "×1,5", "#ffc94b"]);
+  if(!act.length) { txt("Ninguno. Acierta una decisión", tx, ty, "15px 'Trebuchet MS', Arial, sans-serif", "#a9b7dd"); txt("para elegir un tratamiento.", tx, ty+18, "15px 'Trebuchet MS', Arial, sans-serif", "#a9b7dd"); ty+=44; }
+  act.forEach(([a,b,c])=>{ rr(ctx,tx,ty,226,40,12); ctx.fillStyle="#12265c"; ctx.fill(); ctx.fillStyle=c; ctx.fillRect(tx,ty+8,4,24); txt(a, tx+12, ty+11, "14px 'Trebuchet MS', Arial, sans-serif", "#f8fbff"); txt(b, tx+216, ty+10, "700 16px 'Trebuchet MS', Arial, sans-serif", c, "right"); ty+=48; });
+  ty = Math.max(ty, 330);
+  txt("DESEMPEÑO", tx, ty, "700 15px 'Trebuchet MS', Arial, sans-serif", "#f8fbff"); ty+=26;
+  [["Decisiones",`${S.correct}/${S.answered}`],["Riesgos neutralizados",S.ko],["Golpes recibidos",S.hits]].forEach(([a,b])=>{ txt(a,tx,ty,"15px 'Trebuchet MS', Arial, sans-serif","#a9b7dd"); txt(String(b),tx+226,ty,"700 16px 'Trebuchet MS', Arial, sans-serif","#26d6ff","right"); ty+=24; });
+  ty += 18;
+  txt("RIESGOS DE ESTA FASE", tx, ty, "700 15px 'Trebuchet MS', Arial, sans-serif", "#f8fbff"); ty+=24;
+  cfg.enemies.forEach(k=>{ ctx.save(); ctx.translate(tx+14, ty+14); ctx.scale(.55,.55); drawEnemy(ctx,k,0,0,S.tick,true,false); ctx.restore();
+    txt(ENEMY[k].label, tx+38, ty+2, "700 14px 'Trebuchet MS', Arial, sans-serif", ENEMY[k].color); txt(ENEMY[k].factor, tx+38, ty+19, "12px 'Trebuchet MS', Arial, sans-serif", "#a9b7dd"); ty+=42; });
+  txt("CONTROLES DISPONIBLES", 1084, 770, "700 15px 'Trebuchet MS', Arial, sans-serif", "#f8fbff");
+  for(let i=0;i<3;i++){ const x=1096+i*40, y=812; ctx.beginPath(); ctx.arc(x,y,14,0,Math.PI*2); ctx.fillStyle = i<S.ammo ? "#31d624" : "#12265c"; ctx.fill(); ctx.strokeStyle="rgba(255,255,255,.3)"; ctx.lineWidth=2; ctx.stroke();
+    if(i===S.ammo && S.ammo<3){ ctx.beginPath(); ctx.moveTo(x,y); ctx.arc(x,y,14,-Math.PI/2,-Math.PI/2+Math.PI*2*(S.ammoT/1.6)); ctx.closePath(); ctx.fillStyle="rgba(49,214,36,.45)"; ctx.fill(); }
+    if(i<S.ammo) txt("✓", x, y-9, "700 15px Arial", "#071330", "center"); }
+  txt("Se recargan solos", 1222, 803, "14px 'Trebuchet MS', Arial, sans-serif", "#a9b7dd");
+  txt("← → mover · Espacio: control", 1084, 846, "14px 'Trebuchet MS', Arial, sans-serif", "#a9b7dd");
+}
+
+function draw(){
+  ctx.save();
+  if(S.fx.shake>0){ const m=S.fx.shake*30; ctx.translate(rand(-m,m), rand(-m,m)); }
+  if(S.world && S.scene!=="menu"){
+    drawBg(); drawColumn(); drawHud();
+  } else {
+    ctx.drawImage(IMG.amanecer, 0, 0, W, H);
+  }
+  ctx.restore();
+  if(S.fx.flash>0){ ctx.fillStyle=`rgba(${S.fx.flashC},${S.fx.flash*.45})`; ctx.fillRect(0,0,W,H); }
+}
+
+/* ============================ LOOP ============================ */
+let last = performance.now(), acc = 0;
+function loop(now){
+  const dt = Math.min(.05, (now-last)/1000); last = now;
+  if(S.scene==="game" && S.modal===null){
+    acc += dt;
+    while(acc >= 1/60){ update(1/60); acc -= 1/60; if(S.scene!=="game"||S.modal!==null){ acc=0; break; } }
+    S.time += dt;
+  } else acc = 0;
+  if(S.modal==="quest" && S.q && !S.q.done){
+    S.q.left -= dt; S.time += dt;
+    $("qBar").style.width = `${clamp(S.q.left/Q_TIME,0,1)*100}%`;
+    $("qTime").textContent = Math.max(0, Math.ceil(S.q.left));
+    if(S.q.left<=0) answer(-1);
+  }
+  updateFx(dt);
+  draw();
+  requestAnimationFrame(loop);
+}
+
+/* ============================ ENTRADA ============================ */
+function fire(){
+  if(S.scene!=="game" || S.modal!==null || S.shootCd>0) return;
+  if(S.ammo<=0){ S.shootCd=.25; beep(140,.05,"square",.02); return; }
+  S.ammo--; S.shootCd = .28; const pl=S.player;
+  S.world.shots.push({ x: pl.x+PW/2, y: pl.y-6, vy:-14, l:1.4 }); SFX.shot();
+}
+function pauseGame(){ if(S.scene==="game" && S.modal===null){ keys.left=keys.right=false; show("pause"); } }
+window.addEventListener("keydown", (e)=>{
+  const k = e.key;
+  if(document.activeElement === $("user")){ if(k==="Enter") $("bPlay").click(); return; }
+  if(S.modal==="quest"){
+    if(S.q && !S.q.done && ["1","2","3","4"].includes(k)){ const i=+k-1; if(i<S.q.opts.length) answer(i); }
+    else if(S.q && S.q.done && (k==="Enter"||k===" ")){ e.preventDefault(); afterQuestion(); }
+    return;
+  }
+  if(S.modal==="treat"){ const i=+k-1; if(i>=0 && i<4){ const b=$("tGrid").children[i]; if(b && !b.disabled) b.click(); } return; }
+  if(S.modal==="pause" && (k==="p"||k==="P"||k==="Escape")){ hideAll(); return; }
+  if(S.modal){ if(k==="Enter"){ const prim = document.querySelector(`#${S.modal} .btn.primary`); if(prim){ e.preventDefault(); prim.click(); } } return; }
+  if(k==="ArrowLeft"||k==="a"||k==="A") keys.left=true;
+  if(k==="ArrowRight"||k==="d"||k==="D") keys.right=true;
+  if(k===" "||k==="ArrowUp"||k==="w"||k==="W"){ e.preventDefault(); fire(); }
+  if(k==="p"||k==="P"||k==="Escape") pauseGame();
+});
+window.addEventListener("keyup", (e)=>{
+  const k=e.key;
+  if(k==="ArrowLeft"||k==="a"||k==="A") keys.left=false;
+  if(k==="ArrowRight"||k==="d"||k==="D") keys.right=false;
+});
+document.addEventListener("visibilitychange", ()=>{ if(document.hidden) pauseGame(); });
+function holdBtn(el, on, off){ el.addEventListener("pointerdown",ev=>{ev.preventDefault(); on();}); ["pointerup","pointerleave","pointercancel"].forEach(t=>el.addEventListener(t,off)); }
+holdBtn($("tL"), ()=>keys.left=true, ()=>keys.left=false);
+holdBtn($("tR"), ()=>keys.right=true, ()=>keys.right=false);
+holdBtn($("tF"), fire, ()=>{});
+if(matchMedia("(pointer:coarse)").matches) $("touch").style.display="block";
+
+/* botones */
+$("bPlay").onclick = ()=>{
+  const u = $("user").value.trim().toLowerCase().replace(/@.*$/,"");
+  if(!/^[a-z0-9._-]{4,20}$/.test(u)){ $("userErr").textContent = "Escribe tu usuario de la organización (mín. 4 caracteres, sin espacios). Ej: nvargas"; $("user").focus(); return; }
+  $("userErr").textContent = ""; S.user = u; $("user").blur(); startCampaign();
+};
+$("user").addEventListener("input", ()=> $("userErr").textContent="");
+$("bHow").onclick = ()=>{ S.afterHow = ()=>show("menu"); openHow(); };
+$("bHowOk").onclick = ()=>{ const f=S.afterHow; S.afterHow=null; if(f) f(); else show("menu"); };
+$("bRank").onclick = ()=> openRank("menu");
+$("rankOk").onclick = ()=> show(S.rankBack || "menu");
+$("bGo").onclick = ()=>{ hideAll(); cv.focus(); };
+$("qNext").onclick = afterQuestion;
+$("rNext").onclick = nextFromReport;
+$("pGo").onclick = ()=>{ hideAll(); cv.focus(); };
+$("pMenu").onclick = toMenu;
+$("oRetry").onclick = retryPhase;
+$("oMenu").onclick = toMenu;
+$("fDip").onclick = saveDiploma;
+$("fRate").onclick = ()=> window.open(SURVEY_URL, "_blank", "noopener");
+$("fRank").onclick = ()=> openRank("final");
+$("fAgain").onclick = ()=> startCampaign();
+$("mute").onclick = ()=>{ soundOn=!soundOn; $("mute").textContent = `♪ Sonido: ${soundOn?"sí":"no"}`; };
+window.__adnApi = { startPhase };
+function toMenu(){ S.scene="menu"; S.world=null; show("menu"); }
+
+/* escalado del escenario */
+function fit(){ const s=Math.min(innerWidth/W, innerHeight/H); const st=$("stage"); st.style.transform=`scale(${s})`; st.style.left=`${(innerWidth-W*s)/2}px`; st.style.top=`${(innerHeight-H*s)/2}px`; }
+addEventListener("resize", fit); fit();
+
+/* leyenda del instructivo */
+function buildLegend(){
+  const items = [
+    ...Object.keys(ENEMY).map(k=>({k, kind:"e", t:ENEMY[k].label, d:ENEMY[k].factor})),
+    {kind:"p", type:"stable", t:"Control efectivo", d:"Plataforma estable"},
+    {kind:"p", type:"moving", t:"Proceso en curso", d:"Se desplaza"},
+    {kind:"p", type:"fragile", t:"Control débil", d:"Se rompe al primer salto"},
+    {kind:"s", t:"Impulso", d:"Resorte: salto alto"},
+    {kind:"t", t:"Evidencia de control", d:"+50 puntos"}
+  ];
+  $("legend").innerHTML = items.map((_,i)=>`<div class="lg"><canvas width="90" height="62" id="lg${i}" style="width:90px;height:62px"></canvas><b>${esc(_.t)}</b><span>${esc(_.d)}</span></div>`).join("");
+  items.forEach((it,i)=>{
+    const c=$("lg"+i).getContext("2d");
+    if(it.kind==="e") drawEnemy(c, it.k, 45, 30, 0.6, true, false);
+    else if(it.kind==="t") withCtx(c, ()=>drawToken(45,30));
+    else withCtx(c, ()=>drawPlat({ x:0,y:0,w:80,h:18,type:it.type||"stable", spring: it.kind==="s"?{off:31,t:0}:null }, 5, it.kind==="s"?40:24));
+  });
+}
+function withCtx(c, fn){ const saved = ctx; ctx = c; try{ fn(); } finally { ctx = saved; } }
+
+/* ============================ ARRANQUE ============================ */
+async function boot(){
+  const bank = Array.isArray(window.GOFSI_QUESTION_BANK) ? window.GOFSI_QUESTION_BANK : [];
+  BANK = bank.map(normalize).filter(Boolean);
+  if(BANK.length < GATES) throw new Error("El banco de preguntas no cargó (assets/questions.js).");
+  const [amanecer, atardecer, noche, diploma, gofsi, sprite] = await Promise.all([
+    loadImage(ASSETS.amanecer), loadImage(ASSETS.atardecer), loadImage(ASSETS.noche),
+    loadImage(window.GOFSI_DIPLOMA_DATA_URL || ASSETS.diploma), loadImage(ASSETS.gofsi), loadImage(ASSETS.sprite)
+  ]);
+  IMG = { amanecer, atardecer, noche, diploma, gofsi, sprite };
+  $("heroImg").src = gofsi.src;
+  buildLegend();
+  $("loading").remove();
+  requestAnimationFrame(loop);
+}
+boot().catch(err=>{ $("loading").textContent = "Error de carga: " + err.message; console.error(err); });
+})();
+</script>
+</body>
+</html>
