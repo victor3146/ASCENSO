@@ -917,7 +917,8 @@ function submitResult(p){
     v:1, id: Date.now().toString(36) + Math.random().toString(36).slice(2,8),
     nombre:p.name, ciudad:p.sede, personaje:p.char || "fabi",
     basico:p.levels[0].best, medio:p.levels[1].best, avanzado:p.levels[2].best,
-    total:totalScore(p), tiempo:totalTime(p), fecha:new Date().toISOString()
+    total:totalScore(p), tiempo:totalTime(p), fecha:new Date().toISOString(),
+    consentimiento:p.consent || ""
   });
   queueSave(QUEUE);
   flushQueue();

@@ -30,13 +30,14 @@ var ENCABEZADOS = [
   'Veces completado',
   'Primera finalizaci\u00F3n',
   '\u00DAltima actualizaci\u00F3n',
-  '\u00DAltimo env\u00EDo'
+  '\u00DAltimo env\u00EDo',
+  'Acept\u00F3 pol\u00EDtica'
 ];
 
 var COL = {
   clave: 1, nombre: 2, ciudad: 3, personaje: 4, total: 5,
   basico: 6, medio: 7, avanzado: 8, tiempo: 9, veces: 10,
-  primera: 11, ultima: 12, envio: 13
+  primera: 11, ultima: 12, envio: 13, politica: 14
 };
 
 var CIUDADES = [
@@ -94,6 +95,7 @@ function guardar(datos) {
   var ahora = new Date();
   var fila = buscarFila(hoja, clave);
   var tiempo = minutos(datos.tiempo);
+  var politica = fechaPolitica(datos.consentimiento);
 
   if (!fila) {
     if (hoja.getLastRow() > MAX_FILAS) {
@@ -102,7 +104,8 @@ function guardar(datos) {
     hoja.appendRow([
       clave, nombre, datos.ciudad, datos.personaje,
       datos.total, datos.basico, datos.medio,
-      datos.avanzado, tiempo, 1, ahora, ahora, datos.id
+      datos.avanzado, tiempo, 1, ahora, ahora, datos.id,
+      politica
     ]);
     return responder({ ok: true, nuevo: true });
   }
@@ -126,6 +129,10 @@ function guardar(datos) {
   hoja.getRange(fila, COL.veces).setValue(veces);
   hoja.getRange(fila, COL.ultima, 1, 2)
     .setValues([[ahora, datos.id]]);
+  // Se conserva la primera fecha de aceptacion registrada.
+  if (politica && !actual[COL.politica - 1]) {
+    hoja.getRange(fila, COL.politica).setValue(politica);
+  }
   return responder({ ok: true, mejora: mejora });
 }
 
@@ -174,7 +181,20 @@ function validar(d) {
   if (!idValido(d.id)) {
     return 'Env\u00EDo sin identificador';
   }
+  // Fecha de aceptacion de la politica de datos. Es opcional para
+  // no perder envios guardados antes de esta version del juego.
+  var c = d.consentimiento;
+  if (c !== undefined && c !== '' && !fechaPolitica(c)) {
+    return 'Fecha de aceptaci\u00F3n inv\u00E1lida';
+  }
   return '';
+}
+
+/** Convierte la fecha de aceptacion en fecha de la hoja. */
+function fechaPolitica(texto) {
+  if (typeof texto !== 'string' || texto.length > 40) return '';
+  var f = new Date(texto);
+  return isNaN(f.getTime()) ? '' : f;
 }
 
 function idValido(id) {
@@ -234,7 +254,31 @@ function obtenerHoja() {
     hoja.hideColumns(COL.envio);
     hoja.getRange('K:L').setNumberFormat('yyyy-mm-dd hh:mm');
   }
+  asegurarEncabezados(hoja);
   return hoja;
+}
+
+/**
+ * Agrega al final las columnas nuevas que falten (por ejemplo
+ * "Acepto politica") sin mover ni borrar los datos existentes.
+ */
+function asegurarEncabezados(hoja) {
+  var n = ENCABEZADOS.length;
+  var fila1 = hoja.getRange(1, 1, 1, n).getValues()[0];
+  if (fila1[n - 1] === ENCABEZADOS[n - 1]) return;
+  for (var i = 0; i < n; i++) {
+    if (fila1[i] === '' || fila1[i] === null) {
+      hoja.getRange(1, i + 1).setValue(ENCABEZADOS[i])
+        .setFontWeight('bold')
+        .setBackground('#8C1636')
+        .setFontColor('#FFFFFF');
+    }
+  }
+  var filas = hoja.getMaxRows() - 1;
+  if (filas > 0) {
+    hoja.getRange(2, COL.politica, filas, 1)
+      .setNumberFormat('yyyy-mm-dd hh:mm');
+  }
 }
 
 function buscarFila(hoja, clave) {

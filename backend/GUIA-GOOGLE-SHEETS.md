@@ -14,6 +14,7 @@ Cada asociado ocupa **una fila**, identificada por nombre y ciudad. Si vuelve a 
 | Tiempo total (min) | Suma del tiempo de los mejores intentos |
 | Veces completado | Cuántas veces terminó los tres niveles |
 | Primera finalización / Última actualización | Fechas |
+| Aceptó política | Fecha en que el asociado aceptó la política de tratamiento de datos (vacía en registros anteriores a esta función) |
 
 Las columnas "Clave" y "Último envío" quedan ocultas; el script las usa para evitar duplicados.
 
