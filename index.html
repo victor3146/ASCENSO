@@ -153,6 +153,16 @@
   #loading{position:absolute;inset:0;display:grid;place-items:center;background:var(--gris);color:var(--vino);font:800 26px var(--display);z-index:20;text-align:center;padding:20px}
   #mute{position:absolute;z-index:4;width:44px;height:44px;border-radius:50%;border:2px solid var(--vino);background:var(--blanco);color:var(--vino);font:800 20px var(--display);cursor:pointer;display:grid;place-items:center;padding:0}
   #mute[hidden]{display:none}
+  /* TRATAMIENTO DE DATOS: botones fijos arriba y texto desplazable */
+  #pvCard{width:1000px;display:flex;flex-direction:column;max-height:calc(var(--sh, 900px) - 48px);padding:0;overflow:hidden}
+  .pvHead{display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap;padding:24px 32px 18px;border-bottom:1px solid var(--linea);background:var(--blanco)}
+  .pvHead h2{font-size:28px;color:var(--vino)}
+  .pvHead .row{margin-left:auto}
+  .pvBody{overflow-y:auto;padding:20px 32px 28px;min-height:0;font-size:16.5px;line-height:1.55}
+  .pvBody h3{font-size:17px;color:var(--vino);margin:16px 0 4px}
+  .pvBody p{margin:0}
+  .pvBody a{color:var(--vino);font-weight:700}
+  .pvBody .pvNote{margin-top:18px;padding:12px 16px;border-radius:12px;background:var(--gris);color:var(--tinta)}
   #mute.off{color:var(--palo);border-color:var(--palo);text-decoration:line-through}
 
   /* ====== VERTICAL (celular) ====== */
@@ -209,6 +219,12 @@
   .port .chars{gap:8px} .port .char{flex:1;padding:6px 10px 6px 6px} .port .char b{font-size:19px}
   .port .char canvas{width:40px;height:54px}
   .port .msg{font-size:14px}
+  .port .pvHead{padding:18px 18px 14px;gap:12px}
+  .port .pvHead h2{font-size:21px}
+  .port .pvHead .row{width:100%}
+  .port .pvHead .row .btn{flex:1}
+  .port .pvBody{padding:14px 18px 22px;font-size:14.5px}
+  .port .pvBody h3{font-size:15px}
   .port #touch{height:150px}
   .port #touch .tb{width:110px;height:104px;bottom:16px;font-size:34px;border-radius:22px}
   .port #touch #tL{left:14px} .port #touch #tR{right:14px} .port #touch #tF{width:150px;font-size:18px}
@@ -242,6 +258,7 @@
       <button class="btn primary" id="bPlay">INGRESAR</button>
       <button class="btn" id="bHow">CÓMO SE JUEGA</button>
       <button class="btn ghost" id="bRank">Ranking</button>
+      <button class="btn ghost" id="bPriv">Tratamiento de datos</button>
      </div>
     </div>
     <div class="hero"><img id="heroImg" alt="FABI"></div>
@@ -273,6 +290,32 @@
       <div class="pl" id="pickLbl">Elige tu personaje</div>
       <div class="chars" id="chars"></div>
      </div>
+    </div>
+   </div>
+  </div>
+
+  <!-- TRATAMIENTO DE DATOS -->
+  <div class="ov" id="privacy">
+   <div class="card" id="pvCard" role="dialog" aria-labelledby="pvTitle">
+    <div class="pvHead">
+     <div><span class="tag vino">Ley 1581 de 2012</span><h2 id="pvTitle" style="margin-top:8px">Tratamiento de datos personales</h2></div>
+     <div class="row" id="pvActions"></div>
+    </div>
+    <div class="pvBody">
+     <p>Para participar en <b>Formación en Economía Solidaria</b> necesitamos tu autorización para tratar algunos de tus datos personales.</p>
+     <h3>Responsable</h3>
+     <p>FODUN, Fondo de Empleados Docentes de la Universidad Nacional de Colombia.</p>
+     <h3>Qué datos se recogen</h3>
+     <p>Nombre y apellido, ciudad, personaje elegido, puntajes y tiempo de juego. Si respondes el formulario de calificación, también tus respuestas.</p>
+     <h3>Para qué se usan</h3>
+     <p>Únicamente con fines de formación y seguimiento del programa, y para la protección de datos personales del fondo. No se venden, no se comparten con terceros ni se usan con fines comerciales.</p>
+     <h3>Dónde se guardan</h3>
+     <p>Tu avance se guarda en este dispositivo. Al completar el nivel Avanzado, tu resultado se registra en una hoja de cálculo de acceso restringido, de uso exclusivo del fondo.</p>
+     <h3>Tus derechos</h3>
+     <p>Puedes conocer, actualizar, rectificar y solicitar la supresión de tus datos, y revocar esta autorización en cualquier momento.</p>
+     <h3>Más información</h3>
+     <p>Consulta la <a id="pvPolicy" target="_blank" rel="noopener">Política de tratamiento de datos de FODUN</a> o la sección de <a id="pvNorm" target="_blank" rel="noopener">Normatividad</a> en la página del fondo.</p>
+     <p class="pvNote" id="pvNote">Al pulsar <b>«Acepto la política»</b> autorizas el tratamiento de tus datos en los términos descritos.</p>
     </div>
    </div>
   </div>
@@ -397,6 +440,8 @@ const SURVEY_URL = "https://docs.google.com/forms/d/e/1FAIpQLSca5yL5y0xTr8mT-4o7
 // URL de la aplicación web de Google Apps Script (termina en /exec). Ver backend/GUIA-GOOGLE-SHEETS.md.
 // Vacío = el juego funciona igual, pero no envía resultados a Google Sheets.
 const SHEETS_URL = "https://script.google.com/macros/s/AKfycbx_twTbg-CKHy9gxXvRl4UzcxVuFDQdeCKX7ZLuerzh4eHM6tv5MM6CIIE-fWkUFfvd/exec";
+const PRIVACY_PDF = "https://www.fodun.com.co/CkEditor//UserFiles/File/corporativa/reglamento/2021/tratamiento-de-datos-fodun.pdf";
+const PRIVACY_PAGE = "https://www.fodun.com.co/menu/11/normatividad";
 const SEDES = ["Bogotá", "Medellín", "Manizales", "Palmira", "La Paz"];
 // Fondos provisionales. Reemplazar por fotos de las sedes recreativas:
 // Villeta, El Placer, Manguruma, Gonzalo Morantes y Tablones.
@@ -486,6 +531,7 @@ function sanitizeStore(d){
     const lv = Array.isArray(u.levels) ? u.levels : [];
     out.users[k] = {
       name: u.name.slice(0,40), sede: u.sede, char: u.char==="fabio" ? "fabio" : "fabi",
+      consent: typeof u.consent==="string" && !isNaN(Date.parse(u.consent)) ? u.consent.slice(0,40) : null,
       finishedAt: Number.isFinite(+u.finishedAt) && +u.finishedAt>0 ? +u.finishedAt : null,
       levels: [0,1,2].map(i=>{ const l = lv[i] || {}; return {
         best: clamp(Math.round(+l.best||0), 0, LEVELS[i].max), passed: !!l.passed, done: !!l.done,
@@ -581,7 +627,7 @@ function layout(){
   if(PORT){ SW = 460; SH = Math.round(clamp(460*ih/iw, 700, 1100)); } else { SW = 1440; SH = 900; }
   const st = $("stage");
   st.classList.toggle("port", PORT);
-  st.style.width = SW+"px"; st.style.height = SH+"px";
+  st.style.width = SW+"px"; st.style.height = SH+"px"; st.style.setProperty("--sh", SH+"px");
   const s = Math.min(iw/SW, ih/SH);
   st.style.transform = `scale(${s})`; st.style.left = `${(iw-SW*s)/2}px`; st.style.top = `${(ih-SH*s)/2}px`;
   K = clamp(s * (window.devicePixelRatio||1), 1, 2);
@@ -1385,9 +1431,35 @@ $("bPlay").onclick = ()=>{
   if(!/^[\p{L} .'-]{5,40}$/u.test(name) || !name.includes(" ")){ $("userErr").textContent = "Escribe tu nombre y apellido (solo letras). Así aparecerá en tu constancia."; $("user").focus(); return; }
   if(!sede){ $("userErr").textContent = "Selecciona la ciudad donde estás vinculado."; $("sede").focus(); return; }
   $("userErr").textContent = "";
-  S.profile = getProfile(name, sede); saveStore();
-  $("user").blur(); openLevels();
+  $("user").blur();
+  const prev = STORE.users[fold(name) + "|" + sede];
+  if(prev && prev.consent){ enterAs(name, sede); return; }
+  openPrivacy({ name, sede });   // primera vez: debe aceptar la política antes de ver los niveles
 };
+function enterAs(name, sede, consentNow){
+  S.profile = getProfile(name, sede);
+  if(consentNow) S.profile.consent = new Date().toISOString();
+  saveStore(); openLevels();
+}
+// pending = {name, sede}: pide aceptación. Sin pending: solo lectura.
+function openPrivacy(pending){
+  const a = $("pvActions");
+  if(pending){
+    a.innerHTML = `<button class="btn ghost" id="pvNo">No acepto</button><button class="btn primary" id="pvYes">Acepto la política</button>`;
+    $("pvYes").onclick = ()=> enterAs(pending.name, pending.sede, true);
+    $("pvNo").onclick = ()=>{ show("menu"); $("userErr").textContent = "Para jugar necesitas aceptar la política de tratamiento de datos."; };
+  } else {
+    a.innerHTML = `<button class="btn primary" id="pvClose">Cerrar</button>`;
+    $("pvClose").onclick = ()=> show("menu");
+  }
+  $("pvNote").hidden = !pending;
+  show("privacy");
+  const body = document.querySelector("#privacy .pvBody"); if(body) body.scrollTop = 0;
+  setTimeout(()=>{ const f = $(pending ? "pvYes" : "pvClose"); if(f) f.focus(); }, 0);
+}
+$("pvPolicy").href = PRIVACY_PDF;
+$("pvNorm").href = PRIVACY_PAGE;
+$("bPriv").onclick = ()=> openPrivacy(null);
 $("user").addEventListener("input", ()=> $("userErr").textContent="");
 $("sede").addEventListener("change", ()=> $("userErr").textContent="");
 $("bHow").onclick = ()=>{ S.afterHow = ()=>show("menu"); openHow(); };
