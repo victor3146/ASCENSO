@@ -781,13 +781,17 @@ function triggerGate(g){
   pl.y = g.y + 8; pl.vy = 0; pl.vx = 0; keys.left = keys.right = false;
   SFX.gate();
   const q = S.qset[g.idx];
-  S.q = { gate:g, q, opts: shuffle(q.options.map((t,i)=>({t, ok:i===q.correctIndex}))), left:Q_TIME, done:false, ok:false };
+  // Las opciones se barajan, pero "Ninguna" y "N/A" quedan siempre al final.
+  const opts = shuffle(q.options.map((t,i)=>({t, ok:i===q.correctIndex})));
+  const last = o => /^(ninguna|n\/a)\b/i.test(o.t);
+  S.q = { gate:g, q, opts: opts.filter(o=>!last(o)).concat(opts.filter(last)), left:Q_TIME, done:false, ok:false };
   $("qTag").textContent = `Pregunta ${g.idx+1} de ${L.q}`;
   $("qTag").className = "tag " + L.cls;
   $("qMeta").textContent = `Nivel ${L.name} · vale ${fmtPts(ptsPerQ(S.level))} pts` + (S.misses[g.idx] ? ` · intento ${S.misses[g.idx]+1}` : "");
   $("qCase").textContent = q.context;
   $("qAsk").textContent = q.question;
-  $("qFb").textContent = "Lee el caso y elige la mejor respuesta (teclas 1, 2, 3).";
+  $("qAsk").style.display = q.question ? "" : "none";
+  $("qFb").textContent = `Lee el caso y elige la mejor respuesta (teclas 1 a ${S.q.opts.length}).`;
   $("qFb").className = "txt";
   $("qNext").style.display = "none";
   $("qOpts").innerHTML = S.q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${esc(o.t)}</span></button>`).join("");
