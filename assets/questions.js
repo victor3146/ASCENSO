@@ -406,10 +406,9 @@ window.FABI_QUESTION_BANK = [
     "options": [
       "Salud",
       "Hogar",
-      "Vida",
       "Autos"
     ],
-    "correctIndex": 3,
+    "correctIndex": 2,
     "feedbackCorrect": "¡Correcto! La respuesta es: Autos.",
     "feedbackIncorrect": "La respuesta correcta es: Autos."
   },
@@ -448,7 +447,6 @@ window.FABI_QUESTION_BANK = [
     "question": "¿Cuál es el deducible por daño del vehículo?",
     "options": [
       "1 SMMLV",
-      "10 %",
       "20 %",
       "2 SMMLV"
     ],
@@ -492,8 +490,7 @@ window.FABI_QUESTION_BANK = [
     "options": [
       "Autogestión",
       "Jerarquización",
-      "Dirección",
-      "Ninguna de las anteriores"
+      "Dirección"
     ],
     "correctIndex": 0,
     "feedbackCorrect": "¡Correcto! La respuesta es: Autogestión.",
