@@ -329,7 +329,7 @@
      <div class="concept"><h3>Controles</h3><p><b>← →</b> o <b>A / D</b>: mover a tu personaje (salta solo y puede cruzar los bordes).<br><b>Espacio / ↑ / W</b>: lanzar un <b>valor solidario</b> hacia arriba para despejar obstáculos (tienes 3 y se recargan).<br>Caer sobre un obstáculo también lo despeja. <b>P / Esc</b>: pausa.<br>En el celular usa los botones inferiores.</p></div>
      <div class="concept"><h3>Niveles y puntaje</h3><table class="pts" id="howPts"></table></div>
     </div>
-    <div class="concept" style="margin-top:16px"><h3>Preguntas</h3><p>Cada barrera del camino es una pregunta: tienes 30 segundos para responder y siempre verás la explicación. En los niveles <b>Básico</b> y <b>Medio</b>, si te equivocas regresas al último punto seguro y la barrera sigue cerrada: al volver te espera una pregunta diferente. En el nivel <b>Avanzado</b> una respuesta incorrecta suma 0 puntos y sigues subiendo.</p></div>
+    <div class="concept" style="margin-top:16px"><h3>Preguntas</h3><p>Cada barrera del camino es una pregunta: tienes 30 segundos para responder y siempre verás la respuesta correcta. En los niveles <b>Básico</b> y <b>Medio</b>, si te equivocas regresas al último punto seguro y la barrera sigue cerrada: al volver te espera una pregunta diferente. En el nivel <b>Avanzado</b> una respuesta incorrecta suma 0 puntos y sigues subiendo.</p></div>
     <div class="legend" id="legend"></div>
     <div class="row end" style="margin-top:22px"><button class="btn primary" id="bHowOk">ENTENDIDO</button></div>
    </div>
@@ -469,29 +469,29 @@ const LEVELS = [
   { key:"basico", name:"Básico", color:PAL.verde, ink:"#1F7A3A", cls:"verde", q:4, max:20, pass:20, bg:"amanecer",
     gap:[70,140], moving:.12, fragile:.12, spring:.08, enemyGap:470, spawn:.15,
     enemies:["individualismo","desinformacion"],
-    sub:"Los fundamentos: qué es un fondo de empleados y qué principios lo guían.",
+    sub:"Lo esencial: qué es FODUN, cómo se organiza y quién lo vigila.",
     concepts:[
       ["Economía solidaria","Organizaciones sin ánimo de lucro, autogestionadas y democráticas, donde las personas se asocian para resolver necesidades comunes (Ley 454 de 1998)."],
-      ["Fondo de empleados","Asociación de trabajadores con un vínculo común que ahorran juntos y acceden a crédito y bienestar. FODUN reúne a los docentes de la Universidad Nacional."],
-      ["Ser asociado","Tienes derechos (participar, elegir, usar los servicios) y deberes (cumplir los estatutos y tus compromisos económicos)."]
+      ["Fondo de empleados","Asociación de trabajadores con un vínculo común que ahorran juntos y acceden a crédito y bienestar. FODUN reúne a los docentes activos y pensionados de la Universidad Nacional."],
+      ["Ser asociado","Al afiliarte eres asociado: aportas cada mes, participas en las decisiones y accedes a ahorro, crédito, seguros y bienestar."]
     ]},
   { key:"medio", name:"Medio", color:PAL.amarillo, ink:"#8A6400", cls:"amarillo", q:3, max:30, pass:30, bg:"atardecer",
     gap:[80,155], moving:.24, fragile:.2, spring:.07, enemyGap:360, spawn:.25,
     enemies:["individualismo","desinformacion","morosidad","desconfianza"],
-    sub:"Cómo se gobierna el fondo y cómo funcionan el ahorro, el crédito y el bienestar.",
+    sub:"Los servicios del fondo: bienestar, seguros, ahorro, crédito y auxilios.",
     concepts:[
-      ["Órganos de gobierno","La Asamblea General es el máximo órgano; la Junta Directiva administra y el Comité de Control Social vela por los derechos de los asociados."],
-      ["Aportes y ahorro","Tu cuota periódica se divide entre aportes sociales y ahorro permanente, según lo que fijen los estatutos."],
-      ["Crédito responsable","Los créditos se prestan con el ahorro de todos. Pagar a tiempo protege tus finanzas y las del fondo."]
+      ["Bienestar","El fondo ofrece centros recreativos y alojamientos para los asociados y sus familias, con reglamentos de uso."],
+      ["Seguros","FODUN maneja pólizas colectivas que protegen a los asociados y sus créditos. Conocer coberturas y deducibles te ayuda a usarlas bien."],
+      ["Ahorro, crédito y auxilios","Hay créditos con distintos plazos, CDAT y auxilios como el funerario o la asistencia domiciliaria, cada uno con sus requisitos y topes."]
     ]},
   { key:"avanzado", name:"Avanzado", color:PAL.rojo, ink:"#8C1636", cls:"", q:5, max:50, pass:0, bg:"noche",
     gap:[90,165], moving:.3, fragile:.26, spring:.06, enemyGap:290, spawn:.35,
     enemies:["individualismo","desinformacion","morosidad","desconfianza","informalidad"],
-    sub:"Marco legal, supervisión, excedentes y buen gobierno.",
+    sub:"Estatutos, gobierno corporativo y el modelo solidario del fondo.",
     concepts:[
-      ["Marco legal","La Ley 454 de 1998 regula la economía solidaria; los fondos de empleados se rigen por el Decreto Ley 1481 de 1989 y sus reformas. Los vigila la Supersolidaria."],
-      ["Excedentes","No son utilidades: primero se aplican a las reservas y fondos de ley, y el resto se destina según decida la asamblea."],
-      ["Buen gobierno","Declarar conflictos de interés, rendir cuentas y respetar la autonomía del fondo protege la confianza de los asociados."]
+      ["Gobierno corporativo","La Asamblea General de delegados elige a la Junta Directiva, al Comité de Control Social y a la Revisoría Fiscal. Cada órgano tiene funciones distintas y rinde cuentas."],
+      ["Excedentes","No son utilidades: los estatutos fijan qué parte va a reservas y fondos, y el resto se reinvierte en bienestar para los asociados."],
+      ["Círculo solidario","Todos aportamos, todos participamos y todos crecemos juntos: el ahorro fortalece el patrimonio, permite nuevos créditos y los excedentes vuelven como bienestar."]
     ]}
 ];
 const ptsPerQ = (li) => LEVELS[li].max / LEVELS[li].q;
@@ -791,7 +791,7 @@ function triggerGate(g){
   $("qCase").textContent = q.context;
   $("qAsk").textContent = q.question;
   $("qAsk").style.display = q.question ? "" : "none";
-  $("qFb").textContent = `Lee el caso y elige la mejor respuesta (teclas 1 a ${S.q.opts.length}).`;
+  $("qFb").textContent = `Lee la pregunta y elige la respuesta correcta (teclas 1 a ${S.q.opts.length}).`;
   $("qFb").className = "txt";
   $("qNext").style.display = "none";
   $("qOpts").innerHTML = S.q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${esc(o.t)}</span></button>`).join("");
@@ -876,8 +876,8 @@ function levelComplete(){
   ]);
   $("rRead").textContent =
     wrong===0 ? "Respondiste todo bien al primer intento. Conoces estos temas y puedes compartirlos con otros asociados." :
-    L.pass ? `Necesitaste ${wrong} intento${wrong>1?"s":""} adicional${wrong>1?"es":""} para abrir las barreras. Repasa las explicaciones: te ayudarán en el siguiente nivel.` :
-    "Repasa las explicaciones de las preguntas que fallaste. Puedes repetir el nivel para mejorar tu puntaje.";
+    L.pass ? `Necesitaste ${wrong} intento${wrong>1?"s":""} adicional${wrong>1?"es":""} para abrir las barreras. Repasa las respuestas correctas: te ayudarán en el siguiente nivel.` :
+    "Repasa las respuestas correctas de las preguntas que fallaste. Puedes repetir el nivel para mejorar tu puntaje.";
   const nx = $("rNext");
   if(!passed){ nx.textContent = "REINTENTAR NIVEL"; nx.onclick = ()=>startLevel(li); }
   else if(li<2){ nx.textContent = "SIGUIENTE NIVEL"; nx.onclick = ()=>startLevel(li+1); }

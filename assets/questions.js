@@ -1,5 +1,5 @@
 // Banco de preguntas · Formación en Economía Solidaria (FODUN)
-// Fuente: banco_preguntas_fodun.xlsx. El color de cada pregunta define su nivel:
+// Fuente: banco_preguntas_fodun_v2.xlsx (redacción revisada). El color define el nivel:
 // verde = 0 (Básico), amarillo = 1 (Medio), rojo = 2 (Avanzado).
 // En cada intento se eligen al azar 4 (Básico), 3 (Medio) o 5 (Avanzado) preguntas del nivel;
 // si alguien se equivoca en Básico o Medio, la pregunta de reemplazo sale de las restantes del mismo nivel.
@@ -8,8 +8,8 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p1",
     "level": 0,
-    "context": "Cuando uno se afilia al fondo de empleados, el nombre oficial para el afiliado de FODUN es",
-    "question": "",
+    "context": "Al afiliarse a FODUN, la persona recibe un nombre oficial dentro del fondo.",
+    "question": "¿Cómo se llama oficialmente a quien se afilia a FODUN?",
     "options": [
       "Socio",
       "Asociado",
@@ -22,8 +22,8 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p2",
     "level": 0,
-    "context": "¿La organización FODUN hace parte del sector?",
-    "question": "",
+    "context": "FODUN es un fondo de empleados.",
+    "question": "¿A qué sector pertenece?",
     "options": [
       "Sector privado",
       "Sector público",
@@ -36,26 +36,26 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p3",
     "level": 0,
-    "context": "Teniendo en cuenta que cuando el asociado se vincula al fondo",
-    "question": "¿A cuánto asciende el aporte mensual para el FODUN?",
+    "context": "Al vincularse al fondo, el asociado se compromete con una cuota mensual.",
+    "question": "¿De cuánto es esa cuota?",
     "options": [
-      "3% del salario",
-      "100.000",
-      "8% del salario"
+      "El 3 % del salario",
+      "Un valor fijo de $100.000",
+      "El 8 % del salario"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: 3% del salario.",
-    "feedbackIncorrect": "La respuesta correcta es: 3% del salario."
+    "feedbackCorrect": "¡Correcto! La respuesta es: El 3 % del salario.",
+    "feedbackIncorrect": "La respuesta correcta es: El 3 % del salario."
   },
   {
     "id": "p4",
     "level": 0,
-    "context": "Una de las formas para pago de crédito más adecuada para el fondo y más ágil para el asociado es",
-    "question": "",
+    "context": "Las cuotas de un crédito con el fondo se pueden pagar de varias formas.",
+    "question": "¿Cuál es la más ágil para el asociado y la más conveniente para el fondo?",
     "options": [
       "Libranza",
-      "Caja",
-      "Mixto"
+      "Pago en caja",
+      "Pago mixto"
     ],
     "correctIndex": 0,
     "feedbackCorrect": "¡Correcto! La respuesta es: Libranza.",
@@ -64,50 +64,50 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p5",
     "level": 0,
-    "context": "Una de las bondades del fondo es que el seguro no lo asume el asociado",
+    "context": "Una ventaja del fondo es que el asociado no asume el costo del seguro de sus créditos.",
     "question": "¿Quién paga los seguros de los créditos?",
     "options": [
-      "Fodun",
-      "Universidad",
-      "Asociado"
+      "FODUN",
+      "La Universidad",
+      "El asociado"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Fodun.",
-    "feedbackIncorrect": "La respuesta correcta es: Fodun."
+    "feedbackCorrect": "¡Correcto! La respuesta es: FODUN.",
+    "feedbackIncorrect": "La respuesta correcta es: FODUN."
   },
   {
     "id": "p6",
     "level": 0,
-    "context": "Los créditos que otorga el fondo se calculan mediante una tasa de interés",
-    "question": "¿Quién define la tasa de interés de créditos?",
+    "context": "Los créditos que otorga el fondo se cobran con una tasa de interés.",
+    "question": "¿Quién define la tasa de interés de los créditos?",
     "options": [
-      "Junta Directiva",
-      "Gerente general",
-      "Super solidaria"
+      "La Junta Directiva",
+      "El Gerente General",
+      "La Supersolidaria"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Junta Directiva.",
-    "feedbackIncorrect": "La respuesta correcta es: Junta Directiva."
+    "feedbackCorrect": "¡Correcto! La respuesta es: La Junta Directiva.",
+    "feedbackIncorrect": "La respuesta correcta es: La Junta Directiva."
   },
   {
     "id": "p7",
     "level": 0,
-    "context": "Las entidades solidarias están supervisadas por organizaciones de control",
+    "context": "Las entidades solidarias están vigiladas por un organismo de control del Estado.",
     "question": "¿Quién vigila a los fondos de empleados?",
     "options": [
-      "Superintendencia Solidaria",
-      "Superintendencia Financiera",
-      "Analfe"
+      "La Superintendencia de la Economía Solidaria",
+      "La Superintendencia Financiera",
+      "Analfe (Asociación Nacional de Fondos de Empleados)"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Superintendencia Solidaria.",
-    "feedbackIncorrect": "La respuesta correcta es: Superintendencia Solidaria."
+    "feedbackCorrect": "¡Correcto! La respuesta es: La Superintendencia de la Economía Solidaria.",
+    "feedbackIncorrect": "La respuesta correcta es: La Superintendencia de la Economía Solidaria."
   },
   {
     "id": "p8",
     "level": 0,
-    "context": "Por estatutos los fondos deben realizar asambleas periódicas",
-    "question": "¿Qué tipos de asamblea hay?",
+    "context": "Por estatutos, el fondo debe reunir a su Asamblea General de forma periódica.",
+    "question": "¿Cómo se llama la asamblea que se realiza cada año?",
     "options": [
       "Ordinaria",
       "Extraordinaria",
@@ -120,8 +120,8 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p9",
     "level": 0,
-    "context": "Teniendo en cuenta el carácter nacional del fondo",
-    "question": "¿En cuántas ciudades hace presencia FODUN?",
+    "context": "FODUN es un fondo de carácter nacional.",
+    "question": "¿En cuántas ciudades tiene presencia?",
     "options": [
       "Cuatro",
       "Cinco",
@@ -134,22 +134,22 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p10",
     "level": 0,
-    "context": "La jerarquía en las organizaciones solidarias tiene una estructura funcional",
-    "question": "¿Cuál es la máxima autoridad del FODUN?",
+    "context": "Las organizaciones solidarias tienen una estructura de gobierno con distintos niveles de autoridad.",
+    "question": "¿Cuál es la máxima autoridad de FODUN?",
     "options": [
-      "Asamblea general de delegados",
-      "Junta Directiva",
-      "Gerente General"
+      "La Asamblea General de delegados",
+      "La Junta Directiva del fondo",
+      "La Gerencia General del fondo"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Asamblea general de delegados.",
-    "feedbackIncorrect": "La respuesta correcta es: Asamblea general de delegados."
+    "feedbackCorrect": "¡Correcto! La respuesta es: La Asamblea General de delegados.",
+    "feedbackIncorrect": "La respuesta correcta es: La Asamblea General de delegados."
   },
   {
     "id": "p13",
     "level": 0,
-    "context": "Uno de los créditos más fáciles que ofrece el fondo es el crédito rotativo",
-    "question": "¿Cómo se llama la tarjeta de ahorro y crédito otorgada por FODUN?",
+    "context": "FODUN entrega a sus asociados una tarjeta para ahorrar y usar su crédito.",
+    "question": "¿Cómo se llama esa tarjeta?",
     "options": [
       "Servibanca",
       "Visionamos",
@@ -162,49 +162,49 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p14",
     "level": 0,
-    "context": "Una de las restricciones asociadas a la visita a los centros recreativos y se encuentra reglamentada.",
-    "question": "¿Puedes llevar mascotas a los centros recreativos?",
+    "context": "Las visitas a los centros recreativos tienen un reglamento con algunas restricciones.",
+    "question": "¿Se pueden llevar mascotas a los centros recreativos?",
     "options": [
-      "Sí",
-      "No",
-      "N/A"
+      "No, no están permitidas",
+      "Sí, sin ninguna restricción",
+      "Sí, pagando un valor adicional"
     ],
-    "correctIndex": 1,
-    "feedbackCorrect": "¡Correcto! La respuesta es: No.",
-    "feedbackIncorrect": "La respuesta correcta es: No."
+    "correctIndex": 0,
+    "feedbackCorrect": "¡Correcto! La respuesta es: No, no están permitidas.",
+    "feedbackIncorrect": "La respuesta correcta es: No, no están permitidas."
   },
   {
     "id": "p19",
     "level": 0,
-    "context": "Una de las tareas que tiene el fondo es definir porcentajes para créditos e intereses",
-    "question": "¿Quién define la tasa de los intereses a los ahorros?",
+    "context": "El fondo reconoce intereses sobre los ahorros de los asociados.",
+    "question": "¿Quién define la tasa de interés de los ahorros?",
     "options": [
-      "Junta Directiva",
-      "Gerente General",
+      "La Junta Directiva",
+      "El Gerente General",
       "Analfe"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Junta Directiva.",
-    "feedbackIncorrect": "La respuesta correcta es: Junta Directiva."
+    "feedbackCorrect": "¡Correcto! La respuesta es: La Junta Directiva.",
+    "feedbackIncorrect": "La respuesta correcta es: La Junta Directiva."
   },
   {
     "id": "p20",
     "level": 0,
-    "context": "Uno de los cuerpos colegiados que acompaña al fondo es el comité de control social",
-    "question": "¿Quién lo nombra?",
+    "context": "El Comité de Control Social es uno de los órganos que acompañan al fondo.",
+    "question": "¿Quién elige a sus integrantes?",
     "options": [
-      "Asamblea",
-      "Junta directiva",
-      "Gerente General"
+      "La Asamblea General",
+      "La Junta Directiva",
+      "El Gerente General"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Asamblea.",
-    "feedbackIncorrect": "La respuesta correcta es: Asamblea."
+    "feedbackCorrect": "¡Correcto! La respuesta es: La Asamblea General.",
+    "feedbackIncorrect": "La respuesta correcta es: La Asamblea General."
   },
   {
     "id": "p22",
     "level": 0,
-    "context": "Otro servicio que presta el fondo son los seguros",
+    "context": "El fondo también ofrece seguros a sus asociados.",
     "question": "¿Cuál es la forma más ágil de pagarlos?",
     "options": [
       "Libranza",
@@ -218,40 +218,40 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p25",
     "level": 0,
-    "context": "El fondo dentro del alcance para proteger los recursos de los asociados",
-    "question": "¿Posee una póliza de protección para las tarjetas de crédito?",
+    "context": "El fondo busca proteger los recursos de sus asociados.",
+    "question": "¿FODUN tiene una póliza de protección para las tarjetas de crédito?",
     "options": [
-      "Sí",
-      "No",
-      "N/A"
+      "Sí, el fondo tiene esa póliza",
+      "No, cada asociado debe contratarla",
+      "No, las tarjetas no tienen protección"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Sí.",
-    "feedbackIncorrect": "La respuesta correcta es: Sí."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Sí, el fondo tiene esa póliza.",
+    "feedbackIncorrect": "La respuesta correcta es: Sí, el fondo tiene esa póliza."
   },
   {
     "id": "p35",
     "level": 0,
-    "context": "Cuando un profesor se afilia al fondo",
-    "question": "¿Es obligatoria la afiliación al programa de auxilio funerario para todos los asociados menores de 70 años?",
+    "context": "El fondo tiene un programa de auxilio funerario.",
+    "question": "¿La afiliación a este programa es obligatoria para los asociados menores de 70 años?",
     "options": [
-      "Sí",
-      "No",
-      "N/A"
+      "Sí, es obligatoria",
+      "No, es voluntaria",
+      "Solo para los asociados pensionados"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Sí.",
-    "feedbackIncorrect": "La respuesta correcta es: Sí."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Sí, es obligatoria.",
+    "feedbackIncorrect": "La respuesta correcta es: Sí, es obligatoria."
   },
   {
     "id": "p38",
     "level": 0,
-    "context": "Uno de los créditos más ágiles que tiene un asociado en el fondo es la tarjeta visionamos",
-    "question": "¿A qué tipo de crédito está asociado?",
+    "context": "La tarjeta de ahorro y crédito es una de las formas más ágiles de usar el crédito del fondo.",
+    "question": "¿A qué tipo de crédito está asociada?",
     "options": [
       "Rotatorio",
-      "Corto plazo",
-      "Permanencia"
+      "De corto plazo",
+      "De permanencia"
     ],
     "correctIndex": 0,
     "feedbackCorrect": "¡Correcto! La respuesta es: Rotatorio.",
@@ -260,12 +260,12 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p52",
     "level": 0,
-    "context": "Los principios solidarios rigen la formación del fondo",
-    "question": "¿Cuáles principios explican?",
+    "context": "Los principios solidarios orientan el funcionamiento del fondo.",
+    "question": "¿Cuáles de estos son principios solidarios?",
     "options": [
-      "Rentabilidad, competencia y reserva de información.",
-      "Solidaridad, equidad, participación democrática y ayuda mutua.",
-      "Libre mercado, anonimato del asociado y delegación total en la Gerencia."
+      "Rentabilidad, competencia y reserva de información",
+      "Solidaridad, equidad, participación democrática y ayuda mutua",
+      "Libre mercado, anonimato y delegación total en la Gerencia"
     ],
     "correctIndex": 1,
     "feedbackCorrect": "¡Correcto! La respuesta es: Solidaridad, equidad, participación democrática y ayuda mutua.",
@@ -274,12 +274,12 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p56",
     "level": 0,
-    "context": "En las comunicaciones en la página del fondo se presenta “El círculo solidario”",
-    "question": "¿Cuál es la secuencia publicada?",
+    "context": "En su página web, el fondo presenta “El círculo solidario”.",
+    "question": "¿Cuál es la secuencia que publica?",
     "options": [
-      "Ahorro, crédito, excedentes, bienestar y nuevos beneficios.",
-      "Crédito, mora, exclusión y liquidación.",
-      "Utilidad, dividendo, retiro del inversionista y cierre."
+      "Ahorro, crédito, excedentes, bienestar y nuevos beneficios",
+      "Crédito, mora, exclusión y liquidación",
+      "Utilidad, dividendo, retiro del inversionista y cierre"
     ],
     "correctIndex": 0,
     "feedbackCorrect": "¡Correcto! La respuesta es: Ahorro, crédito, excedentes, bienestar y nuevos beneficios.",
@@ -289,7 +289,7 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p11",
     "level": 1,
-    "context": "El bienestar es la principal misión del fondo",
+    "context": "El bienestar es una de las principales misiones del fondo.",
     "question": "¿Cuántos centros recreativos tiene FODUN?",
     "options": [
       "Cuatro",
@@ -303,22 +303,22 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p12",
     "level": 1,
-    "context": "La diversidad de oferta de alojamientos en el territorio nacional que ofrece el fondo",
-    "question": "¿En cuáles ciudades las encuentras?",
+    "context": "Además de sus centros recreativos, el fondo ofrece alojamientos en distintas ciudades del país.",
+    "question": "¿En qué ciudades se encuentran?",
     "options": [
-      "Medellín, Bogotá, Cartagena, Santa Marta",
-      "Medellín, Bogotá, Valledupar",
-      "Bogotá, Melgar"
+      "Medellín, Bogotá, Cartagena y Santa Marta",
+      "Medellín, Bogotá, Valledupar y Melgar",
+      "Bogotá, Melgar, Cartagena y Valledupar"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Medellín, Bogotá, Cartagena, Santa Marta.",
-    "feedbackIncorrect": "La respuesta correcta es: Medellín, Bogotá, Cartagena, Santa Marta."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Medellín, Bogotá, Cartagena y Santa Marta.",
+    "feedbackIncorrect": "La respuesta correcta es: Medellín, Bogotá, Cartagena y Santa Marta."
   },
   {
     "id": "p15",
     "level": 1,
-    "context": "Dentro de los beneficios que la mayoría de los asociados desconoce del fondo, son las pólizas de seguro",
-    "question": "¿Qué tipo de póliza maneja o tiene FODUN?",
+    "context": "Muchos asociados no saben que el fondo les ofrece pólizas de seguro.",
+    "question": "¿Qué tipo de póliza maneja FODUN?",
     "options": [
       "Colectiva",
       "Individual",
@@ -331,50 +331,50 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p16",
     "level": 1,
-    "context": "Dentro de los servicios ofrecidos por el fondo se encuentran los créditos",
+    "context": "El fondo ofrece créditos con distintos plazos.",
     "question": "¿Cuál es el crédito con el plazo más corto?",
     "options": [
-      "Emergencia",
-      "Ordinario",
-      "Vehículo"
+      "Crédito de emergencia",
+      "Crédito ordinario",
+      "Crédito de vehículo"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Emergencia.",
-    "feedbackIncorrect": "La respuesta correcta es: Emergencia."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Crédito de emergencia.",
+    "feedbackIncorrect": "La respuesta correcta es: Crédito de emergencia."
   },
   {
     "id": "p17",
     "level": 1,
-    "context": "Los tiempos en meses que ofrece los títulos valores que ofrece el fondo, son variados",
-    "question": "¿Cuáles son los plazos de los CDAT?",
+    "context": "Los CDAT (Certificados de Depósito de Ahorro a Término) son títulos de ahorro que ofrece el fondo.",
+    "question": "¿Cuáles son sus plazos?",
     "options": [
-      "3,6,12",
-      "8,12",
-      "5,10"
+      "3, 6 y 12 meses",
+      "8 y 12 meses",
+      "5 y 10 meses"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: 3,6,12.",
-    "feedbackIncorrect": "La respuesta correcta es: 3,6,12."
+    "feedbackCorrect": "¡Correcto! La respuesta es: 3, 6 y 12 meses.",
+    "feedbackIncorrect": "La respuesta correcta es: 3, 6 y 12 meses."
   },
   {
     "id": "p18",
     "level": 1,
-    "context": "La junta directiva generalmente determina la liquidación de los intereses para los asociados",
-    "question": "¿Cada cuánto se liquidan los intereses de los ahorros permanentes?",
+    "context": "El fondo liquida periódicamente los intereses de los ahorros permanentes.",
+    "question": "¿Cada cuánto se liquidan?",
     "options": [
-      "3 meses",
-      "7 meses",
-      "12 meses"
+      "Cada 3 meses",
+      "Cada 7 meses",
+      "Cada 12 meses"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: 3 meses.",
-    "feedbackIncorrect": "La respuesta correcta es: 3 meses."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Cada 3 meses.",
+    "feedbackIncorrect": "La respuesta correcta es: Cada 3 meses."
   },
   {
     "id": "p21",
     "level": 1,
-    "context": "La trayectoria del fondo a través del tiempo ha logrado permanencia",
-    "question": "¿Cuántos años cumple FODUN en el año 2040?",
+    "context": "FODUN tiene una larga trayectoria al servicio de sus asociados.",
+    "question": "¿Cuántos años cumplirá FODUN en el año 2040?",
     "options": [
       "50 años",
       "46 años",
@@ -387,22 +387,22 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p23",
     "level": 1,
-    "context": "Para poder reclamar un valor asegurado con el fondo es necesario declarar el siniestro",
-    "question": "¿Cómo se define?",
+    "context": "Para reclamar un seguro con el fondo es necesario reportar el siniestro.",
+    "question": "¿Qué es un siniestro?",
     "options": [
-      "Acto súbito e impredecible y accidental",
-      "Pago del seguro",
-      "Seguro de vivienda"
+      "Un hecho súbito, impredecible y accidental",
+      "El pago que hace la aseguradora al asociado",
+      "Un tipo de seguro para la vivienda familiar"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Acto súbito e impredecible y accidental.",
-    "feedbackIncorrect": "La respuesta correcta es: Acto súbito e impredecible y accidental."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Un hecho súbito, impredecible y accidental.",
+    "feedbackIncorrect": "La respuesta correcta es: Un hecho súbito, impredecible y accidental."
   },
   {
     "id": "p24",
     "level": 1,
-    "context": "Las consultas de los asociados sobre seguros de bienes y servicios se concentran principalmente en",
-    "question": "¿Cuál seguro es el más consultado por los asociados?",
+    "context": "Los asociados consultan con frecuencia sobre los seguros que ofrece el fondo.",
+    "question": "¿Cuál es el seguro más consultado?",
     "options": [
       "Salud",
       "Hogar",
@@ -416,69 +416,69 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p26",
     "level": 1,
-    "context": "Dentro de la política del fondo de proteger los recursos de los asociados",
-    "question": "¿Cuál es el mayor beneficio que los asociados tienen en los seguros?",
+    "context": "Los seguros del fondo protegen los recursos de los asociados.",
+    "question": "¿Cuál es el mayor beneficio que tienen los asociados en seguros?",
     "options": [
-      "Póliza de deudores",
-      "Póliza de autos",
-      "Póliza de salud"
+      "La póliza de deudores",
+      "La póliza de autos",
+      "La póliza de salud"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Póliza de deudores.",
-    "feedbackIncorrect": "La respuesta correcta es: Póliza de deudores."
+    "feedbackCorrect": "¡Correcto! La respuesta es: La póliza de deudores.",
+    "feedbackIncorrect": "La respuesta correcta es: La póliza de deudores."
   },
   {
     "id": "p27",
     "level": 1,
-    "context": "Cuándo un asociado visita una sede recreativa, automáticamente tiene una protección",
-    "question": "¿Qué seguro lo cubre?",
+    "context": "Cuando un asociado visita una sede recreativa, queda protegido automáticamente.",
+    "question": "¿Qué lo cubre?",
     "options": [
-      "Póliza de responsabilidad civil",
-      "Bomberos del municipio",
-      "Funeraria Unal"
+      "Una póliza de responsabilidad civil",
+      "Un seguro de los bomberos del municipio",
+      "Un plan de la Funeraria Unal"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Póliza de responsabilidad civil.",
-    "feedbackIncorrect": "La respuesta correcta es: Póliza de responsabilidad civil."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Una póliza de responsabilidad civil.",
+    "feedbackIncorrect": "La respuesta correcta es: Una póliza de responsabilidad civil."
   },
   {
     "id": "p28",
     "level": 1,
-    "context": "En el evento de un siniestro de un asociado asegurado por el fondo",
-    "question": "¿Cuál es el deducible que se paga por daño vehículo?",
+    "context": "Si un asociado asegurado por el fondo tiene un siniestro con su vehículo, debe pagar un deducible.",
+    "question": "¿Cuál es el deducible por daño del vehículo?",
     "options": [
-      "1 SMLV",
-      "10%",
-      "20%",
-      "2 SMLV"
+      "1 SMMLV",
+      "10 %",
+      "20 %",
+      "2 SMMLV"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: 1 SMLV.",
-    "feedbackIncorrect": "La respuesta correcta es: 1 SMLV."
+    "feedbackCorrect": "¡Correcto! La respuesta es: 1 SMMLV.",
+    "feedbackIncorrect": "La respuesta correcta es: 1 SMMLV."
   },
   {
     "id": "p29",
     "level": 1,
-    "context": "El beneficio asociado a los servicios de salud ofrecidos por el fondo tiene diferentes coberturas",
-    "question": "¿Qué cobertura básica ofrece el seguro de salud?",
+    "context": "El seguro de salud del fondo tiene distintas coberturas.",
+    "question": "¿Qué incluye la cobertura básica?",
     "options": [
-      "Urgencias, hospitalización, y cirugía",
-      "Eps, Arl, Urgencias",
-      "Ambulancia y Cirugías plásticas"
+      "Urgencias, hospitalización y cirugía",
+      "EPS, ARL y servicio de urgencias",
+      "Ambulancia y cirugías plásticas"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Urgencias, hospitalización, y cirugía.",
-    "feedbackIncorrect": "La respuesta correcta es: Urgencias, hospitalización, y cirugía."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Urgencias, hospitalización y cirugía.",
+    "feedbackIncorrect": "La respuesta correcta es: Urgencias, hospitalización y cirugía."
   },
   {
     "id": "p30",
     "level": 1,
-    "context": "Los servicios de salud adicionales al que puede acceder un asociado del fondo son variados",
-    "question": "¿Qué cobertura adicional puedo comprar en el seguro de salud?",
+    "context": "El asociado puede ampliar su seguro de salud con coberturas adicionales.",
+    "question": "¿Qué cobertura adicional puede comprar?",
     "options": [
       "Consulta externa y exámenes ambulatorios",
-      "Atención odontológica",
-      "Cobertura de anteojos"
+      "Atención odontológica completa",
+      "Cobertura total de anteojos y lentes"
     ],
     "correctIndex": 0,
     "feedbackCorrect": "¡Correcto! La respuesta es: Consulta externa y exámenes ambulatorios.",
@@ -487,13 +487,13 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p31",
     "level": 1,
-    "context": "Dentro de los principios organizacionales que diferencia el sector solidario de las empresas de capital se encuentra el denominado:",
-    "question": "",
+    "context": "Hay un principio de organización que diferencia al sector solidario de las empresas de capital.",
+    "question": "¿Cuál es?",
     "options": [
       "Autogestión",
       "Jerarquización",
       "Dirección",
-      "Ninguna"
+      "Ninguna de las anteriores"
     ],
     "correctIndex": 0,
     "feedbackCorrect": "¡Correcto! La respuesta es: Autogestión.",
@@ -502,36 +502,36 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p33",
     "level": 1,
-    "context": "El auxilio otorgado por el fondo a los asociados pensionados que requieran asistencia domiciliaria, asciende a un porcentaje.",
-    "question": "¿Cuál es el porcentaje?",
+    "context": "El fondo da un auxilio a los asociados pensionados que necesitan asistencia domiciliaria.",
+    "question": "¿Qué porcentaje del valor del servicio cubre?",
     "options": [
-      "35% del valor del servicio",
-      "20% del valor del servicio",
-      "15% del valor del servicio"
+      "El 35 %",
+      "El 20 %",
+      "El 15 %"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: 35% del valor del servicio.",
-    "feedbackIncorrect": "La respuesta correcta es: 35% del valor del servicio."
+    "feedbackCorrect": "¡Correcto! La respuesta es: El 35 %.",
+    "feedbackIncorrect": "La respuesta correcta es: El 35 %."
   },
   {
     "id": "p36",
     "level": 1,
-    "context": "Se necesita de un tiempo mínimo de estar afiliado para acceder al auxilio funerario",
-    "question": "¿A cuánto tiempo después de la afiliación se puede acceder?",
+    "context": "Para acceder al auxilio funerario se necesita un tiempo mínimo de afiliación.",
+    "question": "¿Desde cuándo se puede acceder?",
     "options": [
-      "A los 6 meses",
-      "A los 3 meses",
-      "A los 8 meses"
+      "A los 6 meses de la afiliación",
+      "A los 3 meses de la afiliación",
+      "A los 8 meses de la afiliación"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: A los 6 meses.",
-    "feedbackIncorrect": "La respuesta correcta es: A los 6 meses."
+    "feedbackCorrect": "¡Correcto! La respuesta es: A los 6 meses de la afiliación.",
+    "feedbackIncorrect": "La respuesta correcta es: A los 6 meses de la afiliación."
   },
   {
     "id": "p37",
     "level": 1,
-    "context": "En caso de fallecimiento de un asociado, el fondo otorga un monto en salarios mínimos",
-    "question": "¿Cuál es el monto del auxilio funerario?",
+    "context": "Si un asociado fallece, el fondo entrega un auxilio funerario.",
+    "question": "¿Cuál es su monto?",
     "options": [
       "15 SMMLV",
       "10 SMMLV",
@@ -544,37 +544,37 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p51",
     "level": 1,
-    "context": "Por estatutos se define los excedentes, tiempos y montos que se reinvierten en programas que benefician a la comunidad.",
-    "question": "¿Cuáles?",
+    "context": "Los estatutos definen en qué programas se reinvierten los excedentes del fondo.",
+    "question": "¿En cuáles?",
     "options": [
-      "Bienestar, educación solidaria, auxilios, sedes y apartamentos, actividades y eventos, y desarrollo empresarial solidario.",
-      "Solo dividendos y compra de acciones en el sector bancario.",
-      "Únicamente el pago de honorarios de la Revisoría Fiscal."
+      "Bienestar, educación solidaria, auxilios, sedes y apartamentos, eventos y desarrollo empresarial solidario",
+      "Dividendos para los asociados, compra de acciones en bancos y bonificaciones para la Junta Directiva",
+      "Solo el pago de los honorarios de la Revisoría Fiscal y de los gastos administrativos de la Gerencia"
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Bienestar, educación solidaria, auxilios, sedes y apartamentos, actividades y eventos, y desarrollo empresarial solidario.",
-    "feedbackIncorrect": "La respuesta correcta es: Bienestar, educación solidaria, auxilios, sedes y apartamentos, actividades y eventos, y desarrollo empresarial solidario."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Bienestar, educación solidaria, auxilios, sedes y apartamentos, eventos y desarrollo empresarial solidario.",
+    "feedbackIncorrect": "La respuesta correcta es: Bienestar, educación solidaria, auxilios, sedes y apartamentos, eventos y desarrollo empresarial solidario."
   },
   {
     "id": "p60",
     "level": 1,
-    "context": "La representación de los asociados es importante para el proceso de designación de delegados",
-    "question": "¿Para qué existen los delegados en este modelo?",
+    "context": "Los asociados de cada regional eligen delegados que los representan.",
+    "question": "¿Para qué existen los delegados?",
     "options": [
-      "Para reemplazar a la Asamblea y administrar las sedes.",
-      "Para representar a los asociados de cada regional y llevar su voz a la Asamblea cuando no es posible que todos asistan.",
-      "Para elegir al Gerente General y distribuir utilidades entre inversionistas."
+      "Para llevar la voz de los asociados de su regional a la Asamblea, cuando no todos pueden asistir",
+      "Para reemplazar a la Asamblea General y administrar directamente las sedes de cada regional",
+      "Para elegir al Gerente General y repartir las utilidades del fondo entre los inversionistas"
     ],
-    "correctIndex": 1,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Para representar a los asociados de cada regional y llevar su voz a la Asamblea cuando no es posible que todos asistan.",
-    "feedbackIncorrect": "La respuesta correcta es: Para representar a los asociados de cada regional y llevar su voz a la Asamblea cuando no es posible que todos asistan."
+    "correctIndex": 0,
+    "feedbackCorrect": "¡Correcto! La respuesta es: Para llevar la voz de los asociados de su regional a la Asamblea, cuando no todos pueden asistir.",
+    "feedbackIncorrect": "La respuesta correcta es: Para llevar la voz de los asociados de su regional a la Asamblea, cuando no todos pueden asistir."
   },
   /* ============ NIVEL 3 · AVANZADO (rojo) ============ */
   {
     "id": "p32",
     "level": 2,
-    "context": "La incapacidad medica que otorga el fondo por asociado y por vigencia anual esta definida en salarios mínimos",
-    "question": "¿Cuál es el monto máximo por asociado y por vigencia anual que se reconoce?",
+    "context": "El fondo reconoce un auxilio por incapacidad médica con un tope anual por asociado.",
+    "question": "¿Cuál es el monto máximo por asociado en cada vigencia anual?",
     "options": [
       "18 SMMLV",
       "9 SMMLV",
@@ -587,8 +587,8 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p34",
     "level": 2,
-    "context": "La asistencia domiciliaria para los asociados pensionados está establecida por topes en salarios mínimos",
-    "question": "¿Cuáles son los topes para la asistencia domiciliaria?",
+    "context": "La asistencia domiciliaria para asociados pensionados tiene topes en salarios mínimos.",
+    "question": "¿Cuáles son esos topes?",
     "options": [
       "3 SMMLV por mes y máximo 18 SMMLV",
       "6 SMMLV por mes y máximo 8 SMMLV",
@@ -601,82 +601,82 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p39",
     "level": 2,
-    "context": "En el momento de asociarse al fondo, un asociado se obliga a pagar una cuota mensual equivalente al 3 % del salario o mesada pensional.",
+    "context": "Cada asociado paga una cuota mensual equivalente al 3 % de su salario o mesada pensional.",
     "question": "¿Cómo se distribuye esa cuota?",
     "options": [
-      "50 % aportes sociales y 50 % ahorros permanentes",
-      "20 % aportes sociales y 80 % ahorros permanentes",
-      "80 % aportes sociales y 20 % ahorros permanentes"
+      "50 % aportes sociales y 50 % ahorro permanente",
+      "20 % aportes sociales y 80 % ahorro permanente",
+      "80 % aportes sociales y 20 % ahorro permanente"
     ],
     "correctIndex": 1,
-    "feedbackCorrect": "¡Correcto! La respuesta es: 20 % aportes sociales y 80 % ahorros permanentes.",
-    "feedbackIncorrect": "La respuesta correcta es: 20 % aportes sociales y 80 % ahorros permanentes."
+    "feedbackCorrect": "¡Correcto! La respuesta es: 20 % aportes sociales y 80 % ahorro permanente.",
+    "feedbackIncorrect": "La respuesta correcta es: 20 % aportes sociales y 80 % ahorro permanente."
   },
   {
     "id": "p40",
     "level": 2,
-    "context": "Los excedentes del fondo de cada ejercicio, tienen una destinación específica de acuerdo a los estatutos",
+    "context": "Los estatutos fijan cómo se distribuyen los excedentes de cada año, incluido el Fondo de Desarrollo Empresarial Solidario (FODES).",
     "question": "¿Cuál afirmación es correcta?",
     "options": [
-      "El 50 % se reparte entre los asociados y el 50 % restante se destina a reserva de protección de aportes",
-      "El 20 % como mínimo va a la reserva de protección de aportes sociales; el 10 % como mínimo al Fondo de Desarrollo Empresarial Solidario (FODES); y, en todo caso, primero se compensan pérdidas de ejercicios anteriores",
-      "Toda la utilidad se destina a crédito de vivienda, salvo que la Junta Directiva disponga otra cosa"
+      "El 50 % se reparte en efectivo entre los asociados y el otro 50 % va a la reserva de protección de aportes",
+      "Primero se cubren pérdidas anteriores; luego, mínimo 20 % a la reserva de protección de aportes y mínimo 10 % al FODES",
+      "Todos los excedentes se destinan al crédito de vivienda, salvo que la Junta Directiva decida darles otro uso"
     ],
     "correctIndex": 1,
-    "feedbackCorrect": "¡Correcto! La respuesta es: El 20 % como mínimo va a la reserva de protección de aportes sociales; el 10 % como mínimo al Fondo de Desarrollo Empresarial Solidario (FODES); y, en todo caso, primero se compensan pérdidas de ejercicios anteriores.",
-    "feedbackIncorrect": "La respuesta correcta es: El 20 % como mínimo va a la reserva de protección de aportes sociales; el 10 % como mínimo al Fondo de Desarrollo Empresarial Solidario (FODES); y, en todo caso, primero se compensan pérdidas de ejercicios anteriores."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Primero se cubren pérdidas anteriores; luego, mínimo 20 % a la reserva de protección de aportes y mínimo 10 % al FODES.",
+    "feedbackIncorrect": "La respuesta correcta es: Primero se cubren pérdidas anteriores; luego, mínimo 20 % a la reserva de protección de aportes y mínimo 10 % al FODES."
   },
   {
     "id": "p41",
     "level": 2,
-    "context": "Un asociado tiene la potestad de permanecer o retirarse voluntariamente del fondo.",
-    "question": "¿Cuándo puede pedir el reingreso y ante quién?",
+    "context": "El asociado puede retirarse voluntariamente del fondo y, más adelante, pedir su reingreso.",
+    "question": "¿Cuándo y ante quién puede pedir el reingreso?",
     "options": [
-      "De inmediato, ante la Gerencia General.",
-      "Después de no menos de seis (6) meses de su retiro, ante la Junta Directiva",
-      "Después de un (1) año, únicamente si lo aprueba la Asamblea General de delegados"
+      "De inmediato, en cualquier momento, ante la Gerencia General",
+      "Después de al menos 6 meses de su retiro, ante la Junta Directiva",
+      "Después de 1 año, solo si lo aprueba la Asamblea General de delegados"
     ],
     "correctIndex": 1,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Después de no menos de seis (6) meses de su retiro, ante la Junta Directiva.",
-    "feedbackIncorrect": "La respuesta correcta es: Después de no menos de seis (6) meses de su retiro, ante la Junta Directiva."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Después de al menos 6 meses de su retiro, ante la Junta Directiva.",
+    "feedbackIncorrect": "La respuesta correcta es: Después de al menos 6 meses de su retiro, ante la Junta Directiva."
   },
   {
     "id": "p42",
     "level": 2,
-    "context": "Anualmente se realiza por estatutos la Asamblea General de delegados, las decisiones deben cumplir una regla",
-    "question": "¿Cuál regla de votación aplica?",
+    "context": "La Asamblea General de delegados se reúne cada año y vota según las reglas de los estatutos.",
+    "question": "¿Qué reglas de votación aplican?",
     "options": [
-      "El quórum es la mitad de los delegados elegidos; las decisiones ordinarias se toman por mayoría absoluta de los presentes; la reforma estatutaria exige el 70 % de los presentes; y la fusión, transformación, disolución o liquidación exige el 70 % del total de delegados convocados",
-      "Basta con un tercio de los delegados y todas las decisiones se aprueban por mayoría simple de los presentes",
-      "Toda decisión de la Asamblea, incluida la reforma de estatutos, se aprueba con el voto de la mitad más uno de los asociados hábiles del Fondo"
+      "Quórum: la mitad de los delegados elegidos. Decisiones ordinarias: mayoría absoluta de los presentes. Reforma de estatutos: 70 % de los presentes. Fusión, transformación, disolución o liquidación: 70 % del total de delegados convocados.",
+      "Quórum: un tercio de los delegados elegidos. Decisiones ordinarias: mayoría simple de los presentes. Reforma de estatutos: mayoría simple de los presentes. Fusión, transformación, disolución o liquidación: decisión de la Junta Directiva.",
+      "Quórum: la mitad más uno de los asociados hábiles. Decisiones ordinarias y reforma de estatutos: mitad más uno de los asociados hábiles. Fusión, transformación, disolución o liquidación: 50 % de los presentes."
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: El quórum es la mitad de los delegados elegidos; las decisiones ordinarias se toman por mayoría absoluta de los presentes; la reforma estatutaria exige el 70 % de los presentes; y la fusión, transformación, disolución o liquidación exige el 70 % del total de delegados convocados.",
-    "feedbackIncorrect": "La respuesta correcta es: El quórum es la mitad de los delegados elegidos; las decisiones ordinarias se toman por mayoría absoluta de los presentes; la reforma estatutaria exige el 70 % de los presentes; y la fusión, transformación, disolución o liquidación exige el 70 % del total de delegados convocados."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Quórum: la mitad de los delegados elegidos. Decisiones ordinarias: mayoría absoluta de los presentes. Reforma de estatutos: 70 % de los presentes. Fusión, transformación, disolución o liquidación: 70 % del total de delegados convocados.",
+    "feedbackIncorrect": "La respuesta correcta es: Quórum: la mitad de los delegados elegidos. Decisiones ordinarias: mayoría absoluta de los presentes. Reforma de estatutos: 70 % de los presentes. Fusión, transformación, disolución o liquidación: 70 % del total de delegados convocados."
   },
   {
     "id": "p43",
     "level": 2,
-    "context": "El fondo se administra bajo los principios de la economía solidaria y sus cuerpos colegiados representan a los asociados de las sedes.",
-    "question": "¿Cuál afirmación es correcta?",
+    "context": "El fondo se administra con los principios de democracia, participación y autogestión.",
+    "question": "¿Cuál afirmación es correcta sobre la Junta Directiva y el Comité de Control Social?",
     "options": [
-      "La Junta Directiva y el Comité de Control Social son designados por la Gerencia General y responden solo ante la Superintendencia.",
-      "La Junta Directiva y el Comité de Control Social son elegidos por la Asamblea General y representan a los asociados del territorio nacional, bajo principios de democracia, participación y autogestión.",
-      "Solo la Junta Directiva es elegida por los asociados; el Comité de Control Social lo nombra el Revisor Fiscal para el periodo que él fije."
+      "La Gerencia General los designa y responden únicamente ante la Superintendencia",
+      "La Asamblea General los elige y representan a los asociados de todo el país",
+      "Los asociados eligen a la Junta, y el Revisor Fiscal nombra al Comité por el periodo que él fije"
     ],
     "correctIndex": 1,
-    "feedbackCorrect": "¡Correcto! La respuesta es: La Junta Directiva y el Comité de Control Social son elegidos por la Asamblea General y representan a los asociados del territorio nacional, bajo principios de democracia, participación y autogestión.",
-    "feedbackIncorrect": "La respuesta correcta es: La Junta Directiva y el Comité de Control Social son elegidos por la Asamblea General y representan a los asociados del territorio nacional, bajo principios de democracia, participación y autogestión."
+    "feedbackCorrect": "¡Correcto! La respuesta es: La Asamblea General los elige y representan a los asociados de todo el país.",
+    "feedbackIncorrect": "La respuesta correcta es: La Asamblea General los elige y representan a los asociados de todo el país."
   },
   {
     "id": "p44",
     "level": 2,
-    "context": "Los integrantes de los cuerpos colegiados nombrados por la asamblea general tienen una composición estatutaria",
-    "question": "¿Cómo están integrados los dos cuerpos colegiados?",
+    "context": "La Junta Directiva y el Comité de Control Social tienen una composición fijada en los estatutos.",
+    "question": "¿Cómo está integrado cada órgano?",
     "options": [
       "Junta Directiva: 7 principales y 7 suplentes personales. Comité de Control Social: 3 principales y sus suplentes personales.",
-      "Junta Directiva: 5 principales sin suplentes. Comité de Control Social: 7 principales, uno por cada sede y tres de Bogotá.",
-      "Ambos órganos tienen 7 principales y 7 suplentes, elegidos por la Gerencia Regional de cada sede."
+      "Junta Directiva: 5 principales sin suplentes. Comité de Control Social: 7 principales, uno por sede y tres de Bogotá.",
+      "Junta Directiva y Comité de Control Social: 7 principales y 7 suplentes cada uno, elegidos por cada sede regional."
     ],
     "correctIndex": 0,
     "feedbackCorrect": "¡Correcto! La respuesta es: Junta Directiva: 7 principales y 7 suplentes personales. Comité de Control Social: 3 principales y sus suplentes personales.",
@@ -685,96 +685,96 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p45",
     "level": 2,
-    "context": "La asamblea general nombra a los cuerpos colegiados; cada uno es independiente y con funciones diferentes",
-    "question": "¿Qué función corresponde a cada pieza de gobierno corporativo?",
+    "context": "Los órganos de gobierno del fondo son independientes y tienen funciones diferentes.",
+    "question": "¿Cuál afirmación describe correctamente sus funciones?",
     "options": [
-      "El Comité de Control Social ejerce la vigilancia social; “La Junta Comunica” informa a los asociados las decisiones y temas de la Junta; los informes de gestión (Junta, Gerencia, Control Social y Revisoría Fiscal) se presentan a la Asamblea como rendición de cuentas",
-      "El Comité de Control Social aprueba los estados financieros; “La Junta Comunica” reemplaza a la Asamblea; los informes de gestión los elabora solo la Gerencia Regional de Bogotá",
-      "La Revisoría Fiscal elige a la Junta, el Comité de Control Social administra el crédito y los informes de gestión son de uso interno, sin publicación a los delegados"
+      "El Comité de Control Social ejerce la vigilancia social; “La Junta Comunica” informa las decisiones de la Junta; los informes de gestión se presentan a la Asamblea como rendición de cuentas.",
+      "El Comité de Control Social aprueba los estados financieros; “La Junta Comunica” reemplaza a la Asamblea; los informes de gestión los elabora solo la Gerencia Regional de Bogotá.",
+      "La Revisoría Fiscal elige a la Junta Directiva; el Comité de Control Social administra el crédito; los informes de gestión son internos y no se presentan a los delegados."
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: El Comité de Control Social ejerce la vigilancia social; “La Junta Comunica” informa a los asociados las decisiones y temas de la Junta; los informes de gestión (Junta, Gerencia, Control Social y Revisoría Fiscal) se presentan a la Asamblea como rendición de cuentas.",
-    "feedbackIncorrect": "La respuesta correcta es: El Comité de Control Social ejerce la vigilancia social; “La Junta Comunica” informa a los asociados las decisiones y temas de la Junta; los informes de gestión (Junta, Gerencia, Control Social y Revisoría Fiscal) se presentan a la Asamblea como rendición de cuentas."
+    "feedbackCorrect": "¡Correcto! La respuesta es: El Comité de Control Social ejerce la vigilancia social; “La Junta Comunica” informa las decisiones de la Junta; los informes de gestión se presentan a la Asamblea como rendición de cuentas.",
+    "feedbackIncorrect": "La respuesta correcta es: El Comité de Control Social ejerce la vigilancia social; “La Junta Comunica” informa las decisiones de la Junta; los informes de gestión se presentan a la Asamblea como rendición de cuentas."
   },
   {
     "id": "p46",
     "level": 2,
-    "context": "La asamblea general de delegados tiene como función elegir la supervisión",
-    "question": "¿Cuál condición corresponde a elección de la Revisoría Fiscal?",
+    "context": "La Revisoría Fiscal vigila las finanzas del fondo y debe ser independiente.",
+    "question": "¿Qué condición corresponde a su elección?",
     "options": [
-      "La elige la Asamblea General de Delegados, no puede ser asociado del Fondo ni tener parentesco o sociedad con ánimo de lucro con miembros de los órganos de administración o vigilancia, y no debe reelegirse más de dos veces consecutivas.",
-      "La nombra la Junta Directiva entre los asociados hábiles con más de dos años de antigüedad, y puede votar en las decisiones de la Junta.",
-      "La designa la Superintendencia de la Economía Solidaria por un periodo de cinco años, y su función principal es otorgar créditos y administrar las sedes regionales."
+      "La elige la Asamblea; no puede ser asociado ni pariente o socio de directivos o miembros de control, y no puede reelegirse más de dos veces seguidas.",
+      "La nombra la Junta Directiva entre los asociados con más de dos años de antigüedad, y tiene voz y voto en todas las decisiones de la Junta.",
+      "La designa la Superintendencia de la Economía Solidaria por cinco años, y su función principal es aprobar los créditos y administrar las sedes regionales."
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: La elige la Asamblea General de Delegados, no puede ser asociado del Fondo ni tener parentesco o sociedad con ánimo de lucro con miembros de los órganos de administración o vigilancia, y no debe reelegirse más de dos veces consecutivas.",
-    "feedbackIncorrect": "La respuesta correcta es: La elige la Asamblea General de Delegados, no puede ser asociado del Fondo ni tener parentesco o sociedad con ánimo de lucro con miembros de los órganos de administración o vigilancia, y no debe reelegirse más de dos veces consecutivas."
+    "feedbackCorrect": "¡Correcto! La respuesta es: La elige la Asamblea; no puede ser asociado ni pariente o socio de directivos o miembros de control, y no puede reelegirse más de dos veces seguidas.",
+    "feedbackIncorrect": "La respuesta correcta es: La elige la Asamblea; no puede ser asociado ni pariente o socio de directivos o miembros de control, y no puede reelegirse más de dos veces seguidas."
   },
   {
     "id": "p47",
     "level": 2,
-    "context": "Las organizaciones pueden ser públicas, privadas o solidarias dependiendo su propósito económico",
-    "question": "¿Cuál afirmación describe correctamente al Fondo?",
+    "context": "Las organizaciones pueden ser públicas, privadas o solidarias, según su propósito.",
+    "question": "¿Cuál afirmación describe correctamente a FODUN?",
     "options": [
-      "Es un banco de los docentes de la Universidad Nacional: capta ahorro para generar utilidades que se reparten entre inversionistas.",
-      "Es una organización de economía solidaria, creada por y para docentes activos y pensionados de la Universidad Nacional; no es un banco, no reparte utilidades a inversionistas y administra recursos de los asociados para el bienestar colectivo",
-      "Es un intermediario financiero externo a la comunidad docente, cuyas decisiones las toma una junta de inversionistas"
+      "Es un banco de los docentes de la Universidad Nacional que capta su ahorro para generar utilidades y repartirlas entre inversionistas.",
+      "Es una organización solidaria de docentes activos y pensionados de la Universidad Nacional, que administra sus recursos para el bienestar colectivo.",
+      "Es un intermediario financiero externo a la comunidad docente, cuyas decisiones las toma una junta de inversionistas privados ajenos a la Universidad."
     ],
     "correctIndex": 1,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Es una organización de economía solidaria, creada por y para docentes activos y pensionados de la Universidad Nacional; no es un banco, no reparte utilidades a inversionistas y administra recursos de los asociados para el bienestar colectivo.",
-    "feedbackIncorrect": "La respuesta correcta es: Es una organización de economía solidaria, creada por y para docentes activos y pensionados de la Universidad Nacional; no es un banco, no reparte utilidades a inversionistas y administra recursos de los asociados para el bienestar colectivo."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Es una organización solidaria de docentes activos y pensionados de la Universidad Nacional, que administra sus recursos para el bienestar colectivo.",
+    "feedbackIncorrect": "La respuesta correcta es: Es una organización solidaria de docentes activos y pensionados de la Universidad Nacional, que administra sus recursos para el bienestar colectivo."
   },
   {
     "id": "p48",
     "level": 2,
-    "context": "Los asociados al fondo hacen un aporte mensual que tiene un propósito solidario; pero redunda en beneficios colectivos",
+    "context": "El aporte mensual de cada asociado tiene un propósito solidario y se convierte en beneficios colectivos.",
     "question": "¿Cuál es el ciclo que conecta el aporte con el bienestar?",
     "options": [
-      "Crédito, utilidades para inversionistas, dividendos y cierre del ciclo",
-      "Aportes que fortalecen el patrimonio; administración con responsabilidad y transparencia; créditos en condiciones preferenciales; excedentes; reinversión en bienestar, educación solidaria, auxilios, sedes y desarrollo empresarial solidario",
-      "Aportes que se congelan, créditos solo a terceros y excedentes que se distribuyen como utilidad individual al cierre de cada mes"
+      "Los aportes financian créditos con tasas de mercado y generan utilidades que se pagan como dividendos a los inversionistas.",
+      "Los aportes fortalecen el patrimonio, permiten créditos en condiciones preferenciales y generan excedentes que se reinvierten en bienestar.",
+      "Los aportes se congelan, los créditos se otorgan solo a terceros y los excedentes se reparten como utilidad individual cada mes."
     ],
     "correctIndex": 1,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Aportes que fortalecen el patrimonio; administración con responsabilidad y transparencia; créditos en condiciones preferenciales; excedentes; reinversión en bienestar, educación solidaria, auxilios, sedes y desarrollo empresarial solidario.",
-    "feedbackIncorrect": "La respuesta correcta es: Aportes que fortalecen el patrimonio; administración con responsabilidad y transparencia; créditos en condiciones preferenciales; excedentes; reinversión en bienestar, educación solidaria, auxilios, sedes y desarrollo empresarial solidario."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Los aportes fortalecen el patrimonio, permiten créditos en condiciones preferenciales y generan excedentes que se reinvierten en bienestar.",
+    "feedbackIncorrect": "La respuesta correcta es: Los aportes fortalecen el patrimonio, permiten créditos en condiciones preferenciales y generan excedentes que se reinvierten en bienestar."
   },
   {
     "id": "p49",
     "level": 2,
-    "context": "Los principios universales solidarios que rigen el cooperativismo y dan lugar a la educación solidaria se representa por un modelo.",
-    "question": "¿Cuáles son esos principios?",
+    "context": "La página del fondo explica los principios que sostienen su modelo y el papel de la educación solidaria (PESEM).",
+    "question": "¿Cuál afirmación es correcta?",
     "options": [
-      "Los principios citados son solidaridad, equidad, participación democrática y ayuda mutua; la educación, a través del PESEM, no es un beneficio adicional sino uno de los principios que sostiene el modelo",
-      "El único principio es la rentabilidad; el PESEM es un seguro voluntario ajeno a la participación",
-      "La equidad significa que solo los asociados de Bogotá deciden, y la educación solidaria es opcional y externa al modelo"
+      "Son solidaridad, equidad, participación democrática y ayuda mutua; la educación solidaria es parte del modelo, no un beneficio adicional.",
+      "El principio central es la rentabilidad, y el PESEM es un seguro voluntario que no tiene relación con la participación de los asociados.",
+      "La equidad significa que deciden solo los asociados de Bogotá, y la educación solidaria es una actividad opcional y externa al modelo."
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Los principios citados son solidaridad, equidad, participación democrática y ayuda mutua; la educación, a través del PESEM, no es un beneficio adicional sino uno de los principios que sostiene el modelo.",
-    "feedbackIncorrect": "La respuesta correcta es: Los principios citados son solidaridad, equidad, participación democrática y ayuda mutua; la educación, a través del PESEM, no es un beneficio adicional sino uno de los principios que sostiene el modelo."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Son solidaridad, equidad, participación democrática y ayuda mutua; la educación solidaria es parte del modelo, no un beneficio adicional.",
+    "feedbackIncorrect": "La respuesta correcta es: Son solidaridad, equidad, participación democrática y ayuda mutua; la educación solidaria es parte del modelo, no un beneficio adicional."
   },
   {
     "id": "p50",
     "level": 2,
-    "context": "Los estatutos del fondo definen la participación, autogestión, vigilancia y dirección de la organización",
-    "question": "¿Por qué existe Asamblea, delegados y Control Social?",
+    "context": "Los estatutos definen cómo participan, deciden y vigilan los asociados.",
+    "question": "¿Por qué existen la Asamblea, los delegados y el Comité de Control Social?",
     "options": [
-      "La Asamblea solo informa; los delegados administran el crédito; el Control Social reemplaza a la Revisoría Fiscal y reparte excedentes",
-      "La Asamblea es el máximo órgano de decisión: define el rumbo, aprueba resultados y recibe los informes de gestión; los delegados llevan la voz de cada regional cuando no todos pueden asistir; el Comité de Control Social vela porque recursos y decisiones respondan al interés de los asociados",
-      "La Asamblea es un órgano consultivo que se reúne cuando la Gerencia lo decide; los delegados los nombra la Junta Directiva para administrar las sedes; el Control Social define las tasas de interés de los créditos"
+      "La Asamblea solo informa; los delegados administran el crédito; el Comité de Control Social reemplaza a la Revisoría Fiscal y reparte los excedentes.",
+      "La Asamblea es el máximo órgano de decisión; los delegados llevan la voz de cada regional; el Comité de Control Social vela por el interés de los asociados.",
+      "La Asamblea solo opina cuando la Gerencia la convoca; los delegados administran las sedes; el Comité de Control Social fija las tasas de los créditos."
     ],
     "correctIndex": 1,
-    "feedbackCorrect": "¡Correcto! La respuesta es: La Asamblea es el máximo órgano de decisión: define el rumbo, aprueba resultados y recibe los informes de gestión; los delegados llevan la voz de cada regional cuando no todos pueden asistir; el Comité de Control Social vela porque recursos y decisiones respondan al interés de los asociados.",
-    "feedbackIncorrect": "La respuesta correcta es: La Asamblea es el máximo órgano de decisión: define el rumbo, aprueba resultados y recibe los informes de gestión; los delegados llevan la voz de cada regional cuando no todos pueden asistir; el Comité de Control Social vela porque recursos y decisiones respondan al interés de los asociados."
+    "feedbackCorrect": "¡Correcto! La respuesta es: La Asamblea es el máximo órgano de decisión; los delegados llevan la voz de cada regional; el Comité de Control Social vela por el interés de los asociados.",
+    "feedbackIncorrect": "La respuesta correcta es: La Asamblea es el máximo órgano de decisión; los delegados llevan la voz de cada regional; el Comité de Control Social vela por el interés de los asociados."
   },
   {
     "id": "p53",
     "level": 2,
-    "context": "En la página del fondo se encuentran entre otras, las preguntas frecuentes",
-    "question": "¿Qué se entiende por los aportes?",
+    "context": "En la sección de preguntas frecuentes de la página del fondo se explica qué son los aportes.",
+    "question": "¿Qué son los aportes?",
     "options": [
-      "Dejan de pertenecer al asociado en el momento del descuento y no pueden devolverse.",
-      "Son la base del patrimonio colectivo y, a la vez, le pertenecen al asociado como parte de su patrimonio",
-      "Solo financian seguros y no tienen relación con el ahorro ni con el crédito"
+      "Dejan de pertenecer al asociado en el momento del descuento y no se le devuelven, ni siquiera al retirarse.",
+      "Son la base del patrimonio colectivo y, a la vez, le pertenecen al asociado como parte de su patrimonio.",
+      "Solo sirven para pagar los seguros del fondo y no tienen relación con el ahorro ni con el crédito."
     ],
     "correctIndex": 1,
     "feedbackCorrect": "¡Correcto! La respuesta es: Son la base del patrimonio colectivo y, a la vez, le pertenecen al asociado como parte de su patrimonio.",
@@ -783,71 +783,71 @@ window.FABI_QUESTION_BANK = [
   {
     "id": "p54",
     "level": 2,
-    "context": "La página del fondo se presenta un mensaje concreto sobre el objetivo y la misión de los asociados, cierra el modelo con una idea de círculo.",
-    "question": "¿Cuál corresponde a lo publicado?",
+    "context": "En la página del fondo, el modelo solidario se resume en una frase que cierra un círculo.",
+    "question": "¿Cuál es esa frase?",
     "options": [
-      "Unos aportan, otros deciden y solo los inversionistas crecen.",
-      "Todos aportamos, todos participamos y todos crecemos juntos: cada beneficio puede volver como nuevo ahorro y el ciclo empieza otra vez.",
-      "El ciclo se cierra cuando el asociado recibe dividendos y deja de aportar."
+      "Unos aportan, otros deciden y solo crecen los inversionistas: el ciclo termina cuando se reparten las utilidades.",
+      "Todos aportamos, todos participamos y todos crecemos juntos: cada beneficio vuelve como nuevo ahorro y el ciclo empieza otra vez.",
+      "Cada asociado aporta lo que quiere y recibe lo que aportó: el ciclo se cierra cuando recibe dividendos y deja de aportar."
     ],
     "correctIndex": 1,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Todos aportamos, todos participamos y todos crecemos juntos: cada beneficio puede volver como nuevo ahorro y el ciclo empieza otra vez.",
-    "feedbackIncorrect": "La respuesta correcta es: Todos aportamos, todos participamos y todos crecemos juntos: cada beneficio puede volver como nuevo ahorro y el ciclo empieza otra vez."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Todos aportamos, todos participamos y todos crecemos juntos: cada beneficio vuelve como nuevo ahorro y el ciclo empieza otra vez.",
+    "feedbackIncorrect": "La respuesta correcta es: Todos aportamos, todos participamos y todos crecemos juntos: cada beneficio vuelve como nuevo ahorro y el ciclo empieza otra vez."
   },
   {
     "id": "p55",
     "level": 2,
-    "context": "En la página del fondo se encuentra una propuesta",
-    "question": "¿Cuál es la cadena que describe la página?",
+    "context": "La página del fondo describe una cadena que va del ahorro al bienestar.",
+    "question": "¿Cuál es esa cadena?",
     "options": [
-      "El ahorro se retira de inmediato, no entra al patrimonio y no financia crédito.",
-      "El asociado ahorra, eso fortalece el patrimonio, el patrimonio permite nuevos créditos, los excedentes financian bienestar y todos los asociados se benefician.",
-      "El ahorro se coloca en un banco externo y el Fondo solo cobra comisión."
+      "El asociado ahorra, el ahorro se retira de inmediato, no entra al patrimonio y por eso no financia nuevos créditos.",
+      "El asociado ahorra, eso fortalece el patrimonio, permite nuevos créditos y los excedentes financian el bienestar de todos.",
+      "El asociado ahorra, el ahorro se deposita en un banco externo y el fondo solo cobra una comisión por administrarlo."
     ],
     "correctIndex": 1,
-    "feedbackCorrect": "¡Correcto! La respuesta es: El asociado ahorra, eso fortalece el patrimonio, el patrimonio permite nuevos créditos, los excedentes financian bienestar y todos los asociados se benefician.",
-    "feedbackIncorrect": "La respuesta correcta es: El asociado ahorra, eso fortalece el patrimonio, el patrimonio permite nuevos créditos, los excedentes financian bienestar y todos los asociados se benefician."
+    "feedbackCorrect": "¡Correcto! La respuesta es: El asociado ahorra, eso fortalece el patrimonio, permite nuevos créditos y los excedentes financian el bienestar de todos.",
+    "feedbackIncorrect": "La respuesta correcta es: El asociado ahorra, eso fortalece el patrimonio, permite nuevos créditos y los excedentes financian el bienestar de todos."
   },
   {
     "id": "p57",
     "level": 2,
-    "context": "En la página del fondo se encuentra descrito un sistema que representa los beneficios",
-    "question": "¿Cómo agrupa la página los beneficios?",
+    "context": "La página del fondo agrupa en dos tipos los beneficios para los asociados.",
+    "question": "¿Cómo los agrupa?",
     "options": [
-      "Financiero: ahorro, crédito y CDAT. Social: auxilios, convenios, seguros, sedes y apartamentos, cursos, actividades y eventos en familia.",
-      "Financiero: solo CDAT. Social: solo la Asamblea.",
-      "Financiero: dividendos. Social: acciones en bolsa"
+      "Financieros: ahorro, crédito y CDAT. Sociales: auxilios, convenios, seguros, sedes y apartamentos, cursos y eventos en familia.",
+      "Financieros: solo los CDAT. Sociales: la participación en la Asamblea y la elección de los delegados de cada regional.",
+      "Financieros: dividendos y acciones en bolsa. Sociales: descuentos en bancos y en comercios aliados de todo el país."
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Financiero: ahorro, crédito y CDAT. Social: auxilios, convenios, seguros, sedes y apartamentos, cursos, actividades y eventos en familia.",
-    "feedbackIncorrect": "La respuesta correcta es: Financiero: ahorro, crédito y CDAT. Social: auxilios, convenios, seguros, sedes y apartamentos, cursos, actividades y eventos en familia."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Financieros: ahorro, crédito y CDAT. Sociales: auxilios, convenios, seguros, sedes y apartamentos, cursos y eventos en familia.",
+    "feedbackIncorrect": "La respuesta correcta es: Financieros: ahorro, crédito y CDAT. Sociales: auxilios, convenios, seguros, sedes y apartamentos, cursos y eventos en familia."
   },
   {
     "id": "p58",
     "level": 2,
-    "context": "En principio de participación",
-    "question": "¿Qué razón da la página para las elecciones?",
+    "context": "La página del fondo explica por qué se hacen elecciones.",
+    "question": "¿Qué razón da?",
     "options": [
-      "Porque un banco corresponsal exige rotar gerentes cada año",
-      "Porque la participación democrática es un principio solidario: los asociados eligen a quienes los representan en la Asamblea y en los órganos de control",
-      "Porque los delegados se designan por antigüedad y no por voto"
+      "Porque un banco corresponsal exige que el fondo cambie cada año a sus gerentes, directivos y delegados.",
+      "Porque los asociados eligen democráticamente a quienes los representan en la Asamblea y en los órganos de control.",
+      "Porque los estatutos asignan los cargos de delegado por antigüedad en el fondo, sin necesidad de hacer una votación."
     ],
     "correctIndex": 1,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Porque la participación democrática es un principio solidario: los asociados eligen a quienes los representan en la Asamblea y en los órganos de control.",
-    "feedbackIncorrect": "La respuesta correcta es: Porque la participación democrática es un principio solidario: los asociados eligen a quienes los representan en la Asamblea y en los órganos de control."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Porque los asociados eligen democráticamente a quienes los representan en la Asamblea y en los órganos de control.",
+    "feedbackIncorrect": "La respuesta correcta es: Porque los asociados eligen democráticamente a quienes los representan en la Asamblea y en los órganos de control."
   },
   {
     "id": "p59",
     "level": 2,
-    "context": "En el sitio web del fondo se encuentran explícitos dos principios",
-    "question": "¿Cómo explica la página estos dos principios equidad y ayuda mutua?",
+    "context": "La página del fondo explica dos principios: la equidad y la ayuda mutua.",
+    "question": "¿Cómo los explica?",
     "options": [
-      "Equidad: todos los asociados tienen igualdad de oportunidades. Ayuda mutua: el bienestar colectivo fortalece el bienestar individual.",
-      "Equidad: más voto quien más aporte. Ayuda mutua: cada asociado resuelve solo sus créditos.",
-      "Equidad: prioridad de una sola regional. Ayuda mutua: auxilios solo para no asociados."
+      "Equidad: todos tienen igualdad de oportunidades. Ayuda mutua: el bienestar colectivo fortalece el bienestar individual.",
+      "Equidad: tiene más voto quien más aporta. Ayuda mutua: cada asociado debe resolver solo sus propios créditos.",
+      "Equidad: se da prioridad a una sola regional. Ayuda mutua: los auxilios se entregan solo a no asociados."
     ],
     "correctIndex": 0,
-    "feedbackCorrect": "¡Correcto! La respuesta es: Equidad: todos los asociados tienen igualdad de oportunidades. Ayuda mutua: el bienestar colectivo fortalece el bienestar individual.",
-    "feedbackIncorrect": "La respuesta correcta es: Equidad: todos los asociados tienen igualdad de oportunidades. Ayuda mutua: el bienestar colectivo fortalece el bienestar individual."
+    "feedbackCorrect": "¡Correcto! La respuesta es: Equidad: todos tienen igualdad de oportunidades. Ayuda mutua: el bienestar colectivo fortalece el bienestar individual.",
+    "feedbackIncorrect": "La respuesta correcta es: Equidad: todos tienen igualdad de oportunidades. Ayuda mutua: el bienestar colectivo fortalece el bienestar individual."
   }
 ];
