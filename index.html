@@ -47,11 +47,14 @@
   .num{font-variant-numeric:tabular-nums}
   /* MENÚ */
   #menu{background:linear-gradient(90deg,rgba(242,242,242,.98) 0%,rgba(242,242,242,.94) 50%,rgba(242,242,242,.1) 100%);backdrop-filter:none}
-  #menu .inner{width:1320px;display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:30px}
+  #menu .inner{width:1320px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);align-items:center;gap:30px}
   .brand{display:block;height:92px;width:auto}
   .eyebrow{font:700 16px var(--display);letter-spacing:.18em;text-transform:uppercase;color:var(--rosa);margin:30px 0 6px}
-  .title{font:800 74px/1 var(--display);letter-spacing:-.02em;color:var(--vino)}
-  .title span{display:block;color:var(--rojo)}
+  .title{font:800 50px/1.05 var(--display);letter-spacing:-.02em;color:var(--vino)}
+  .title span{display:block;color:var(--rojo);white-space:nowrap}
+  .menuBtns{flex-wrap:nowrap;gap:10px}
+  .menuBtns .btn{font-size:16px;padding:12px 20px}
+  .menuBtns .btn.ghost{padding:12px 8px}
   .pitch{font-size:21px;line-height:1.5;color:var(--tinta);max-width:620px;margin:20px 0 22px}
   .lvchips{display:flex;gap:10px;margin-bottom:24px;max-width:620px}
   .lvchip{flex:1;border-radius:14px;padding:11px 14px;background:var(--blanco);border:1px solid var(--linea);border-top:5px solid var(--c)}
@@ -125,6 +128,10 @@
   .concept{border-radius:16px;padding:18px 20px;background:var(--gris)}
   .concept h3{font-size:20px;color:var(--vino);margin-bottom:8px}
   .concept p{margin:0;font-size:16.5px;line-height:1.5}
+  .concept p + .bul{margin-top:6px}
+  .bul{margin:0;padding-left:22px;font-size:16.5px;line-height:1.5}
+  .bul li{margin:3px 0}
+  .bul li::marker{color:var(--rojo)}
   .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:22px 0}
   .stat{background:var(--gris);border-radius:16px;padding:16px 18px}
   .stat .l{font:700 12.5px var(--display);color:var(--tenue);text-transform:uppercase;letter-spacing:.08em}
@@ -133,6 +140,7 @@
   .lg{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;font-size:14px;color:var(--tenue);background:var(--gris);border-radius:14px;padding:10px 8px}
   .lg b{color:var(--tinta);font-size:15px}
   .lg canvas{width:90px;height:62px}
+  .lg .ed{background:var(--rojo);color:var(--blanco);font-weight:700;border-radius:8px;padding:3px 8px}
   .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
   table.pts{width:100%;border-collapse:collapse;font-size:16.5px;margin-top:6px}
   table.pts td{padding:6px 4px;border-bottom:1px dashed var(--linea)}
@@ -176,7 +184,7 @@
   .port #menu .inner{width:436px;grid-template-columns:1fr;gap:0}
   .port .brand{height:54px}
   .port .eyebrow{font-size:12px;margin:18px 0 4px}
-  .port .title{font-size:40px}
+  .port .title{font-size:31px}
   .port .pitch{font-size:15.5px;margin:12px 0 14px}
   .port .lvchips{gap:8px;margin-bottom:14px}
   .port .lvchip{padding:8px 10px;border-radius:12px}
@@ -196,12 +204,15 @@
   .port .lvcard p{font-size:14.5px} .port .lvcard .rule{font-size:13.5px}
   .port .lvbtn{font-size:14px;padding:9px 16px}
   .port .grid3,.port .two{grid-template-columns:1fr;gap:10px;margin:14px 0}
-  .port .concept{padding:14px 16px} .port .concept h3{font-size:17px} .port .concept p{font-size:14.5px}
+  .port .concept{padding:14px 16px} .port .concept h3{font-size:17px} .port .concept p{font-size:14.5px} .port .bul{font-size:14.5px;padding-left:18px}
   .port .stats{grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
   .port .stat{padding:12px 14px} .port .stat .v{font-size:22px} .port .stat .l{font-size:11px}
   .port .legend{grid-template-columns:repeat(3,1fr);gap:8px}
   .port .lg{font-size:12px;padding:8px 4px} .port .lg b{font-size:12.5px}
   .port .lg canvas{width:72px;height:50px}
+  .port .lg .ed{padding:2px 5px}
+  .port .menuBtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .port .menuBtns .btn{font-size:14.5px;padding:11px 10px}
   .port table.pts{font-size:14px}
   .port #qCard .case{font-size:19px}
   .port .ask{font-size:16px;margin-bottom:14px}
@@ -246,15 +257,15 @@
     <div>
      <img class="brand" id="logoMenu" alt="FODUN · Fondo de Empleados Docentes Universidad Nacional de Colombia">
      <div class="eyebrow">Programa para asociados</div>
-     <h1 class="title">Formación en <span>Economía Solidaria</span></h1>
-     <p class="pitch">Acompaña a <b>FABI</b> o a <b>FABIO</b> en un ascenso por tres niveles con preguntas sobre cómo funciona tu fondo. Puedes entrar las veces que quieras: tu avance queda guardado y al final obtienes tu puntaje sobre 100.</p>
+     <h1 class="title">Formación en <span>Economía Solidaria -ES-</span></h1>
+     <p class="pitch">Un ascenso con <b>FABI</b> o <b>FABIO</b> por tres niveles, con preguntas sobre cómo funciona el fondo. Se puede ingresar las veces que se desee: el avance queda guardado y al final se obtiene un puntaje sobre 100.</p>
      <div class="lvchips" id="lvChips"></div>
      <div class="form">
       <div class="field"><label for="user">Nombre y apellido</label><input id="user" maxlength="40" placeholder="Ej: Ana María Rojas" autocomplete="name" spellcheck="false"></div>
       <div class="field"><label for="sede">Ciudad</label><select id="sede"></select></div>
      </div>
      <div class="err" id="userErr"></div>
-     <div class="row">
+     <div class="row menuBtns">
       <button class="btn primary" id="bPlay">INGRESAR</button>
       <button class="btn" id="bHow">CÓMO SE JUEGA</button>
       <button class="btn ghost" id="bRank">Ranking</button>
@@ -270,9 +281,9 @@
    <div class="card" id="lvCard">
     <div class="lvhead">
      <div>
-      <span class="tag vino">Tu avance</span>
+      <span class="tag vino">Avance</span>
       <h2 class="ttl" id="lvHello"></h2>
-      <div class="sub">Supera cada nivel para desbloquear el siguiente. Puedes repetir los niveles que ya superaste.</div>
+      <div class="sub">Cada nivel superado desbloquea el siguiente. Los niveles superados se pueden repetir.</div>
      </div>
      <div class="total">
       <div class="l">Puntaje total</div>
@@ -287,7 +298,7 @@
       <div class="row"><button class="btn" id="lvHow">CÓMO SE JUEGA</button><button class="btn" id="lvRank">RANKING</button><button class="btn ghost" id="lvOut">Cambiar asociado</button></div>
      </div>
      <div class="picker" role="radiogroup" aria-labelledby="pickLbl">
-      <div class="pl" id="pickLbl">Elige tu personaje</div>
+      <div class="pl" id="pickLbl">Personaje</div>
       <div class="chars" id="chars"></div>
      </div>
     </div>
@@ -302,20 +313,20 @@
      <div class="row" id="pvActions"></div>
     </div>
     <div class="pvBody">
-     <p>Para participar en <b>Formación en Economía Solidaria</b> necesitamos tu autorización para tratar algunos de tus datos personales.</p>
+     <p>Para participar en <b>Formación en Economía Solidaria</b> se requiere autorización para el tratamiento de algunos datos personales.</p>
      <h3>Responsable</h3>
      <p>FODUN, Fondo de Empleados Docentes de la Universidad Nacional de Colombia.</p>
      <h3>Qué datos se recogen</h3>
-     <p>Nombre y apellido, ciudad, personaje elegido, puntajes y tiempo de juego. Si respondes el formulario de calificación, también tus respuestas.</p>
+     <p>Nombre y apellido, ciudad, personaje elegido, puntajes y tiempo de juego. Si se responde el formulario de calificación, también esas respuestas.</p>
      <h3>Para qué se usan</h3>
      <p>Únicamente con fines de formación y seguimiento del programa, y para la protección de datos personales del fondo. No se venden, no se comparten con terceros ni se usan con fines comerciales.</p>
      <h3>Dónde se guardan</h3>
-     <p>Tu avance se guarda en este dispositivo. Al completar el nivel Avanzado, tu resultado se registra en una hoja de cálculo de acceso restringido, de uso exclusivo del fondo.</p>
-     <h3>Tus derechos</h3>
-     <p>Puedes conocer, actualizar, rectificar y solicitar la supresión de tus datos, y revocar esta autorización en cualquier momento.</p>
+     <p>El avance se guarda en este dispositivo. Al completar el nivel Avanzado, el resultado se registra en una hoja de cálculo de acceso restringido, de uso exclusivo del fondo.</p>
+     <h3>Derechos del titular</h3>
+     <p>Se pueden conocer, actualizar, rectificar y solicitar la supresión de los datos, y revocar esta autorización en cualquier momento.</p>
      <h3>Más información</h3>
-     <p>Consulta la <a id="pvPolicy" target="_blank" rel="noopener">Política de tratamiento de datos de FODUN</a> o la sección de <a id="pvNorm" target="_blank" rel="noopener">Normatividad</a> en la página del fondo.</p>
-     <p class="pvNote" id="pvNote">Al pulsar <b>«Acepto la política»</b> autorizas el tratamiento de tus datos en los términos descritos.</p>
+     <p>Más detalles en la <a id="pvPolicy" target="_blank" rel="noopener">Política de tratamiento de datos de FODUN</a> o en la sección de <a id="pvNorm" target="_blank" rel="noopener">Normatividad</a> de la página del fondo.</p>
+     <p class="pvNote" id="pvNote">Al pulsar <b>«Acepto la política»</b> se autoriza el tratamiento de los datos en los términos descritos.</p>
     </div>
    </div>
   </div>
@@ -324,12 +335,12 @@
   <div class="ov" id="how">
    <div class="card wide">
     <span class="tag">Cómo se juega</span>
-    <h2 class="ttl">Sube, responde y suma hasta 100 puntos</h2>
+    <h2 class="ttl">Subir, responder y sumar hasta 100 puntos</h2>
     <div class="two" style="margin-top:16px">
-     <div class="concept"><h3>Controles</h3><p><b>← →</b> o <b>A / D</b>: mover a tu personaje (salta solo y puede cruzar los bordes).<br><b>Espacio / ↑ / W</b>: lanzar un <b>valor solidario</b> hacia arriba para despejar obstáculos (tienes 3 y se recargan).<br>Caer sobre un obstáculo también lo despeja. <b>P / Esc</b>: pausa.<br>En el celular usa los botones inferiores.</p></div>
+     <div class="concept"><h3>Controles</h3><ul class="bul"><li><b>← →</b> o <b>A / D</b>: mover el personaje (salta solo y puede cruzar los bordes).</li><li><b>Espacio / ↑ / W</b>: lanzar un <b>valor solidario</b> hacia arriba para despejar obstáculos (hay 3 y se recargan).</li><li>Caer sobre un obstáculo también lo despeja.</li><li><b>P / Esc</b>: pausa.</li><li>En el celular se usan los botones inferiores.</li></ul></div>
      <div class="concept"><h3>Niveles y puntaje</h3><table class="pts" id="howPts"></table></div>
     </div>
-    <div class="concept" style="margin-top:16px"><h3>Preguntas</h3><p>Cada barrera del camino es una pregunta: tienes 30 segundos para responder y siempre verás la respuesta correcta. En los niveles <b>Básico</b> y <b>Medio</b>, si te equivocas regresas al último punto seguro y la barrera sigue cerrada: al volver te espera una pregunta diferente. En el nivel <b>Avanzado</b> una respuesta incorrecta suma 0 puntos y sigues subiendo.</p></div>
+    <div class="concept" style="margin-top:16px"><h3>Preguntas</h3><p>Cada barrera del camino es una pregunta y siempre se muestra la respuesta correcta.</p><ul class="bul" id="howQ"></ul></div>
     <div class="legend" id="legend"></div>
     <div class="row end" style="margin-top:22px"><button class="btn primary" id="bHowOk">ENTENDIDO</button></div>
    </div>
@@ -370,7 +381,7 @@
     <h2 class="ttl" id="rTitle"></h2>
     <div class="sub" id="rSub"></div>
     <div class="stats" id="rStats"></div>
-    <div class="concept"><h3>Lectura de tu resultado</h3><p id="rRead"></p></div>
+    <div class="concept"><h3>Lectura del resultado</h3><p id="rRead"></p></div>
     <div class="row end" style="margin-top:22px"><button class="btn" id="rLevels">VER NIVELES</button><button class="btn primary" id="rNext">SIGUIENTE NIVEL</button></div>
    </div>
   </div>
@@ -379,7 +390,7 @@
   <div class="ov" id="pause">
    <div class="card" style="width:560px;text-align:center">
     <h2 class="ttl" style="color:var(--vino)">Pausa</h2>
-    <p class="sub">Si sales a los niveles, este intento no se guarda.</p>
+    <p class="sub">Al salir a los niveles, este intento no se guarda.</p>
     <div class="row" style="justify-content:center;margin-top:20px"><button class="btn primary" id="pGo">CONTINUAR</button><button class="btn" id="pMenu">SALIR A NIVELES</button></div>
    </div>
   </div>
@@ -388,11 +399,11 @@
   <div class="ov" id="final">
    <div class="card wide">
     <span class="tag verde">Recorrido completo</span>
-    <h2 class="ttl" style="color:var(--vino)">¡Completaste la formación!</h2>
-    <div class="sub">Superaste los tres niveles de Economía Solidaria. Descarga tu constancia de participación y cuéntanos cómo te fue.</div>
+    <h2 class="ttl" style="color:var(--vino)">¡Formación completada!</h2>
+    <div class="sub">Los tres niveles de Economía Solidaria fueron superados. La constancia de participación está disponible para descargar y la experiencia se puede calificar en la encuesta.</div>
     <div class="stats" id="fStats"></div>
     <div class="row between">
-     <div class="row"><button class="btn primary" id="fCert">VER CONSTANCIA</button><a class="btn" id="fRate" target="_blank" rel="noopener">CALIFICA TU EXPERIENCIA</a></div>
+     <div class="row"><button class="btn primary" id="fCert">VER CONSTANCIA</button><a class="btn" id="fRate" target="_blank" rel="noopener">CALIFICAR LA EXPERIENCIA</a></div>
      <div class="row"><button class="btn ghost" id="fRank">Ranking</button><button class="btn ghost" id="fLevels">Volver a niveles</button></div>
     </div>
     <div class="msg" id="fMsg" role="status"></div>
@@ -434,7 +445,7 @@
 const GRAV = 0.42, BOUNCE = -14.6, SPRING = -23, BOOST = -19, MAXVX = 7.2;
 const PW = 48, PH = 70;   // área de choque del personaje
 const CHAR_H = 98;          // altura de dibujo del personaje
-const GATE_GAP = 1300, Q_TIME = 30;
+const GATE_GAP = 1300;
 const STORE_KEY = "fodun_economia_solidaria_v1";
 const SURVEY_URL = "https://docs.google.com/forms/d/e/1FAIpQLSca5yL5y0xTr8mT-4o7gcmXnamktYHd9i0rEqzsumRBReMa4Q/viewform";
 // URL de la aplicación web de Google Apps Script (termina en /exec). Ver backend/GUIA-GOOGLE-SHEETS.md.
@@ -466,25 +477,25 @@ const FONT_B = "'Nunito Sans', 'Segoe UI', Arial, sans-serif";
 // q = número de preguntas del nivel; los puntos por pregunta son max / q.
 // pass > 0: hay que acertar para abrir cada barrera (una respuesta incorrecta regresa al punto seguro).
 const LEVELS = [
-  { key:"basico", name:"Básico", color:PAL.verde, ink:"#1F7A3A", cls:"verde", q:4, max:20, pass:20, bg:"amanecer",
+  { key:"basico", name:"Básico", color:PAL.verde, ink:"#1F7A3A", cls:"verde", q:4, max:20, pass:20, qtime:30, bg:"amanecer",
     gap:[70,140], moving:.12, fragile:.12, spring:.08, enemyGap:470, spawn:.15,
     enemies:["individualismo","desinformacion"],
     sub:"Lo esencial: qué es FODUN, cómo se organiza y quién lo vigila.",
     concepts:[
       ["Economía solidaria","Organizaciones sin ánimo de lucro, autogestionadas y democráticas, donde las personas se asocian para resolver necesidades comunes (Ley 454 de 1998)."],
       ["Fondo de empleados","Asociación de trabajadores con un vínculo común que ahorran juntos y acceden a crédito y bienestar. FODUN reúne a los docentes activos y pensionados de la Universidad Nacional."],
-      ["Ser asociado","Al afiliarte eres asociado: aportas cada mes, participas en las decisiones y accedes a ahorro, crédito, seguros y bienestar."]
+      ["Ser asociado","Quien se afilia es asociado: aporta cada mes, participa en las decisiones y accede a ahorro, crédito, seguros y bienestar."]
     ]},
-  { key:"medio", name:"Medio", color:PAL.amarillo, ink:"#8A6400", cls:"amarillo", q:3, max:30, pass:30, bg:"atardecer",
+  { key:"medio", name:"Medio", color:PAL.amarillo, ink:"#8A6400", cls:"amarillo", q:3, max:30, pass:30, qtime:30, bg:"atardecer",
     gap:[80,155], moving:.24, fragile:.2, spring:.07, enemyGap:360, spawn:.25,
     enemies:["individualismo","desinformacion","morosidad","desconfianza"],
     sub:"Los servicios del fondo: bienestar, seguros, ahorro, crédito y auxilios.",
     concepts:[
       ["Bienestar","El fondo ofrece centros recreativos y alojamientos para los asociados y sus familias, con reglamentos de uso."],
-      ["Seguros","FODUN maneja pólizas colectivas que protegen a los asociados y sus créditos. Conocer coberturas y deducibles te ayuda a usarlas bien."],
+      ["Seguros","FODUN maneja pólizas colectivas que protegen a los asociados y sus créditos. Conocer coberturas y deducibles ayuda a usarlas bien."],
       ["Ahorro, crédito y auxilios","Hay créditos con distintos plazos, CDAT y auxilios como el funerario o la asistencia domiciliaria, cada uno con sus requisitos y topes."]
     ]},
-  { key:"avanzado", name:"Avanzado", color:PAL.rojo, ink:"#8C1636", cls:"", q:5, max:50, pass:0, bg:"noche",
+  { key:"avanzado", name:"Avanzado", color:PAL.rojo, ink:"#8C1636", cls:"", q:5, max:50, pass:0, qtime:60, bg:"noche",
     gap:[90,165], moving:.3, fragile:.26, spring:.06, enemyGap:290, spawn:.35,
     enemies:["individualismo","desinformacion","morosidad","desconfianza","informalidad"],
     sub:"Estatutos, gobierno corporativo y el modelo solidario del fondo.",
@@ -732,7 +743,7 @@ function openLevels(){
   $("lvSeg").innerHTML = LEVELS.map((L,i)=>`<div style="--c:${L.color};flex:${L.max}"><i style="width:${100*p.levels[i].best/L.max}%"></i></div>`).join("");
   $("lvGrid").innerHTML = LEVELS.map((L,i)=>{
     const st = p.levels[i], open = unlocked(p,i);
-    const rule = L.pass ? "Responde bien cada pregunta para avanzar." : "Nivel final: suma todos los puntos que puedas.";
+    const rule = L.pass ? "Se debe responder bien cada pregunta para avanzar." : "Nivel final: se suman todos los puntos posibles.";
     const pill = st.passed || (i===2 && st.done) ? `<span class="pill ok">Superado</span>` : open ? `<span class="pill go">Disponible</span>` : `<span class="pill">Bloqueado</span>`;
     return `<div class="lvcard ${L.cls==="amarillo"?"amar":""}" style="--c:${L.color}">
       <div class="top"><h3>${L.name}</h3><b class="num">${L.max} pts</b></div>
@@ -784,14 +795,15 @@ function triggerGate(g){
   // Las opciones se barajan, pero "Ninguna" y "N/A" quedan siempre al final.
   const opts = shuffle(q.options.map((t,i)=>({t, ok:i===q.correctIndex})));
   const last = o => /^(ninguna|n\/a)\b/i.test(o.t);
-  S.q = { gate:g, q, opts: opts.filter(o=>!last(o)).concat(opts.filter(last)), left:Q_TIME, done:false, ok:false };
+  S.q = { gate:g, q, opts: opts.filter(o=>!last(o)).concat(opts.filter(last)), left:L.qtime, total:L.qtime, done:false, ok:false };
+  $("qTime").textContent = L.qtime;
   $("qTag").textContent = `Pregunta ${g.idx+1} de ${L.q}`;
   $("qTag").className = "tag " + L.cls;
   $("qMeta").textContent = `Nivel ${L.name} · vale ${fmtPts(ptsPerQ(S.level))} pts` + (S.misses[g.idx] ? ` · intento ${S.misses[g.idx]+1}` : "");
   $("qCase").textContent = q.context;
   $("qAsk").textContent = q.question;
   $("qAsk").style.display = q.question ? "" : "none";
-  $("qFb").textContent = `Lee la pregunta y elige la respuesta correcta (teclas 1 a ${S.q.opts.length}).`;
+  $("qFb").textContent = `Seleccionar la respuesta correcta (teclas 1 a ${S.q.opts.length}).`;
   $("qFb").className = "txt";
   $("qNext").style.display = "none";
   $("qOpts").innerHTML = S.q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${i+1}</span><span>${esc(o.t)}</span></button>`).join("");
@@ -819,7 +831,7 @@ function answer(i){
     const head = i<0 ? "⏱ Se acabó el tiempo. " : "✖ ";
     if(L.pass){
       S.misses[Q.gate.idx]++;
-      fb.textContent = head + Q.q.fbBad + "  Regresas al último punto seguro.";
+      fb.textContent = head + Q.q.fbBad + "  Se regresa al último punto seguro.";
       nx.textContent = "VOLVER AL PUNTO SEGURO";
     } else {
       S.results[Q.gate.idx] = false;
@@ -841,7 +853,7 @@ function afterQuestion(){
     S.qset[g.idx] = drawQuestion(S.qset[g.idx].id);
     hideAll(); S.scene = "game";
     respawn();
-    toast("La barrera sigue cerrada. Vuelve a subir: te espera otra pregunta.");
+    toast("La barrera sigue cerrada. Al volver a subir aparecerá otra pregunta.");
     return;
   }
   g.opened = true;
@@ -866,8 +878,8 @@ function levelComplete(){
   $("rTag").className = "tag " + (passed ? "verde" : "");
   $("rTitle").textContent = `Nivel ${L.name}: ${fmtPts(S.pts)} de ${L.max} puntos`;
   $("rSub").textContent = passed
-    ? (li<2 ? `Desbloqueaste el nivel ${LEVELS[li+1].name}.` : "Terminaste el último nivel de la formación.")
-    : `Necesitas ${L.pass} puntos para avanzar. Vuelve a intentarlo.`;
+    ? (li<2 ? `Nivel ${LEVELS[li+1].name} desbloqueado.` : "Último nivel de la formación completado.")
+    : `Se necesitan ${L.pass} puntos para avanzar. Se puede intentar de nuevo.`;
   $("rStats").innerHTML = statHTML([
     ["Puntos del nivel", `${fmtPts(S.pts)}/${L.max}`],
     ["Puntaje total", `${fmtPts(totalScore(p))}/100`],
@@ -875,9 +887,9 @@ function levelComplete(){
     ["Tiempo", fmtTime(S.time)]
   ]);
   $("rRead").textContent =
-    wrong===0 ? "Respondiste todo bien al primer intento. Conoces estos temas y puedes compartirlos con otros asociados." :
-    L.pass ? `Necesitaste ${wrong} intento${wrong>1?"s":""} adicional${wrong>1?"es":""} para abrir las barreras. Repasa las respuestas correctas: te ayudarán en el siguiente nivel.` :
-    "Repasa las respuestas correctas de las preguntas que fallaste. Puedes repetir el nivel para mejorar tu puntaje.";
+    wrong===0 ? "Todas las respuestas fueron correctas al primer intento: un buen dominio de estos temas, que vale la pena compartir con otros asociados." :
+    L.pass ? `${wrong>1?"Se necesitaron":"Se necesitó"} ${wrong} intento${wrong>1?"s":""} adicional${wrong>1?"es":""} para abrir las barreras. Repasar las respuestas correctas ayuda en el siguiente nivel.` :
+    "Conviene repasar las respuestas correctas de las preguntas falladas. El nivel se puede repetir para mejorar el puntaje.";
   const nx = $("rNext");
   if(!passed){ nx.textContent = "REINTENTAR NIVEL"; nx.onclick = ()=>startLevel(li); }
   else if(li<2){ nx.textContent = "SIGUIENTE NIVEL"; nx.onclick = ()=>startLevel(li+1); }
@@ -945,9 +957,9 @@ async function flushQueue(){
 }
 function syncMsg(){
   if(!SHEETS_URL) return "";
-  if(syncState==="sending") return "Registrando tu resultado…";
-  if(syncState==="done" && !QUEUE.length) return "✅ Tu resultado quedó registrado.";
-  if(QUEUE.length) return "Tu resultado se registrará apenas haya conexión a internet.";
+  if(syncState==="sending") return "Registrando el resultado…";
+  if(syncState==="done" && !QUEUE.length) return "✅ Resultado registrado.";
+  if(QUEUE.length) return "El resultado se registrará apenas haya conexión a internet.";
   return "";
 }
 function refreshSync(){ if(S.modal==="final") $("fMsg").textContent = syncMsg(); }
@@ -1031,7 +1043,7 @@ function damage(src){
   S.fx.flash=.5; S.fx.flashC=hexRgb(PAL.rojo); S.fx.shake=.3;
   burst(pl.x+PW/2, pl.y-S.camY+PH/2, hexRgb(PAL.rojo), 30);
   SFX.hit();
-  if(src && src.type) toast(`${ENEMY[src.type].label}: ${ENEMY[src.type].factor.toLowerCase()}. Lanza un valor para despejarlo.`);
+  if(src && src.type) toast(`${ENEMY[src.type].label}: ${ENEMY[src.type].factor.toLowerCase()}. Un valor solidario lo despeja.`);
 }
 
 /* ============================ ACTUALIZACIÓN ============================ */
@@ -1113,7 +1125,7 @@ function update(dt){
 
   if(pl.y > S.camY + VHL + 60){
     respawn();
-    toast("Caíste del recorrido: retomas desde el último punto seguro.");
+    toast("Caída del recorrido: se retoma desde el último punto seguro.");
   }
 }
 
@@ -1382,7 +1394,7 @@ function loop(now){
   } else acc = 0;
   if(S.modal==="quest" && S.q && !S.q.done){
     S.q.left -= dt; S.time += dt;
-    $("qBar").style.width = `${clamp(S.q.left/Q_TIME,0,1)*100}%`;
+    $("qBar").style.width = `${clamp(S.q.left/S.q.total,0,1)*100}%`;
     $("qTime").textContent = Math.max(0, Math.ceil(S.q.left));
     if(S.q.left<=0) answer(-1);
   }
@@ -1429,12 +1441,12 @@ holdBtn($("tR"), ()=>keys.right=true, ()=>keys.right=false);
 holdBtn($("tF"), fire, ()=>{});
 
 /* botones */
-$("sede").innerHTML = `<option value="">Selecciona…</option>` + SEDES.map(s=>`<option>${s}</option>`).join("");
+$("sede").innerHTML = `<option value="">Seleccionar…</option>` + SEDES.map(s=>`<option>${s}</option>`).join("");
 $("bPlay").onclick = ()=>{
   const name = $("user").value.replace(/\s+/g," ").trim();
   const sede = $("sede").value;
-  if(!/^[\p{L} .'-]{5,40}$/u.test(name) || !name.includes(" ")){ $("userErr").textContent = "Escribe tu nombre y apellido (solo letras). Así aparecerá en tu constancia."; $("user").focus(); return; }
-  if(!sede){ $("userErr").textContent = "Selecciona la ciudad donde estás vinculado."; $("sede").focus(); return; }
+  if(!/^[\p{L} .'-]{5,40}$/u.test(name) || !name.includes(" ")){ $("userErr").textContent = "Se requiere nombre y apellido (solo letras), tal como aparecerá en la constancia."; $("user").focus(); return; }
+  if(!sede){ $("userErr").textContent = "Se requiere la ciudad de vinculación."; $("sede").focus(); return; }
   $("userErr").textContent = "";
   $("user").blur();
   const prev = STORE.users[fold(name) + "|" + sede];
@@ -1452,7 +1464,7 @@ function openPrivacy(pending){
   if(pending){
     a.innerHTML = `<button class="btn ghost" id="pvNo">No acepto</button><button class="btn primary" id="pvYes">Acepto la política</button>`;
     $("pvYes").onclick = ()=> enterAs(pending.name, pending.sede, true);
-    $("pvNo").onclick = ()=>{ show("menu"); $("userErr").textContent = "Para jugar necesitas aceptar la política de tratamiento de datos."; };
+    $("pvNo").onclick = ()=>{ show("menu"); $("userErr").textContent = "Para jugar es necesario aceptar la política de tratamiento de datos."; };
   } else {
     a.innerHTML = `<button class="btn primary" id="pvClose">Cerrar</button>`;
     $("pvClose").onclick = ()=> show("menu");
@@ -1492,14 +1504,17 @@ window.__fesApi = { startLevel, layout };
 /* contenidos estáticos */
 function buildStatic(){
   $("lvChips").innerHTML = LEVELS.map(L=>`<div class="lvchip" style="--c:${L.color};--ct:${L.ink}"><div class="n">${L.name}</div><div class="t">${L.max} puntos · ${L.q} preguntas</div></div>`).join("");
+  $("howQ").innerHTML = LEVELS.map(L=>`<li><b>${L.name}</b>: ${L.qtime} segundos por pregunta. ${L.pass
+    ? "Una respuesta incorrecta lleva de vuelta al último punto seguro y la barrera sigue cerrada: al volver aparece una pregunta diferente."
+    : "Una respuesta incorrecta suma 0 puntos y el ascenso continúa."}</li>`).join("");
   $("howPts").innerHTML = LEVELS.map((L,i)=>`<tr><td><span class="dot" style="--c:${L.color}"></span><b>${L.name}</b>: ${L.q} × ${fmtPts(ptsPerQ(i))} pts${L.pass?"":" · nivel final"}</td><td>${L.max}</td></tr>`).join("") + `<tr><td><b>Total</b></td><td>100</td></tr>`;
   const items = [
     ...Object.keys(ENEMY).map(k=>({k, kind:"e", t:ENEMY[k].label, d:ENEMY[k].factor})),
-    {kind:"p", type:"stable", t:"Plataforma firme", d:"Siempre te sostiene"},
+    {kind:"p", type:"stable", t:"Plataforma firme", d:"Siempre sostiene"},
     {kind:"p", type:"moving", t:"Plataforma móvil", d:"Se desplaza"},
     {kind:"p", type:"fragile", t:"Plataforma frágil", d:"Se rompe al primer salto"}
   ];
-  $("legend").innerHTML = items.map((it,i)=>`<div class="lg"><canvas width="90" height="62" id="lg${i}"></canvas><b>${esc(it.t)}</b><span>${esc(it.d)}</span></div>`).join("");
+  $("legend").innerHTML = items.map((it,i)=>`<div class="lg"><canvas width="90" height="62" id="lg${i}"></canvas><b>${esc(it.t)}</b><span${it.kind==="e"?' class="ed"':""}>${esc(it.d)}</span></div>`).join("");
   items.forEach((it,i)=>{
     const c=$("lg"+i).getContext("2d");
     if(it.kind==="e") drawEnemy(c, it.k, 45, 30, 0.6, true, false);
