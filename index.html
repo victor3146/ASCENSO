@@ -1514,7 +1514,7 @@ function buildStatic(){
     {kind:"p", type:"moving", t:"Plataforma móvil", d:"Se desplaza"},
     {kind:"p", type:"fragile", t:"Plataforma frágil", d:"Se rompe al primer salto"}
   ];
-  $("legend").innerHTML = items.map((it,i)=>`<div class="lg"><canvas width="90" height="62" id="lg${i}"></canvas><b>${esc(it.t)}</b><span${it.kind==="e"?' class="ed"':""}>${esc(it.d)}</span></div>`).join("");
+  $("legend").innerHTML = items.map((it,i)=>`<div class="lg"><canvas width="90" height="62" id="lg${i}"></canvas><b>${esc(it.t)}</b><span class="ed">${esc(it.d)}</span></div>`).join("");
   items.forEach((it,i)=>{
     const c=$("lg"+i).getContext("2d");
     if(it.kind==="e") drawEnemy(c, it.k, 45, 30, 0.6, true, false);
