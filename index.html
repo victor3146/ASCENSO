@@ -670,13 +670,30 @@ function computeView(){
 addEventListener("resize", layout);
 
 /* ============================ MUNDO ============================ */
+// Altura que alcanza un salto (v² / 2g) más un margen.
+const reachOf = (v) => v*v/(2*GRAV) + 16;
+// Las plataformas quedan corridas: ninguna queda justo encima de otra al alcance de un salto,
+// así que para subir hay que mover el personaje (quedarse quieto ya no basta).
 function genWorld(li){
   const cfg = LEVELS[li], n = cfg.q;
   const plats=[], enemies=[], gates=[];
   plats.push({ x:0, y:0, w:COLW, h:26, type:"base" });
+  const placed = [];   // plataformas fijas ya ubicadas: { x, w, y, reach }
+  const overlaps = (a1, a2, b1, b2) => [-COLW, 0, COLW].some(s => a1 < b2 + s && b1 + s < a2);
+  const clear = (x, w, y, reach) => placed.every(q => {
+    const dy = q.y - y, r = dy > 0 ? q.reach : reach;          // la de abajo define el alcance
+    return Math.abs(dy) > r || !overlaps(x - 14, x + w + 14, q.x - 14, q.x + q.w + 14);
+  });
+  const placeX = (w, y, reach) => {
+    for(let k=0; k<60; k++){ const x = rand(0, COLW - w); if(clear(x, w, y, reach)) return x; }
+    return rand(0, COLW - w);
+  };
+  const center = (y, reach) => placed.push({ x: COLW/2 - 1, w: 2, y, reach });  // el personaje entra por el centro
+  center(0, reachOf(BOUNCE));
   for(let i=0;i<n;i++) gates.push({ y:-(i+1)*GATE_GAP, idx:i, opened:false, t:0 });
   let bottom = 0;
   const pw = Math.min(210, COLW*.45), sw = Math.min(260, COLW*.6);
+  const k = Math.max(.8, COLW/640);   // en celular (columna angosta) las plataformas son un poco más angostas
   for(let g=0; g<n; g++){
     const gate = gates[g];
     const stop = gate.y + 150;
@@ -685,15 +702,26 @@ function genWorld(li){
       const gap = rand(cfg.gap[0], cfg.gap[1]);
       if(y - gap < stop + 40) break;
       y -= gap;
-      const w = rand(104, 150), x = rand(0, COLW - w);
+      const w = rand(104, 150)*k;
       const moving = Math.random() < cfg.moving;
+      const spring = !moving && Math.random() < cfg.spring;
+      const reach = reachOf(spring ? SPRING : BOUNCE);
+      const x = moving ? rand(0, COLW - w) : placeX(w, y, reach);
       const p = { x, y, w, h:18, type: moving ? "moving" : "stable", vx: moving ? (Math.random()<.5?-1:1)*rand(1.1, 1.6 + li*.4) : 0 };
-      if(!moving && Math.random() < cfg.spring) p.spring = { off: rand(16, w-34), t:0 };
+      if(spring) p.spring = { off: rand(16, w-34), t:0 };
       plats.push(p);
-      if(Math.random() < cfg.fragile){ const fw=rand(90,120); plats.push({ x: rand(0, COLW-fw), y: y + gap*rand(.35,.65), w:fw, h:16, type:"fragile", broken:false, vy:0 }); }
+      if(!moving) placed.push({ x, w, y, reach });
+      if(Math.random() < cfg.fragile){
+        const fw = rand(90,120)*k, fy = y + gap*rand(.35,.65), fx = placeX(fw, fy, reachOf(BOUNCE));
+        plats.push({ x: fx, y: fy, w:fw, h:16, type:"fragile", broken:false, vy:0 });
+        placed.push({ x: fx, w: fw, y: fy, reach: reachOf(BOUNCE) });
+      }
     }
-    plats.push({ x: rand(20, COLW-pw-20), y: stop, w:pw, h:20, type:"stable" });
+    const sx = placeX(pw, stop, reachOf(BOUNCE));
+    plats.push({ x: sx, y: stop, w:pw, h:20, type:"stable" });
+    placed.push({ x: sx, w: pw, y: stop, reach: reachOf(BOUNCE) });
     plats.push({ x: (COLW-sw)/2, y: gate.y - 120, w:sw, h:22, type:"safe", gate:g });
+    center(gate.y - 120, reachOf(BOOST));   // tras abrir la barrera el personaje sale con impulso desde el centro
     let ey = bottom - 380;
     while(ey > stop + 160){
       if(!(g===0 && ey > -500)) enemies.push(makeEnemy(pick(cfg.enemies), rand(50, COLW-50), ey));
@@ -1105,7 +1133,7 @@ function update(dt){
     if(e.type==="morosidad" && !e.vis) continue;
     const dx = Math.abs(wrapDx(cx, e.x)), dy = (pl.y+PH/2) - e.y;
     if(dx < def.r + PW/2 - 6 && Math.abs(dy) < def.r + PH/2 - 8){
-      if(pl.vy>0 && dy < -def.r*.3){ e.alive=false; pl.vy=BOUNCE; poof(e); continue; }
+      if(pl.vy>0 && dy < -def.r*.3){ e.alive=false; pl.vy=BOUNCE*.6; poof(e); continue; }   // rebote corto: un enemigo no sirve de escalón
       damage(e);
     }
   }
