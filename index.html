@@ -337,10 +337,11 @@
     <span class="tag">Cómo se juega</span>
     <h2 class="ttl">Subir, responder y sumar hasta 100 puntos</h2>
     <div class="two" style="margin-top:16px">
-     <div class="concept"><h3>Controles</h3><ul class="bul"><li><b>← →</b> o <b>A / D</b>: mover el personaje (salta solo y puede cruzar los bordes).</li><li><b>Espacio / ↑ / W</b>: lanzar un <b>valor solidario</b> hacia arriba para despejar obstáculos (hay 3 y se recargan).</li><li>Caer sobre un obstáculo también lo despeja.</li><li><b>P / Esc</b>: pausa.</li><li>En el celular se usan los botones inferiores.</li></ul></div>
+     <div class="concept"><h3>Controles</h3><ul class="bul"><li><b>← →</b> o <b>A / D</b>: mover el personaje (salta solo y puede cruzar los bordes).</li><li><b>Espacio / ↑ / W</b>: lanzar un <b>valor solidario</b> hacia arriba (ver «Valores solidarios»).</li><li><b>P / Esc</b>: pausa.</li><li>En el celular se usan los botones inferiores.</li></ul></div>
      <div class="concept"><h3>Niveles y puntaje</h3><table class="pts" id="howPts"></table></div>
     </div>
     <div class="concept" style="margin-top:16px"><h3>Preguntas</h3><p>Cada barrera del camino es una pregunta y siempre se muestra la respuesta correcta.</p><ul class="bul" id="howQ"></ul></div>
+    <div class="concept" style="margin-top:16px"><h3>Valores solidarios</h3><ul class="bul"><li>Los valores solidarios (cooperación, participación, confianza…) son la herramienta para despejar los obstáculos que frenan al fondo.</li><li>Hay 3 disponibles y se recupera uno cada 1,6 segundos; el indicador <b>VALORES</b> muestra cuántos quedan.</li><li>Se lanzan hacia arriba con <b>Espacio / ↑ / W</b>, o con el botón <b>VALOR</b> en el celular.</li><li>Caer sobre un obstáculo también lo despeja.</li><li>Si un obstáculo toca al personaje, lo empuja hacia abajo y puede hacerlo caer al último punto seguro.</li></ul></div>
     <div class="legend" id="legend"></div>
     <div class="row end" style="margin-top:22px"><button class="btn primary" id="bHowOk">ENTENDIDO</button></div>
    </div>
@@ -810,7 +811,7 @@ function startLevel(li){
   $("bTitle").textContent = `Nivel ${L.name}`;
   $("bSub").textContent = `${L.sub} ${L.q} preguntas de ${fmtPts(ptsPerQ(li))} puntos.`;
   $("bConcepts").innerHTML = L.concepts.map(c=>`<div class="concept"><h3>${esc(c[0])}</h3><p>${esc(c[1])}</p></div>`).join("");
-  $("bHint").textContent = `Obstáculos en este nivel: ${L.enemies.map(e=>ENEMY[e].label).join(", ")}.`;
+  $("bHint").textContent = `Obstáculos en este nivel: ${L.enemies.map(e=>ENEMY[e].label).join(", ")}. Se despejan con un valor solidario.`;
   show("brief");
 }
 function openHow(){ show("how"); }
